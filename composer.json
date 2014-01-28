@@ -1,5 +1,5 @@
 {
-    "name": "dmolsen/Detector",
+    "name": "dmolsen/detector",
     "require": {
         "php": ">=5.3.3"
     },
