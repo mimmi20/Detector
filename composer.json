@@ -1,7 +1,8 @@
 {
     "name": "dmolsen/detector",
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3",
+        "tobie/ua-parser": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "*"

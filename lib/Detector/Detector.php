@@ -736,12 +736,10 @@ class Detector
      */
     private static function createUAProperties($obj)
     {
-
-        // include the ua-parser-php library to rip apart user agent strings
-        require_once(__DIR__ . "/lib/ua-parser-php/UAParser.php");
+        $parser = \UAParser\Parser::create();
 
         // classify the user agent string so we can learn more what device this really is. more for readability than anything
-        $userAgent = UA::parse();
+        $userAgent = $parser->parse($_SERVER['HTTP_USER_AGENT']);
 
         // save properties from ua-parser-php
         foreach ($userAgent as $key => $value) {
