@@ -2,7 +2,7 @@
     "name": "dmolsen/detector",
     "type": "library",
     "description": "Combined browser- & feature-detection for your app",
-    "keywords": ["useragent","user-agent","detector","device","YABFDL","ua-parser-php", "feature detection"],
+    "keywords": ["useragent", "user-agent", "detector", "device", "YABFDL", "ua-parser-php", "feature detection"],
     "homepage": "http://detector.dmolsen.com/",
     "license": "MIT",
     "require": {
