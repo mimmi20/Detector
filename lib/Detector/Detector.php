@@ -1,5 +1,4 @@
 <?php
-
 /*!
  * Detector v0.9.5
  *
@@ -7,17 +6,10 @@
  * Licensed under the MIT license
  */
 
-// address 5.2 compatibility
-if (!defined('__DIR__')) {
-    define('__DIR__', dirname(__FILE__));
-}
-if (!function_exists('json_decode') || !function_exists('json_encode')) {
-    require_once(__DIR__ . "/lib/json/jsonwrapper.php");
-}
+namespace Detector;
 
 class Detector
 {
-
     private static $debug = false; // gets overwritten by the config so changing this won't do anything for you...
 
     public static $ua;
@@ -670,12 +662,10 @@ class Detector
      */
     private static function createUAProperties($obj)
     {
-
-        // include the ua-parser-php library to rip apart user agent strings
-        require_once(__DIR__ . "/lib/ua-parser-php/UAParser.php");
+        $parser = new \UAParser\Parser();
 
         // classify the user agent string so we can learn more what device this really is. more for readability than anything
-        $userAgent = UA::parse();
+        $userAgent = $parser->parse();
 
         // save properties from ua-parser-php
         foreach ($userAgent as $key => $value) {
@@ -691,8 +681,5 @@ if (!isset($p)) {
     $ua = Detector::build();
 
     // include the browserFamily library to classify the browser by features
-    require_once(__DIR__ . "/lib/feature-family/featureFamily.php");
     $ua->family = featureFamily::find($ua);
 }
-
-?>
