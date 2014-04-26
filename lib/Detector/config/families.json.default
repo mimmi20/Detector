@@ -1,15 +1,15 @@
 {
-	"tablet": {
-		"isTablet": true
-	},
-	"mobile-advanced": { 
-    "isMobile": true,
-    "features": [ "csstransforms" ]
-	},
-	"mobile-basic": { 
-    "isMobile": true
-	},
-	"desktop": {
-		"isComputer": true
-	}
+    "tablet": {
+        "isTablet": true
+    },
+    "mobile-advanced": {
+        "isMobile": true,
+        "features": [ "csstransforms" ]
+    },
+    "mobile-basic": {
+        "isMobile": true
+    },
+    "desktop": {
+        "isComputer": true
+    }
 }
