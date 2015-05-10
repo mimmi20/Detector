@@ -51,7 +51,7 @@
 
     <!-- My Scripts -->
     <?php Detector::buildFeaturesScriptLink(); ?>
-    <script type="text/javascript" src="/js/modernizr-latest.js"></script>
+    <script type="text/javascript" src="/js/modernizr.2.8.3.min.custom.js"></script>
     <script type="text/javascript" src="/js/tests.demo.js"></script>
 </head>
 

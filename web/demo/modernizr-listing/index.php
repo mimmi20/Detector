@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title>Modernizr Listing</title>
-	<script type="text/javascript" src="/js/modernizr.full.js"></script>
+	<script type="text/javascript" src="/js/modernizr.2.8.3.min.custom.js"></script>
   </head>
 
   <style type="text/css">
-	body { 
+	body {
 		font-family: sans-serif;
 		font-size: 12px;
 	}
@@ -15,9 +15,9 @@
   <body>
 
 	<h1>Listing of Modernizr Properties</h1>
-	<p>The following properties are being tracked by default with Detector using Modernizr 2.5.2.</p>
+	<p>The following properties are being tracked by default with Detector using Modernizr 2.8.3.</p>
 	<p>
-	<script type="text/javascript">	
+	<script type="text/javascript">
 	 var m=Modernizr;
 	 for(var f in m){
 	    if(f[0]=='_'){continue;}
