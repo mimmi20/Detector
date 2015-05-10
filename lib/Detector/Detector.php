@@ -643,7 +643,7 @@ class Detector
         $parser = \UAParser\Parser::create();
 
         // classify the user agent string so we can learn more what device this really is. more for readability than anything
-        $userAgent = $parser->parse($_SERVER['HTTP_USER_AGENT']);
+        $userAgent = $parser->parse(self::$ua);
 
         // save properties from ua-parser-php
         foreach ($userAgent as $key => $value) {
