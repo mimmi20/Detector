@@ -8,7 +8,7 @@
     "require": {
         "php": ">=5.3.3",
         "composer/installers": "*",
-        "tobie/ua-parser": "dev-master"
+        "ua-parser/uap-php": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "*"
