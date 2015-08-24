@@ -1,7 +1,7 @@
 # Detector v0.9.5 #
 
 Detector is a simple, PHP- and JavaScript-based browser- and feature-detection library that can adapt to new devices & browsers on its own without the need to pull from a central database of browser information.
-	
+    
 Detector dynamically creates profiles using a browser's _(mainly)_ unique user-agent string as a key. Using [Modernizr](http://modernizr.com/) it records the HTML5 & CSS3 features a requesting browser may or may not support. [ua-parser-php](https://github.com/tobie/ua-parser/tree/master/php) is used to collect and record any useful information _(like OS or device name)_ the user-agent string may contain. 
 
 With Detector a developer can serve the appropriate markup, stylesheets, and JavaScript to a requesting browser without being completely dependent on a front-end-only resource loader nor a browser-detection library being up-to-date.

@@ -30,4 +30,4 @@
                                                            alt="Fork Me on GitHub"/></a>
     </div>
 
-<?php include 'web/templates/_footer.inc.php'; ?>
+<?php include 'web/templates/_footer.inc.php';

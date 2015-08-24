@@ -17,37 +17,13 @@
     <![endif]-->
 
     <!-- Le styles -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <?php
-    if (isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")) {
-        print "<link href=\"/css/mobile.css\" rel=\"stylesheet\">";
-    } else {
-        print "<link href=\"/css/desktop.css\" rel=\"stylesheet\">";
-    }
-    ?>
-    <style type="text/css">
-        .beta{
-            font-size:20px;
-            vertical-align:bottom;
-        }
-
-        thead > tr > th{
-            vertical-align:bottom;
-        }
-
-        thead > tr, div.alert-message{
-            background-color:#efefef;
-            background-image:none;
-        }
-
-        .featureNote{
-            border:0;
-            padding:0;
-            margin:-5px 0 25px 4px;
-            color:#666;
-            font-size:13px;
-        }
-    </style>
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <?php if (isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")) : ?>
+    <link href="/css/mobile.css" rel="stylesheet"/>
+    <?php else: ?>
+    <link href="/css/desktop.css" rel="stylesheet"/>
+    <?php endif; ?>
+    <link href="/css/general.css" rel="stylesheet"/>
 
     <!-- My Scripts -->
     <?php Detector::buildFeaturesScriptLink(); ?>
@@ -56,15 +32,15 @@
 </head>
 
 <body>
-
-<div class="container">
-
-    <div class="content">
-        <div class="page-header">
-            <h1><a href="/" style="color: black;">Detector</a> <span
-                    class='label notice beta'>beta</span> <?php if (isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")) {
-                } else {
-                    print "<small>combined browser- &amp; feature-detection for your app</small></h1>";
-                } ?>
-        </div>
-        <div class="row">
+    <div class="container">
+        <div class="content">
+            <div class="page-header">
+                <h1>
+                    <a href="/" style="color: black;">Detector</a>
+                    <span class='label notice beta'>beta</span>
+                    <?php if (!((isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")))) : ?>
+                    <small>combined browser- &amp; feature-detection for your app</small>
+                    <?php endif; ?>
+                </h1>
+            </div>
+            <div class="row">

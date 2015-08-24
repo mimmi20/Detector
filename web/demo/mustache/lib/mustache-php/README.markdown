@@ -10,7 +10,7 @@ Usage
 A quick example:
 
     <?php
-    include('Mustache.php');
+    include 'Mustache.php';
     $m = new Mustache;
     echo $m->render('Hello {{planet}}', array('planet' => 'World!'));
     // "Hello World!"

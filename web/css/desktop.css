@@ -3,7 +3,7 @@ html, body {
   background-color: #eee;
 }
 h3 {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 .container > footer p {
   text-align: center; /* center align it with the container */
@@ -33,7 +33,7 @@ h3 {
 }
 
 .span10 p {
-	 padding-right: 10px;
+     padding-right: 10px;
 }
 
 /* Styles you shouldn't keep as they are for displaying this base example only */
@@ -53,13 +53,13 @@ h3 {
 }
 
 thead > tr > th { 
-	font-size: 14px; 
+    font-size: 14px;
 }
 
 #forkme {
-	position: absolute;
-	top: 0;
-	right: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .embed-container {

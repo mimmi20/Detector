@@ -1,5 +1,4 @@
 <?php
-
 chdir(dirname(__DIR__));
 
 $autoloadPaths = array(
@@ -23,6 +22,13 @@ if (!$foundVendorAutoload) {
 // require Detector so we can popular identify the browser & populate $ua
 require 'lib/Detector/Detector.php';
 
+// if this is a request from features.js.php don't run the build function
+$ua = Detector::build();//var_dump($ua);
+
+// include the browserFamily library to classify the browser by features
+require_once 'lib/Detector/lib/feature-family/featureFamily.php';
+$ua->family = featureFamily::find($ua);
+
 // include some helpful functions
 include 'web/templates/_convertTF.inc.php';
 include 'web/templates/_createFT.inc.php';
@@ -33,6 +39,3 @@ if (isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")) 
 } else {
     include 'web/templates/index.default.inc.php';
 }
-
-?>
-

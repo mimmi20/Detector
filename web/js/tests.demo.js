@@ -26,31 +26,31 @@ Modernizr.addTest('ps-hiResCapable', Modernizr.mq('only screen and (-webkit-min-
 
 // Select screen attributes
 Modernizr.addTest("pr-screenAttributes",function() { 
-	var _windowHeight = (window.innerHeight > 0) ? window.innerHeight : screen.width;
-	var _windowWidth  = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-	var _colorDepth   = screen.colorDepth;
-	
-	return { windowHeight: _windowHeight, windowWidth: _windowWidth, colorDepth: _colorDepth };
+    var _windowHeight = (window.innerHeight > 0) ? window.innerHeight : screen.width;
+    var _windowWidth  = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    var _colorDepth   = screen.colorDepth;
+
+    return { windowHeight: _windowHeight, windowWidth: _windowWidth, colorDepth: _colorDepth };
 });
 
 Modernizr.addTest("core-mobile", function() {
-	if (Modernizr.mq('only screen and (max-width: 320px) and (orientation: portrait)')) {
-		return true;
-	} else if (Modernizr.mq('only screen and (max-width: 480px) and (orientation: landscape)')) {
-		return true;
-	} else {
-		return false;
-	}
+    if (Modernizr.mq('only screen and (max-width: 320px) and (orientation: portrait)')) {
+        return true;
+    } else if (Modernizr.mq('only screen and (max-width: 480px) and (orientation: landscape)')) {
+        return true;
+    } else {
+        return false;
+    }
 });
 
 Modernizr.addTest("core-tablet",function() {
-	if (Modernizr.mq('only screen and (min-width: 600px) and (orientation:portrait)')) {
-		return true;
-	} else if (Modernizr.mq('only screen and (max-width: 1024px) and (orientation:landscape)')) {
-		return true;
-	} else {
-		return false;
-	}
+    if (Modernizr.mq('only screen and (min-width: 600px) and (orientation:portrait)')) {
+        return true;
+    } else if (Modernizr.mq('only screen and (max-width: 1024px) and (orientation:landscape)')) {
+        return true;
+    } else {
+        return false;
+    }
 });
 
 Modernizr.addTest("core-desktop",Modernizr.mq('only screen and (min-width: 802px)'));

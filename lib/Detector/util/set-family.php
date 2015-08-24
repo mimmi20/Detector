@@ -8,7 +8,7 @@
  */
 
 // include the browserFamily lib to figure out what family this belongs too
-require(__DIR__ . "/../lib/feature-family/featureFamily.php");
+require __DIR__ . "/../lib/feature-family/featureFamily.php";
 
 if ($uaListJSON = @file_get_contents(__DIR__ . "/../user-agents/core/ua.list.json")) {
     $uaList = (array) json_decode($uaListJSON);

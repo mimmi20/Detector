@@ -4,19 +4,19 @@ html, body {
 }
 
 h1 {
-	margin-left: -11px;
+    margin-left: -11px;
 }
 
 .container, .content, .span10, .span9, .span4, footer {
-	width: 96%;
+    width: 96%;
 }
 
 textarea.xxlarge, input.xlarge, textarea {
-	width: 94%;
+    width: 94%;
 }
 
 .span7 {
-	width: 220px;
+    width: 220px;
 }
 
 .container > footer p {
