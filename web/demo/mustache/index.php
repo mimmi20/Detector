@@ -31,9 +31,9 @@ $data     = array(
     'title'       => 'Hello, World!',
     'description' => 'This extremely simple demo is meant to show how Detector & Mustache can be combined to create a Responsive Web Design + Server Side Component (RESS) System. By using the requesting browser\'s Detector family classification a responsive template & partials that match the browser\'s features are rendered server-side via Mustache. Choose a different layout below to see how this page & the included images change depending upon the browser family.',
     'link'        => 'https://github.com/dmolsen/Detector/wiki/Templating-with-Detector-&-Mustache-Tutorial',
-    'viewDesktop' => 'http://detector.dmolsen.com/demo/mustache/?pid=13ee8513d6fb7f97aef6635309b91f40',
-    'viewMA'      => 'http://detector.dmolsen.com/demo/mustache/?pid=e1bd58cc186d3a2156b6ebddb558fd41',
-    'viewMB'      => 'http://detector.dmolsen.com/demo/mustache/?pid=658e6d9b003bb3f3a3d9ae6e5ca1a42a',
+    'viewDesktop' => '/demo/mustache/?pid=13ee8513d6fb7f97aef6635309b91f40',
+    'viewMA'      => '/demo/mustache/?pid=e1bd58cc186d3a2156b6ebddb558fd41',
+    'viewMB'      => '/demo/mustache/?pid=658e6d9b003bb3f3a3d9ae6e5ca1a42a',
     'images'      => array(
         array('index'   => '1',
               'title'   => 'Automobile',
@@ -61,6 +61,10 @@ $data     = array(
 
 // if this is a request from features.js.php don't run the build function
 $ua = Detector::build();//var_dump($ua);
+
+// include the browserFamily library to classify the browser by features
+require_once 'lib/Detector/lib/feature-family/featureFamily.php';
+$ua->family = featureFamily::find($ua);
 
 $m        = new Mustache();
 $partials = new MustacheLoader("web/demo/mustache/templates/partials/" . $ua->family, "mustache", "web/demo/mustache/templates/partials/base");

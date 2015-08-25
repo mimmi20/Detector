@@ -26,7 +26,7 @@ require_once "lib/Detector/Detector.php";
 $ua = Detector::build();//var_dump($ua);
 
 // require detector to get the family, autoloads the $ua var
-require_once "../../../lib/Detector/lib/helpers/detectorHelper.php";
+require_once "lib/Detector/lib/helpers/detectorHelper.php";
 
 ?>
 

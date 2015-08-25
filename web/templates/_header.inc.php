@@ -5,11 +5,9 @@
     <title>Detector [BETA] - combined browser- &amp; feature-detection for your app</title>
     <meta name="description" content="">
     <meta name="author" content="">
-    <?php
-    if (isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")) {
-        print "<meta name=\"viewport\" content=\"width=device-width\">";
-    }
-    ?>
+    <?php if (isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")) : ?>
+    <meta name="viewport" content="width=device-width">
+    <?php endif; ?>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>

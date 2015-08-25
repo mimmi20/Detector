@@ -18,8 +18,11 @@ class DetectorHelpers
      * @param  {Object}        the user agent features
      * @param  {String}        list of browser features to include in the css, bad idea to leave features blank...
      */
-    public static function createHTMLList($obj, $features = null, $printUAProps = false)
-    {
+    public static function createHTMLList(
+        $obj,
+        $features = null,
+        $printUAProps = false
+    ) {
         if ($features != null) {
             $features_a = explode(",", $features);
             array_walk($features_a, create_function('&$val', '$val = trim($val);'));
@@ -43,6 +46,10 @@ class DetectorHelpers
         if ($printUAProps) {
             $uaProps = array("os", "osFull", "browserFull", "device", "deviceFull");
             foreach ($uaProps as $uaProp) {
+                if (!isset($obj->$uaProp) || !is_string($obj->$uaProp)) {
+                    continue;
+                }
+
                 print str_replace(" ", "-", strtolower($obj->$uaProp)) . ' ';
             }
         }
@@ -54,8 +61,10 @@ class DetectorHelpers
      * @param  {Object}        the user agent features
      * @param  {String}        list of browser features to include in the css, bad idea to leave features blank...
      */
-    public static function createJavaScriptObj($obj, $features = null)
-    {
+    public static function createJavaScriptObj(
+        $obj,
+        $features = null
+    ) {
         print "<script type=\"text/javascript\">";
         print "Detector=new Object();";
         if ($features) {
