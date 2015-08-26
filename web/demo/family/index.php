@@ -29,8 +29,8 @@ require_once "lib/Detector/Detector.php";
 $ua = Detector::build();//var_dump($ua);
 
 // include the browserFamily library to classify the browser by features
-require_once 'lib/Detector/lib/feature-family/featureFamily.php';
+require_once 'lib/Detector/lib/feature-family/FeatureFamily.php';
 
-print "family name: " . featureFamily::find($ua);
+print "family name: " . FeatureFamily::find($ua);
 
 ?>

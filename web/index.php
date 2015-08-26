@@ -20,14 +20,14 @@ if (!$foundVendorAutoload) {
 }
 
 // require Detector so we can popular identify the browser & populate $ua
-require 'lib/Detector/Detector.php';
+use \Detector\Detector;
+use \Detector\FeatureFamily;
 
 // if this is a request from features.js.php don't run the build function
 $ua = Detector::build();//var_dump($ua);
 
 // include the browserFamily library to classify the browser by features
-require_once 'lib/Detector/lib/feature-family/featureFamily.php';
-$ua->family = featureFamily::find($ua);
+$ua->family = FeatureFamily::find($ua);
 
 // include some helpful functions
 include 'web/templates/_convertTF.inc.php';

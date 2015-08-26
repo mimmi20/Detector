@@ -1,22 +1,24 @@
 <?php
-
 /*!
- * featureFamily v0.2
+ * FeatureFamily v0.2
  * a helper library for Detector that classifies browsers based on features
  *
  * Copyright (c) 2011-2012 Dave Olsen, http://dmolsen.com
  * Licensed under the MIT license
  */
 
-class featureFamily
+namespace Detector;
+
+class FeatureFamily
 {
 
     /**
      * Decides which family this device should be a part of
      *
-     * @param  {Object}        the set of features that have already been defined for the user agent
+     * @param object $obj the set of features that have already been defined for the user agent
      *
-     * @return {String}        the name of the family that this user agent matches. might just be the default.
+     * @return int|string {String}        the name of the family that this user agent matches. might just be the default.
+     * the name of the family that this user agent matches. might just be the default.
      */
     public static function find($obj)
     {
@@ -31,9 +33,9 @@ class featureFamily
         }
 
         // define what a family is
-        if (!($familiesJSON = @file_get_contents(__DIR__ . "/../../config/families.json"))) {
+        if (!($familiesJSON = @file_get_contents(__DIR__ . "/config/families.json"))) {
             // config.ini didn't exist so attempt to create it using the default file
-            if (!@copy(__DIR__ . "/../../config/families.json.default", __DIR__ . "/../../config/families.json")) {
+            if (!@copy(__DIR__ . "/config/families.json.default", __DIR__ . "/config/families.json")) {
                 print "Please make sure families.json.default exists before trying to have Detector build the families.json file automagically.";
                 exit;
             } else {

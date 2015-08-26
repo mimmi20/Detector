@@ -20,7 +20,9 @@ if (!$foundVendorAutoload) {
 }
 
 $p = true; // turn off the build function
-require 'lib/Detector/Detector.php';
+
+use \Detector\Detector;
+
 header('content-type: application/x-javascript');
 Detector::perrequest();
 ?>

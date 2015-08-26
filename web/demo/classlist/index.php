@@ -20,8 +20,8 @@ if (!$foundVendorAutoload) {
 }
 
 // require detector to get the family, autoloads the $ua var
-require_once "lib/Detector/Detector.php";
-require_once "lib/Detector/lib/helpers/detectorHelper.php";
+use \Detector\Detector;
+use \Detector\DetectorHelpers;
 
 // if this is a request from features.js.php don't run the build function
 $ua = Detector::build();//var_dump($ua);

@@ -1,6 +1,7 @@
+<?php use \Detector\Detector; ?>
 <h3><?php echo  (Detector::$foundIn == 'archive') ? 'Archived' : 'Your'; ?> Detector Browser Profile</h3>
 <p>
-    The following browser profile was created using <a href="https://github.com/dmolsen/ua-parser-php">ua-parser-php</a>. This information
+    The following browser profile was created using <a href="https://github.com/ua-parser/uap-php">PHP implementation of ua-parser</a>. This information
     is derived solely from the user agent string for your browser.
 </p>
 <?php

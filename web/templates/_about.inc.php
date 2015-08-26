@@ -4,7 +4,7 @@
     to pull from a central database of browser information.
 </p>
 <p>
-    Detector dynamically creates profiles using a browser's <em>(mainly)</em> unique user-agent string as a key. Using <a href="http://modernizr.com/">Modernizr</a> it records the HTML5 &amp; CSS3 features a requesting browser may or may not support. <a href="https://github.com/dmolsen/ua-parser-php">ua-parser-php</a> is used to collect and record any useful information <em>(like OS or device name)</em> the user-agent string may contain. 
+    Detector dynamically creates profiles using a browser's <em>(mainly)</em> unique user-agent string as a key. Using <a href="http://modernizr.com/">Modernizr</a> it records the HTML5 &amp; CSS3 features a requesting browser may or may not support. <a href="https://github.com/ua-parser/uap-php">PHP implementation of ua-parser</a> is used to collect and record any useful information <em>(like OS or device name)</em> the user-agent string may contain.
 </p>
 <p> 
     With Detector a developer 

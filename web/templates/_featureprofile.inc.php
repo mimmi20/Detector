@@ -1,3 +1,4 @@
+<?php use \Detector\Detector; ?>
 <h3><?php echo  (Detector::$foundIn == 'archive') ? 'Archived' : 'Your'; ?> Detector Feature Profile</h3>
 <p>
     The following feature profile was primarily created using <a href="http://www.modernizr.com/docs/#s2">Modernizr's core tests</a>. The left column of results, <strong>Your Browser</strong>, is populated by JavaScript using a copy of Modernizr that is loaded with this page. The right column, <strong>Detector Profile</strong>, is populated by PHP using the profile created by Detector for your browser.

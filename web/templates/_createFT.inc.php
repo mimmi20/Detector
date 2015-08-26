@@ -1,3 +1,4 @@
+<?php use \Detector\Detector; ?>
 <?php
 function createFT($ua,$match,$title,$prefix = '',$note = '') {
     print "<table class=\"zebra-striped span9\">

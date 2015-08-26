@@ -1,19 +1,14 @@
 <?php
-
 /*!
  * Detector v0.8.5
  *
- * Copyright (c) 2011-2012 Dave Olsen, http://dmolsen.com
+ * Copyright (c) 2015 Thomas Müller
  * Licensed under the MIT license
  */
 
-// address 5.2 compatibility
-if (!defined('__DIR__')) {
-    define('__DIR__', dirname(__FILE__));
-}
-if (!function_exists('json_decode') || !function_exists('json_encode')) {
-    require_once(__DIR__ . "/lib/json/jsonwrapper.php");
-}
+namespace Detector;
+
+use UAParser\Parser;
 
 class Detector
 {
@@ -54,6 +49,8 @@ class Detector
     /**
      * Configures the shared variables in Detector so that they can be used in functions that might not need to run
      * Detector::build();
+     *
+     * @throws \Detector\Exception
      */
     private static function configure()
     {
@@ -61,11 +58,10 @@ class Detector
         if (!($config = @parse_ini_file(__DIR__ . '/config/config.ini'))) {
             // config.ini didn't exist so attempt to create it using the default file
             if (!@copy(__DIR__ . '/config/config.ini.default', __DIR__ . '/config/config.ini')) {
-                print 'Please make sure config.ini.default exists before trying to have Detector build the config.ini file automagically.';
-                exit;
-            } else {
-                $config = @parse_ini_file(__DIR__ . '/config/config.ini');
+                throw new Exception('Please make sure config.ini.default exists before trying to have Detector build the config.ini file automagically.');
             }
+
+            $config = @parse_ini_file(__DIR__ . '/config/config.ini');
         }
 
         // populate some standard variables out of the config
@@ -94,7 +90,7 @@ class Detector
      *
      * Logic is based heavily on modernizr-server
      *
-     * @return mixed|null|object|StdClass an object that contains all the properties for this particular user agent
+     * @return mixed|null|object|\stdClass an object that contains all the properties for this particular user agent
      */
     public static function build()
     {
@@ -152,11 +148,11 @@ class Detector
             self::$foundIn = 'persession';
 
             // parse the per request cookie
-            $cookiePerSession = new stdClass();
+            $cookiePerSession = new \stdClass();
             $cookiePerSession = self::parseCookie('ps', $cookiePerSession, true);
 
             // parse the per request cookie
-            $cookiePerRequest = new stdClass();
+            $cookiePerRequest = new \stdClass();
             $cookiePerRequest = self::parseCookie('pr', $cookiePerRequest, true);
 
             // merge the session info we already have and the info from the cookie
@@ -188,7 +184,7 @@ class Detector
             self::$foundIn = 'session';
 
             // parse the per request cookie
-            $cookiePerRequest = new stdClass();
+            $cookiePerRequest = new \stdClass();
             $cookiePerRequest = self::parseCookie('pr', $cookiePerRequest);
 
             // merge the session info we already have and the info from the cookie
@@ -250,7 +246,7 @@ class Detector
             $jsonTemplateCore     = self::openUAFile($uaTemplateCore);
             $jsonTemplateExtended = self::openUAFile($uaTemplateExtended);
 
-            // use ua-parser-php to set-up the basic properties for this UA, populate other core properties
+            // use ua-parser to set-up the basic properties for this UA, populate other core properties
             // include the basic properties of the UA
             $jsonTemplateCore->ua          = self::$ua;
             $jsonTemplateCore->uaHash      = self::$uaHash;
@@ -258,8 +254,8 @@ class Detector
             $jsonTemplateCore              = self::createUAProperties($jsonTemplateCore);
 
             // populate extended properties
-            $jsonTemplateExtended                  = !isset($jsonTemplateExtended) ? new stdClass(
-            ) : $jsonTemplateExtended;
+            $jsonTemplateExtended = !isset($jsonTemplateExtended) ? new \stdClass() : $jsonTemplateExtended;
+            
             $jsonTemplateExtended->ua              = self::$ua;
             $jsonTemplateExtended->uaHash          = self::$uaHash;
             $jsonTemplateExtended->extendedVersion = self::$extendedVersion;
@@ -294,22 +290,22 @@ class Detector
             $jsonTemplateCore     = self::openUAFile($uaTemplateCore);
             $jsonTemplateExtended = self::openUAFile($uaTemplateExtended);
 
-            // use ua-parser-php to set-up the basic properties for this UA, populate other core properties
+            // use ua-parser to set-up the basic properties for this UA, populate other core properties
             $jsonTemplateCore->ua          = self::$ua;
             $jsonTemplateCore->uaHash      = self::$uaHash;
             $jsonTemplateCore->coreVersion = self::$coreVersion;
             $jsonTemplateCore              = self::createUAProperties($jsonTemplateCore);
 
             // populate extended properties
-            $jsonTemplateExtended                  = !isset($jsonTemplateExtended) ? new stdClass(
-            ) : $jsonTemplateExtended;
+            $jsonTemplateExtended = !isset($jsonTemplateExtended) ? new \stdClass() : $jsonTemplateExtended;
+            
             $jsonTemplateExtended->ua              = self::$ua;
             $jsonTemplateExtended->uaHash          = self::$uaHash;
             $jsonTemplateExtended->extendedVersion = self::$extendedVersion;
 
             // create objects to hold any of the per user or per request data. it shouldn't be saved to file but it should be added to the session
-            $cookiePerSession = new stdClass();
-            $cookiePerRequest = new stdClass();
+            $cookiePerSession = new \stdClass();
+            $cookiePerRequest = new \stdClass();
 
             // push features into the same level as the general device information
             // change 1/0 to true/false. why? 'cause that's what i like to read ;)
@@ -371,7 +367,7 @@ class Detector
     {
         self::configure();
         if ((isset($_REQUEST['dynamic']) && ($_REQUEST['dynamic'] == 'true')) && !(isset($_REQUEST['nocookies']) && ($_REQUEST['nocookies'] == 'true'))) {
-            readfile(__DIR__ . '/lib/modernizr/cookieTest.js');
+            readfile('src/modernizr/cookieTest.js');
         }
         readfile(__DIR__ . '/' . self::$uaFeaturesMinJS);
         self::readDirFiles(self::$uaFeaturesPerRequest);
@@ -391,13 +387,13 @@ class Detector
         // gather info by sending Modernizr & custom tests
         print "<!DOCTYPE html><html lang=\"en\"><head><meta name=\"viewport\" content=\"width=device-width\"><script type='text/javascript'>";
         print "document.cookie='" . self::$cookieID . "-ps=foo;path=/';"; // hack around how the cookies get handled in general
-        readfile(__DIR__ . '/lib/modernizr/cookieTest.js');
+        readfile('src/modernizr/cookieTest.js');
         readfile(__DIR__ . '/' . self::$uaFeaturesMinJS);
         self::readDirFiles(self::$uaFeaturesPerSession);
         self::readDirFiles(self::$uaFeaturesPerRequest);
-        print self::_mer(
-            ) . "</script></head><body><noscript><meta http-equiv='refresh' content='0; url=" . self::buildNoscriptLink(
-            ) . "'></noscript></body></html>";
+        print self::_mer()
+            . "</script></head><body><noscript><meta http-equiv='refresh' content='0; url=" . self::buildNoscriptLink()
+            . "'></noscript></body></html>";
         exit;
     }
 
@@ -408,7 +404,7 @@ class Detector
     {
         // gather info by sending Modernizr & custom tests
         print "<!DOCTYPE html><html lang=\"en\"><head><meta name=\"viewport\" content=\"width=device-width\"><script type='text/javascript'>";
-        readfile(__DIR__ . '/lib/modernizr/cookieTest.js');
+        readfile('src/modernizr/cookieTest.js');
         readfile(__DIR__ . '/' . self::$uaFeaturesMaxJS);
         self::readDirFiles(self::$uaFeaturesCore);
         self::readDirFiles(self::$uaFeaturesExtended);
@@ -461,7 +457,7 @@ class Detector
             foreach (explode('|', $cookie) as $feature) {
                 list($name, $value) = explode(':', $feature, 2);
                 if ($value[0] == '/') {
-                    $value_object = new stdClass();
+                    $value_object = new \stdClass();
                     foreach (explode('/', substr($value, 1)) as $sub_feature) {
                         list($sub_name, $sub_value) = explode(':', $sub_feature, 2);
                         $value_object->$sub_name = $sub_value;
@@ -533,7 +529,7 @@ class Detector
             mkdir(__DIR__ . "/" . self::$uaDirCore . $dir);
             chmod(__DIR__ . "/" . self::$uaDirCore . $dir, 0775);
             mkdir(__DIR__ . "/" . self::$uaDirExtended . $dir);
-            chmod(__DIR__ . "/" . self::$uaDirCore . $dir, 0775);
+            chmod(__DIR__ . "/" . self::$uaDirExtended . $dir, 0775);
         }
         $fp = fopen($uaFilePath, "w");
         fwrite($fp, $jsonEncoded);
@@ -546,8 +542,8 @@ class Detector
      *
      * @param string $uaFilePath file path
      *
-     * @return mixed|string {Object}        object containing the results of opening a file & parsing the JSON in the
-     *                      UA file
+     * @return mixed|string object containing the results of opening a file & parsing the JSON in the UA file
+     * @throws \Detector\Exception
      */
     private static function openUAFile($uaFilePath)
     {
@@ -556,10 +552,9 @@ class Detector
             $uaJSONTemplate = json_decode($uaJSONTemplate);
 
             return $uaJSONTemplate;
-        } else {
-            print "couldn't open the JSON file at " . $uaFilePath . " for some reason. permissions? bad path? bombing now...";
-            exit;
         }
+
+        throw new Exception('couldn\'t open the JSON file at ' . $uaFilePath . ' for some reason. permissions? bad path? bombing now...');
     }
 
     /**
@@ -594,11 +589,11 @@ class Detector
     /**
      * Parses the cookie for a list of features
      *
-     * @param string   $cookieExtension
-     * @param StdClass $obj
-     * @param bool     $default
+     * @param string    $cookieExtension
+     * @param \stdClass $obj
+     * @param bool      $default
      *
-     * @return StdClass|null values from the cookie for that cookieExtension
+     * @return \stdClass|null values from the cookie for that cookieExtension
      */
     private static function parseCookie(
         $cookieExtension,
@@ -657,18 +652,18 @@ class Detector
      *
      * @param  {Object}        the core template object
      *
-     * @return {Object}        the core template object "filled out" from ua-parser-php
+     * @return {Object}        the core template object "filled out" from ua-parser
      */
     private static function createUAProperties($obj)
     {
-        $parser = \UAParser\Parser::create();
+        $parser = Parser::create();
 
         // classify the user agent string so we can learn more what device this really is. more for readability than anything
-        /** @var \UAParser\Result\Client $userAgent */
-        $userAgent = $parser->parse(self::$ua);
+        /** @var \UAParser\Result\Client $client */
+        $client = $parser->parse(self::$ua);
 
-        // save properties from ua-parser-php
-        foreach ($userAgent as $key => $value) {
+        // save properties from ua-parser
+        foreach ($client as $key => $value) {
             $obj->$key = $value;
         }
 

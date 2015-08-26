@@ -1,5 +1,4 @@
 <?php
-
 /*!
  * Detector Helpers v0.1
  *
@@ -8,6 +7,8 @@
  * Copyright (c) 2011-2012 Dave Olsen, http://dmolsen.com
  * Licensed under the MIT license
  */
+
+namespace Detector;
 
 class DetectorHelpers
 {

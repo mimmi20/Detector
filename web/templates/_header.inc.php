@@ -5,6 +5,7 @@
     <title>Detector [BETA] - combined browser- &amp; feature-detection for your app</title>
     <meta name="description" content="">
     <meta name="author" content="">
+    <?php use \Detector\Detector; ?>
     <?php if (isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")) : ?>
     <meta name="viewport" content="width=device-width">
     <?php endif; ?>

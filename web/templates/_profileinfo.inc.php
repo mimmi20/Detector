@@ -1,5 +1,6 @@
 <p>
 Both of the following Detector profiles were <strong>
+<?php use \Detector\Detector; ?>
 <?php
     if (Detector::$foundIn == "archive") {
         print " pulled from a profile already in the system that you asked to view. Because it's an archived profile the browser-side tests were not run.";

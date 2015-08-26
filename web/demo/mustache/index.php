@@ -63,8 +63,8 @@ $data     = array(
 $ua = Detector::build();//var_dump($ua);
 
 // include the browserFamily library to classify the browser by features
-require_once 'lib/Detector/lib/feature-family/featureFamily.php';
-$ua->family = featureFamily::find($ua);
+require_once 'lib/Detector/lib/feature-family/FeatureFamily.php';
+$ua->family = FeatureFamily::find($ua);
 
 $m        = new Mustache();
 $partials = new MustacheLoader("web/demo/mustache/templates/partials/" . $ua->family, "mustache", "web/demo/mustache/templates/partials/base");

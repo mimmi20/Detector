@@ -2,11 +2,11 @@
 
 Detector is a simple, PHP- and JavaScript-based browser- and feature-detection library that can adapt to new devices & browsers on its own without the need to pull from a central database of browser information.
     
-Detector dynamically creates profiles using a browser's _(mainly)_ unique user-agent string as a key. Using [Modernizr](http://modernizr.com/) it records the HTML5 & CSS3 features a requesting browser may or may not support. [ua-parser-php](https://github.com/tobie/ua-parser/tree/master/php) is used to collect and record any useful information _(like OS or device name)_ the user-agent string may contain. 
+Detector dynamically creates profiles using a browser's _(mainly)_ unique user-agent string as a key. Using [Modernizr](http://modernizr.com/) it records the HTML5 & CSS3 features a requesting browser may or may not support. [PHP implementation of ua-parser](https://github.com/ua-parser/uap-php/tree/master) is used to collect and record any useful information _(like OS or device name)_ the user-agent string may contain. 
 
 With Detector a developer can serve the appropriate markup, stylesheets, and JavaScript to a requesting browser without being completely dependent on a front-end-only resource loader nor a browser-detection library being up-to-date.
 
-The server-side portion of Detector is based upon [modernizr-server](https://github.com/jamesgpearce/modernizr-server) by James Pearce ([@jamespearce](http://twitter.com/#!/jamespearce)) and the browser-detection library [ua-parser-php](https://github.com/tobie/ua-parser/tree/master/php). Detector utilizes [Modernizr](http://www.modernizr.com/) for its client-side, feature-detection support.
+The server-side portion of Detector is based upon [modernizr-server](https://github.com/jamesgpearce/modernizr-server) by James Pearce ([@jamespearce](http://twitter.com/#!/jamespearce)) and the browser-detection library [PHP implementation of ua-parser](https://github.com/ua-parser/uap-php/tree/master). Detector utilizes [Modernizr](http://www.modernizr.com/) for its client-side, feature-detection support.
 
 ## Demo of Detector ##
 
@@ -16,7 +16,7 @@ A very [simple demo of Detector](http://detector.dmolsen.com/) is available for 
 
 The following features are as of v0.8.5 of Detector:
 
-* stores features detected with [Modernizr 2.6.1](http://www.modernizr.com/) ([list](http://detector.dmolsen.com/demo/modernizr-listing/)) and browser & device information detected with [ua-parser-php](https://github.com/tobie/ua-parser/tree/master/php) (based on [ua-parser](http://code.google.com/p/ua-parser/)) on the server as part of a browser profile for easy retrieval
+* stores features detected with [Modernizr 2.6.1](http://www.modernizr.com/) ([list](http://detector.dmolsen.com/demo/modernizr-listing/)) and browser & device information detected with [PHP implementation of ua-parser](https://github.com/ua-parser/uap-php/tree/master) on the server as part of a browser profile for easy retrieval
 * uses the user agent string as a unique key for looking up information (e.g. one profile per user agent)
 * majority of tests are run only once per unique user agent string so only one user is ever tested & redirected
 * [add your own feature tests](https://github.com/dmolsen/Detector/wiki/Detector-Test-Tutorial) and store the results using Modernizr's addTest() API
