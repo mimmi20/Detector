@@ -1,28 +1,36 @@
 {
-    "name": "dmolsen/detector",
-    "type": "library",
-    "description": "Combined browser- & feature-detection for your app",
-    "keywords": ["useragent", "user-agent", "detector", "device", "YABFDL", "ua-parser", "feature detection"],
-    "homepage": "http://detector.dmolsen.com/",
-    "license": "MIT",
-    "require": {
-        "php": ">=5.3.3",
-        "composer/installers": "*",
-        "ua-parser/uap-php": "dev-master"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "*"
-    },
-    "authors": [
-        {
-            "name": "Dave Olsen",
-            "email": "dmolsen@gmail.com",
-            "homepage": "https://github.com/dmolsen"
-        }
-    ],
-    "autoload": {
-        "psr-0": {
-            "Detector\\": "src/"
-        }
+  "name": "dmolsen/detector",
+  "type": "library",
+  "description": "Combined browser- & feature-detection for your app",
+  "keywords": [
+    "useragent",
+    "user-agent",
+    "detector",
+    "device",
+    "YABFDL",
+    "ua-parser",
+    "feature detection"
+  ],
+  "homepage": "http://detector.dmolsen.com/",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.3.3",
+    "composer/installers": "*",
+    "ua-parser/uap-php": "dev-master"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*"
+  },
+  "authors": [
+    {
+      "name": "Thomas Müller",
+      "homepage": "https://github.com/mimmi20",
+      "role": "Developer"
     }
+  ],
+  "autoload": {
+    "psr-0": {
+      "Detector\\": "src/"
+    }
+  }
 }
