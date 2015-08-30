@@ -9,12 +9,13 @@
     "device",
     "YABFDL",
     "ua-parser",
-    "feature detection"
+    "feature detection",
+    "modernizr-server"
   ],
   "license": "MIT",
   "require": {
     "php": ">=5.3.3",
-    "composer/installers": "*",
+    "mimmi20/modernizr-server": "~1",
     "ua-parser/uap-php": "dev-master"
   },
   "require-dev": {
