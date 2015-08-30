@@ -25,13 +25,13 @@ class DetectorHelpers
         $printUAProps = false
     ) {
         if ($features != null) {
-            $features_a = explode(",", $features);
+            $features_a = explode(',', $features);
             array_walk($features_a, create_function('&$val', '$val = trim($val);'));
         }
         foreach ($obj as $key => $value) {
             if (is_object($value)) {
                 foreach ($value as $vkey => $vvalue) {
-                    $vkey = $key . "-" . $vkey;
+                    $vkey = $key . '-' . $vkey;
                     if (!$features || in_array($vkey, $features_a)) {
                         $result = ($vvalue) ? $vkey : 'no-' . $vkey;
                         print $result . ' ';
@@ -45,13 +45,13 @@ class DetectorHelpers
             }
         }
         if ($printUAProps) {
-            $uaProps = array("os", "osFull", "browserFull", "device", "deviceFull");
+            $uaProps = array('os', 'osFull', 'browserFull', 'device', 'deviceFull');
             foreach ($uaProps as $uaProp) {
                 if (!isset($obj->$uaProp) || !is_string($obj->$uaProp)) {
                     continue;
                 }
 
-                print str_replace(" ", "-", strtolower($obj->$uaProp)) . ' ';
+                print str_replace(' ', '-', strtolower($obj->$uaProp)) . ' ';
             }
         }
     }
@@ -66,43 +66,43 @@ class DetectorHelpers
         $obj,
         $features = null
     ) {
-        print "<script type=\"text/javascript\">";
-        print "Detector=new Object();";
+        print '<script type="text/javascript">';
+        print 'Detector=new Object();';
         if ($features) {
-            $features_a = explode(",", $features);
+            $features_a = explode(',', $features);
             array_walk($features_a, create_function('&$val', '$val = trim($val);'));
         }
         foreach ($obj as $key => $value) {
             if (is_object($value)) {
                 $i = 0;
                 foreach ($value as $vkey => $vvalue) {
-                    if (!$features || in_array($key . "-" . $vkey, $features_a)) {
+                    if (!$features || in_array($key . '-' . $vkey, $features_a)) {
                         if ($i == 0) {
-                            print "Detector." . $key . "=new Object();\n";
+                            print 'Detector.' . $key . "=new Object();\n";
                             $i++;
                         }
-                        $vkey = str_replace("-", "", $vkey);
+                        $vkey = str_replace('-', '', $vkey);
                         if ($vvalue) {
-                            print "Detector." . $key . "." . $vkey . "=true;\n";
+                            print 'Detector.' . $key . '.' . $vkey . "=true;\n";
                         } else {
-                            print "Detector." . $key . "." . $vkey . "=false;\n";
+                            print 'Detector.' . $key . '.' . $vkey . "=false;\n";
                         }
                     }
                 }
             } else {
                 if (!$features || in_array($key, $features_a)) {
-                    $key = str_replace("-", "", $key);
+                    $key = str_replace('-', '', $key);
                     if ($value === true) {
-                        print "Detector." . $key . "=true;\n";
+                        print 'Detector.' . $key . "=true;\n";
                     } else if ($value == false) {
-                        print "Detector." . $key . "=false;\n";
+                        print 'Detector.' . $key . "=false;\n";
                     } else {
-                        print "Detector." . $key . "='" . $value . "';\n";
+                        print 'Detector.' . $key . "='" . $value . "';\n";
                     }
                 }
             }
         }
-        print "</script>";
+        print '</script>';
     }
 }
 
