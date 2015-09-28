@@ -19,7 +19,9 @@
     "ua-parser/uap-php": "dev-master"
   },
   "require-dev": {
-    "phpunit/phpunit": "*"
+    "phpunit/phpunit": "*",
+    "squizlabs/php_codesniffer": "2.*",
+    "fabpot/php-cs-fixer": "*"
   },
   "authors": [
     {
