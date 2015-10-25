@@ -1,6 +1,6 @@
 <h3 style="margin-top: -11px;">About Detector</h3>
 <p>
-    <a href="https://github.com/dmolsen/Detector">Detector</a> is a simple, PHP- and JavaScript-based browser- and feature-detection library that can adapt to new devices &amp; browsers on its own without the need
+    <a href="https://github.com/mimmi20/Detector">Detector</a> is a simple, PHP- and JavaScript-based browser- and feature-detection library that can adapt to new devices &amp; browsers on its own without the need
     to pull from a central database of browser information.
 </p>
 <p>
@@ -12,5 +12,5 @@
 </p>
 
 <p>
-    <a href="https://github.com/dmolsen/Detector">Check out the README</a> for more information as well as the <a href="https://github.com/dmolsen/Detector">full list of features</a>.
+    <a href="https://github.com/mimmi20/Detector">Check out the README</a> for more information as well as the <a href="https://github.com/dmolsen/Detector">full list of features</a>.
 </p>

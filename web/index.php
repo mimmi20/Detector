@@ -24,17 +24,17 @@ use \Detector\Detector;
 use \Detector\FeatureFamily;
 
 // if this is a request from features.js.php don't run the build function
-$ua = Detector::build();//var_dump($ua);
+$ua = Detector::build();
 
 // include the browserFamily library to classify the browser by features
 $ua->family = FeatureFamily::find($ua);
-
+var_dump($ua, Detector::$foundIn);
 // include some helpful functions
 include 'web/templates/_convertTF.inc.php';
 include 'web/templates/_createFT.inc.php';
 
 // switch templates based on device type
-if (isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")) {
+if (isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != 'archive')) {
     include 'web/templates/index.mobile.inc.php';
 } else {
     include 'web/templates/index.default.inc.php';

@@ -23,6 +23,5 @@ $p = true; // turn off the build function
 
 use \Detector\Detector;
 
-header('content-type: application/x-javascript');
+header('content-type: application/x-javascript', true);
 Detector::perrequest();
-?>

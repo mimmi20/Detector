@@ -12,10 +12,6 @@ debug                   = false
 coreVersion             = "0.9"
 extendedVersion         = "1.0"
 
-// where to find the modernizr scripts
-uaFeaturesMaxJS         = "web/js/modernizr.2.8.3.min.custom.js"
-uaFeaturesMinJS         = "web/js/modernizr.2.8.3.min.custom.js"
-
 // where to find the tests that should be run against browsers
 uaFeaturesCore          = "tests/core/"
 uaFeaturesExtended      = "tests/extended/"

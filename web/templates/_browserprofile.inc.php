@@ -5,7 +5,6 @@
     is derived solely from the user agent string for your browser.
 </p>
 <?php
-//var_dump($ua);exit;
     if (Detector::$foundIn == 'archive') {
         if ($uaListJSON = @file_get_contents(__DIR__."/../../lib/Detector/user-agents/core/ua.list.json")) {
             $uaList = (array) json_decode($uaListJSON);
@@ -47,7 +46,7 @@
     <tbody>
         <tr>
             <th class="span3">User Agent:</th>
-            <td><?php echo $ua->ua?></td>
+            <td><?php echo $ua->originalUserAgent?></td>
         </tr>
         <?php
             if (isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")) {
@@ -55,24 +54,25 @@
             } else { ?>
                 <tr>
                     <th class="span3">UA Hash:</th>
-                    <td><?php echo $ua->uaHash?></td>
+                    <td><?php echo $ua->uaHash; ?></td>
                 </tr>
         <?php } ?>
-        <?php if (isset($ua->full)) { ?>
+        <?php if (isset($ua->ua) && ($ua->ua != '')) { ?>
             <tr>
-                <th class="span3">Browser/OS:</th>
-                <td><?php echo $ua->full?></td>
+                <th>Browser:</th>
+                <td><?php echo $ua->ua->toString(); ?></td>
             </tr>
-        <?php } else if (isset($ua->browserFull)) { ?>
+        <?php } ?>
+        <?php if (isset($ua->os) && ($ua->os != '')) { ?>
             <tr>
-                <th class="span3">Browser:</th>
-                <td><?php echo $ua->browserFull?></td>
+                <th>OS:</th>
+                <td><?php echo $ua->os->toString(); ?></td>
             </tr>
         <?php } ?>
         <?php if (isset($ua->device) && ($ua->device != '')) { ?>
             <tr>
                 <th>Device:</th>
-                <td><?php var_dump($ua->device);//echo $ua->device; ?></td>
+                <td><?php echo $ua->device->toString(); ?></td>
             </tr>
         <?php } ?>
         <?php if (isset($ua->browser) && ($ua->browser == 'Mobile Safari')) { ?>

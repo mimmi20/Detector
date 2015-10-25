@@ -10,5 +10,5 @@ function getCookie() {
     }
 }
 
-document.cookie = "testCookie=testData";
-var cookieRedirect = (window.location.href.match(/\?/)) ? window.location.href + "&nocookies=true" : window.location.href + "?nocookies=true";
+document.cookie = 'testCookie=testData';
+var cookieRedirect = (window.location.href.match(/\?/)) ? window.location.href + '&nocookies=true' : window.location.href + '?nocookies=true';

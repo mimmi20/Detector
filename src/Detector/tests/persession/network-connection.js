@@ -13,7 +13,6 @@
 // for more rigorous network testing, consider boomerang.js: github.com/bluesmoon/boomerang/
 
 Modernizr.addTest('ps-lowbandwidth', function() {
-
   var connection = navigator.connection || { type: 0 }; // polyfill
 
   return connection.type == 3 || // connection.CELL_2G

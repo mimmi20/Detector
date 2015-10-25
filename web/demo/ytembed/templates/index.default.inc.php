@@ -13,7 +13,7 @@
 </div>
 
 <div id="forkme">
-    <a href="https://github.com/dmolsen/Detector"><img src="/images/ForkMe_Wht.png" width="141" height="141" alt="Fork Me on GitHub" /></a>
+    <a href="https://github.com/mimmi20/Detector"><img src="/images/ForkMe_Wht.png" width="141" height="141" alt="Fork Me on GitHub" /></a>
 </div>
 
 <?php include "web/templates/_footer.inc.php"; ?>

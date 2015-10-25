@@ -1,6 +1,6 @@
 <h3>Get the Code</h3>
 <ul>
-    <li> <a href="https://github.com/dmolsen/Detector">Detector on GitHub</a></li>
+    <li> <a href="https://github.com/mimmi20/Detector">Detector on GitHub</a></li>
 </ul>
 
 <h3>Demos</h3>
