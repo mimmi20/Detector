@@ -24,7 +24,8 @@ require_once "web/demo/mustache/lib/mustache-php/Mustache.php";
 require_once "web/demo/mustache/lib/mustache-php/MustacheLoader.php";
 
 // require detector to get the family, autoloads the $ua var
-require_once "lib/Detector/Detector.php";
+use \Detector\Detector;
+use \Detector\FeatureFamily;
 
 $template = file_get_contents("web/demo/mustache/templates/index.mustache");
 $data     = array(
@@ -63,7 +64,6 @@ $data     = array(
 $ua = Detector::build();//var_dump($ua);
 
 // include the browserFamily library to classify the browser by features
-require_once 'lib/Detector/lib/feature-family/FeatureFamily.php';
 $ua->family = FeatureFamily::find($ua);
 
 $m        = new Mustache();

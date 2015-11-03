@@ -14,9 +14,12 @@
   ],
   "license": "MIT",
   "require": {
-    "php": ">=5.3.3",
+    "php": ">=5.5.0",
     "mimmi20/modernizr-server": "dev-master",
-    "ua-parser/uap-php": "dev-master"
+    "ua-parser/uap-php": "dev-master",
+    "browscap/browscap-php": "*@dev",
+    "monolog/monolog": "~1.13",
+    "mimmi20/wurflcache": "~1.3"
   },
   "require-dev": {
     "phpunit/phpunit": "*",

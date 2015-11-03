@@ -98,7 +98,7 @@ class Detector
         $pid = (isset($_REQUEST['pid']) && preg_match('/[a-z0-9]{32}/', $_REQUEST['pid'])) ? $_REQUEST['pid'] : false;
 
         // offer the ability to review profiles saved in the system
-        if ($pid && self::$debug) {
+        if ($pid) {
             // where did we find this info to display... probably only need this for the demo
             self::$foundIn = 'archive';
 
@@ -506,6 +506,19 @@ class Detector
             $obj->$key = $value;
         }
 
+        $logger = new Logger('browscap');
+        $logger->pushHandler(new NullHandler(Logger::DEBUG));
+
+        $cache = new File(array(File::DIR => __DIR__ . '/../../cache/'));
+        // Now, load an INI file into BrowscapPHP\Browscap for testing the UAs
+        $browscap = new Browscap();
+        $browscap
+            ->setCache($cache)
+            ->setLogger($logger)
+        ;
+
+        $actualProps = (array) $browscap->getBrowser(self::$ua);
+
         return $obj;
     }
 
@@ -521,7 +534,7 @@ class Detector
         if ($uaListJSON = @file_get_contents(__DIR__ . '/' . self::$uaDirCore . 'ua.list.json')) {
             $uaList = (array) json_decode($uaListJSON);
         }
-var_dump($uaList);
+
         if (isset($uaList[self::$uaHash])) {
             return;
         }

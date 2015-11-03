@@ -23,14 +23,13 @@ if (!$foundVendorAutoload) {
 }
 
 // require detector to get the family, autoloads the $ua var
-require_once "lib/Detector/Detector.php";
+use \Detector\Detector;
+use \Detector\FeatureFamily;
 
 // if this is a request from features.js.php don't run the build function
 $ua = Detector::build();//var_dump($ua);
 
 // include the browserFamily library to classify the browser by features
-require_once 'lib/Detector/lib/feature-family/FeatureFamily.php';
-
 print "family name: " . FeatureFamily::find($ua);
 
 ?>

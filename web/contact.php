@@ -1,7 +1,7 @@
 <?php
 
 // require Detector so we can popular identify the browser & populate $ua
-require "../lib/Detector/Detector.php";
+require "../src/Detector/Detector.php";
 
 if ($_POST['post']) {
     $message = "Here is some feedback for Detector:

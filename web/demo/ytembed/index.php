@@ -20,7 +20,7 @@ if (!$foundVendorAutoload) {
 }
 
 // require detector to get the family, autoloads the $ua var
-require_once "lib/Detector/Detector.php";
+use \Detector\Detector;
 
 $html5Embed = "<iframe src=\"http://www.youtube.com/embed/N-zXaiDNKjU\" frameborder=\"0\" allowfullscreen></iframe>";
 $simpleLink   = "Your browser doesn't appear to support HTML5. <a href=\"http://www.youtube.com/watch?v=N-zXaiDNKjU\">Check out the video on YouTube</a>.";
