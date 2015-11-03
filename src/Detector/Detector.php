@@ -445,9 +445,9 @@ class Detector
             $uaFeatures = self::_ang($_COOKIE[$cookieName]);
             foreach ($uaFeatures as $key => $value) {
                 if ((strpos($key, $cookieExtension . '-') !== false) || (($cookieExtension == 'core') && (strpos(
-                                $key,
-                                'extended-'
-                            ) === false) && (strpos($key, 'pr-') === false) && (strpos($key, 'ps-') === false))
+                    $key,
+                    'extended-'
+                ) === false) && (strpos($key, 'pr-') === false) && (strpos($key, 'ps-') === false))
                 ) {
                     $key = str_replace($cookieExtension . '-', '', $key);
                     if (is_object($value)) {

@@ -105,4 +105,3 @@ class DetectorHelpers
         print '</script>';
     }
 }
-
