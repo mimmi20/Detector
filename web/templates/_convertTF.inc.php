@@ -1,5 +1,6 @@
 <?php
-function convertTF($value) {
+function convertTF($value)
+{
     if ($value == "true") {
         return "<span class='label success'>true</span>";
     } else if ($value) {

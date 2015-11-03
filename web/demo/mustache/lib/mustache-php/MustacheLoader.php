@@ -1,12 +1,13 @@
 <?php
+use Detector\Detector;
 
 /**
  * A Mustache Partial filesystem loader.
  *
  * @author Justin Hileman {@link http://justinhileman.com}
  */
-class MustacheLoader implements ArrayAccess {
-
+class MustacheLoader implements ArrayAccess
+{
     protected $baseDir;
     protected $partialsCache = array();
     protected $extension;
@@ -14,12 +15,12 @@ class MustacheLoader implements ArrayAccess {
     /**
      * MustacheLoader constructor.
      *
-     * @access public
-     * @param  string $baseDir   Base template directory.
-     * @param  string $extension File extension for Mustache files (default: 'mustache')
-     * @return void
+     * @param string $baseDir   Base template directory.
+     * @param string $extension File extension for Mustache files (default: 'mustache')
+     * @param string $defaultDir
      */
-    public function __construct($baseDir, $extension = 'mustache', $defaultDir = 'base') {
+    public function __construct($baseDir, $extension = 'mustache', $defaultDir = 'base')
+    {
 
         if (!is_dir($baseDir)) {
             throw new InvalidArgumentException('$baseDir must be a valid directory, ' . $baseDir . ' given.');
@@ -35,10 +36,13 @@ class MustacheLoader implements ArrayAccess {
     }
 
     /**
-     * @param  string $offset Name of partial
-     * @return boolean
+     * @param string $offset Name of partial
+     * @param bool   $test
+     *
+     * @return bool
      */
-    public function offsetExists($offset,$test = true) {
+    public function offsetExists($offset, $test = true)
+    {
         if ($test) {
             $this->finalPath = $this->pathName($offset);
         }
@@ -50,7 +54,8 @@ class MustacheLoader implements ArrayAccess {
      * @param  string $offset Name of partial
      * @return string Partial template contents
      */
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
 
         if (!$this->offsetExists($offset, false)) {
             throw new InvalidArgumentException('Partial does not exist: ' . $offset);
@@ -67,20 +72,21 @@ class MustacheLoader implements ArrayAccess {
     /**
      * MustacheLoader is an immutable filesystem loader. offsetSet throws a LogicException if called.
      *
-     * @throws LogicException
-     * @return void
+     * @param mixed $offset
+     * @param mixed $value
      */
-    public function offsetSet($offset, $value) {
+    public function offsetSet($offset, $value)
+    {
         throw new LogicException('Unable to set offset: MustacheLoader is an immutable ArrayAccess object.');
     }
 
     /**
      * MustacheLoader is an immutable filesystem loader. offsetUnset throws a LogicException if called.
      *
-     * @throws LogicException
-     * @return void
+     * @param mixed $offset
      */
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset)
+    {
         throw new LogicException('Unable to unset offset: MustacheLoader is an immutable ArrayAccess object.');
     }
 
@@ -88,11 +94,12 @@ class MustacheLoader implements ArrayAccess {
      * An internal helper for generating path names.
      *
      * @param  string $file Partial name
-     * @return string File path
+     * @return string|null File path
      */
-    protected function pathName($file) {
+    protected function pathName($file)
+    {
         if (Detector::$splitFamily) {
-            $matches = explode("-",$this->baseDir);
+            $matches = explode("-", $this->baseDir);
             if (count($matches) > 1) {
                 $dirs = array();
                 $dir = "";
@@ -103,18 +110,22 @@ class MustacheLoader implements ArrayAccess {
                     $k++;
                 }
                 $dirs = array_reverse($dirs);
-                foreach($dirs as $dir) {
+                foreach ($dirs as $dir) {
                     if (file_exists($dir . '/' . $file . '.' . $this->extension)) {
                         return $dir . '/' . $file . '.' . $this->extension;
                     }
                 }
             }
         }
+
         if (file_exists($this->baseDir . '/' . $file . '.' . $this->extension)) {
             return $this->baseDir . '/' . $file . '.' . $this->extension;
         }
+
         if (file_exists($this->defaultDir . '/' . $file . '.' . $this->extension)) {
             return $this->defaultDir . '/' . $file . '.' . $this->extension;
         }
+
+        return null;
     }
 }

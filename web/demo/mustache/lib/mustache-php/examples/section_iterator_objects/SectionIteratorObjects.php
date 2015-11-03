@@ -1,6 +1,7 @@
 <?php
 
-class SectionIteratorObjects extends Mustache {
+class SectionIteratorObjects extends Mustache
+{
     public $start = "It worked the first time.";
 
     protected $_data = array(
@@ -8,7 +9,8 @@ class SectionIteratorObjects extends Mustache {
         array('item' => 'As well as the third.'),
     );
 
-    public function middle() {
+    public function middle()
+    {
         return new ArrayIterator($this->_data);
     }
 

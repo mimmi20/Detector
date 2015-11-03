@@ -16,7 +16,7 @@
   "require": {
     "php": ">=5.5.0",
     "mimmi20/modernizr-server": "~1.0.1",
-    "ua-parser/uap-php": "~v3.4",
+    "ua-parser/uap-php": "~3.4",
     "browscap/browscap-php": "~3.0.0-alpha.1",
     "monolog/monolog": "~1.13",
     "mimmi20/wurflcache": "~1.3"

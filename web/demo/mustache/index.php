@@ -70,5 +70,3 @@ $m        = new Mustache();
 $partials = new MustacheLoader("web/demo/mustache/templates/partials/" . $ua->family, "mustache", "web/demo/mustache/templates/partials/base");
 
 print $m->render($template, $data, $partials);
-
-?>

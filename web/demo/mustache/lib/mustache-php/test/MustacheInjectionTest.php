@@ -5,11 +5,13 @@ require_once '../Mustache.php';
 /**
  * @group mustache_injection
  */
-class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
+class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase
+{
 
     // interpolation
 
-    public function testInterpolationInjection() {
+    public function testInterpolationInjection()
+    {
         $data = array(
             'a' => '{{ b }}',
             'b' => 'FAIL'
@@ -20,7 +22,8 @@ class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($output, $m->render($template, $data));
     }
 
-    public function testUnescapedInterpolationInjection() {
+    public function testUnescapedInterpolationInjection()
+    {
         $data = array(
             'a' => '{{ b }}',
             'b' => 'FAIL'
@@ -34,7 +37,8 @@ class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
 
     // sections
 
-    public function testSectionInjection() {
+    public function testSectionInjection()
+    {
         $data = array(
             'a' => true,
             'b' => '{{ c }}',
@@ -46,7 +50,8 @@ class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($output, $m->render($template, $data));
     }
 
-    public function testUnescapedSectionInjection() {
+    public function testUnescapedSectionInjection()
+    {
         $data = array(
             'a' => true,
             'b' => '{{ c }}',
@@ -61,7 +66,8 @@ class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
 
     // partials
 
-    public function testPartialInjection() {
+    public function testPartialInjection()
+    {
         $data = array(
             'a' => '{{ b }}',
             'b' => 'FAIL'
@@ -75,7 +81,8 @@ class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($output, $m->render($template, $data, $partials));
     }
 
-    public function testPartialUnescapedInjection() {
+    public function testPartialUnescapedInjection()
+    {
         $data = array(
             'a' => '{{ b }}',
             'b' => 'FAIL'
@@ -92,7 +99,8 @@ class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
 
     // lambdas
 
-    public function testLambdaInterpolationInjection() {
+    public function testLambdaInterpolationInjection()
+    {
         $data = array(
             'a' => array($this, 'interpolationLambda'),
             'b' => '{{ c }}',
@@ -104,11 +112,13 @@ class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($output, $m->render($template, $data));
     }
 
-    public function interpolationLambda() {
+    public function interpolationLambda()
+    {
         return '{{ b }}';
     }
 
-    public function testLambdaSectionInjection() {
+    public function testLambdaSectionInjection()
+    {
         $data = array(
             'a' => array($this, 'sectionLambda'),
             'b' => '{{ c }}',
@@ -120,8 +130,8 @@ class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($output, $m->render($template, $data));
     }
 
-    public function sectionLambda($content) {
+    public function sectionLambda($content)
+    {
         return '{{ ' . $content . ' }}';
     }
-
 }

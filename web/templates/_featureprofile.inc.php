@@ -19,11 +19,11 @@
             <th class="span3">coreVersion:</th>
             <td>
                 <?php
-                    if (isset($ua->coreVersion)) {
-                        print $ua->coreVersion;
-                       } else {
-                        print "This profile hasn't been versioned yet.";
-                    }
+                if (isset($ua->coreVersion)) {
+                    print $ua->coreVersion;
+                } else {
+                    print "This profile hasn't been versioned yet.";
+                }
                 ?>
             </td>
         </tr>
@@ -31,11 +31,11 @@
             <th class="span3">family:</th>
             <td>
                 <?php
-                    if (isset($ua->family)) {
-                        print $ua->family;
-                       } else {
-                        print "Feature family hasn't been set yet for this profile.";
-                    }
+                if (isset($ua->family)) {
+                    print $ua->family;
+                } else {
+                    print "Feature family hasn't been set yet for this profile.";
+                }
                 ?>
             </td>
         </tr>
@@ -46,7 +46,7 @@
     <small><em>To learn more about families please <a href="https://github.com/dmolsen/Detector/wiki/Detector-Family-Tutorial">review the family tutorial</a>.</em></small>
 </div>
 
-<?php 
+<?php
 
     $ua_a = (array) $ua;
     ksort($ua_a);
@@ -58,17 +58,17 @@
     $miscFeatures       = "/(touch|webgl|json|lowbattery|cookies|battery|gamepad|lowbandwidth|eventsource|ie8compat|unicode)/";
     $mqFeatures         = "/(mediaqueries|desktop|mobile|tablet)/";
     $extendedFeatures   = "/(extendedVersion|emoji)/";
-    $perSessionFeatures    = "/(hirescapable)/";
+    $perSessionFeatures = "/(hirescapable)/";
     $perRequestFeatures = "/(screenattributes)/";
 
     // create separate tables
-    createFT($ua,$css3Features,"CSS3 Features");
-    createFT($ua,$html5Features,"HTML5 Features");
-    createFT($ua,$miscFeatures,"Misc. Features","","While a device may be touch-based that doesn't not mean it supports <a href=\"http://www.w3.org/TR/touch-events/\">touch events</a> which is what I'm testing for here.");
-    createFT($ua,$mqFeatures,"Browser Class via Media Queries","core-","This feature needs some love as it's not always returning information correctly.");
-    createFT($ua,$extendedFeatures,"Detector Extended Test Features","extended-","To learn more about extended tests and their purpose please <a href=\"https://github.com/dmolsen/Detector/wiki/Detector-Test-Tutorial\">review the test tutorial.</a>");
+    createFT($ua, $css3Features, "CSS3 Features");
+    createFT($ua, $html5Features, "HTML5 Features");
+    createFT($ua, $miscFeatures, "Misc. Features","","While a device may be touch-based that doesn't not mean it supports <a href=\"http://www.w3.org/TR/touch-events/\">touch events</a> which is what I'm testing for here.");
+    createFT($ua, $mqFeatures, "Browser Class via Media Queries","core-","This feature needs some love as it's not always returning information correctly.");
+    createFT($ua, $extendedFeatures, "Detector Extended Test Features","extended-","To learn more about extended tests and their purpose please <a href=\"https://github.com/dmolsen/Detector/wiki/Detector-Test-Tutorial\">review the test tutorial.</a>");
     if (Detector::$foundIn != 'archive') {
-        createFT($ua,$perSessionFeatures,"Detector Per Session Test Features","ps-","To learn more about per session tests and their purpose please <a href=\"https://github.com/dmolsen/Detector/wiki/Detector-Test-Tutorial\">review the test tutorial.</a>");
-        createFT($ua,$perRequestFeatures,"Detector Per Request Test Features","pr-","To learn more about per request tests and their purpose please <a href=\"https://github.com/dmolsen/Detector/wiki/Detector-Test-Tutorial\">review the test tutorial.</a> If this section isn't populated hit \"refresh\". Attributes are captured via a cookie. Screen size will also be one request behind if you resize the window for the same reason.");
+        createFT($ua, $perSessionFeatures, "Detector Per Session Test Features","ps-","To learn more about per session tests and their purpose please <a href=\"https://github.com/dmolsen/Detector/wiki/Detector-Test-Tutorial\">review the test tutorial.</a>");
+        createFT($ua, $perRequestFeatures, "Detector Per Request Test Features","pr-","To learn more about per request tests and their purpose please <a href=\"https://github.com/dmolsen/Detector/wiki/Detector-Test-Tutorial\">review the test tutorial.</a> If this section isn't populated hit \"refresh\". Attributes are captured via a cookie. Screen size will also be one request behind if you resize the window for the same reason.");
     }
 ?>

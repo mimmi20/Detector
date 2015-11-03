@@ -8,14 +8,15 @@
 
 namespace Detector;
 
+use BrowscapPHP\Browscap;
 use Modernizr\Modernizr;
+use Monolog\Handler\NullHandler;
+use Monolog\Logger;
 use UAParser\Parser;
+use WurflCache\Adapter\File;
 
 class Detector
 {
-
-    private static $debug = false; // gets overwritten by the config so changing this won't do anything for you...
-
     public static $ua;
     public static $accept;
 
@@ -518,6 +519,12 @@ class Detector
         ;
 
         $actualProps = (array) $browscap->getBrowser(self::$ua);
+
+        foreach ($actualProps as $property => $value) {
+            $obj->$property = $value;
+        }
+
+
 
         return $obj;
     }

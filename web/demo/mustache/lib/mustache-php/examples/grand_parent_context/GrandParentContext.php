@@ -1,10 +1,12 @@
 <?php
 
-class GrandParentContext extends Mustache {
+class GrandParentContext extends Mustache
+{
     public $grand_parent_id = 'grand_parent1';
     public $parent_contexts = array();
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->parent_contexts[] = array('parent_id' => 'parent1', 'child_contexts' => array(

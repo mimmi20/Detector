@@ -20,5 +20,3 @@ if ($ua->isMobile) {
 } else {
     include "templates/contact.default.inc.php";
 }
-
-?>

@@ -1,7 +1,9 @@
 <?php
 
-class DoubleSection extends Mustache {
-    public function t() {
+class DoubleSection extends Mustache
+{
+    public function t()
+    {
         return true;
     }
 

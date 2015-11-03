@@ -32,7 +32,7 @@ $ua = Detector::build();//var_dump($ua);
   <head>
     <meta charset="utf-8">
     <title>JavaScript Listing</title>
-    <?php echo DetectorHelpers::createJavaScriptObj($ua,"browserFull,isMobile,geolocation,cssanimations,cssgradients,indexeddb")?>
+    <?php echo DetectorHelpers::createJavaScriptObj($ua, "browserFull,isMobile,geolocation,cssanimations,cssgradients,indexeddb")?>
   </head>
 
   <body>

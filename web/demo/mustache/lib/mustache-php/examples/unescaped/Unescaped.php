@@ -1,5 +1,6 @@
 <?php
 
-class Unescaped extends Mustache {
+class Unescaped extends Mustache
+{
     public $title = "Bear > Shark";
 }

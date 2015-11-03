@@ -1,6 +1,7 @@
 <?php
 
-class Partials extends Mustache {
+class Partials extends Mustache
+{
     public $name = 'ilmich';
     public $data = array(
         array('name' => 'federica', 'age' => 27, 'gender' => 'female'),

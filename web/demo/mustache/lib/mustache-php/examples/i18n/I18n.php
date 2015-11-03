@@ -1,6 +1,7 @@
 <?php
 
-class I18n extends Mustache {
+class I18n extends Mustache
+{
 
     // Variable to be interpolated
     public $name = 'Bob';
@@ -14,7 +15,8 @@ class I18n extends Mustache {
         'My name is {{ name }}.' => 'Me llamo {{ name }}.',
     );
 
-    public function __trans($text) {
+    public function __trans($text)
+    {
         return isset($this->dictionary[$text]) ? $this->dictionary[$text] : $text;
     }
 }

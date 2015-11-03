@@ -5,10 +5,13 @@
     <title>Detector [BETA] - combined browser- &amp; feature-detection for your app</title>
     <meta name="description" content="">
     <meta name="author" content="">
-    <?php use \Detector\Detector; ?>
+    <?php use \Detector\Detector;
+
+    ?>
     <?php if (isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")) : ?>
     <meta name="viewport" content="width=device-width">
-    <?php endif; ?>
+    <?php
+endif; ?>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -19,9 +22,11 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
     <?php if (isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")) : ?>
     <link href="/css/mobile.css" rel="stylesheet"/>
-    <?php else: ?>
+    <?php
+else : ?>
     <link href="/css/desktop.css" rel="stylesheet"/>
-    <?php endif; ?>
+    <?php
+endif; ?>
     <link href="/css/general.css" rel="stylesheet"/>
 
     <!-- My Scripts -->
@@ -39,7 +44,8 @@
                     <span class='label notice beta'>beta</span>
                     <?php if (!((isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")))) : ?>
                     <small>combined browser- &amp; feature-detection for your app</small>
-                    <?php endif; ?>
+                    <?php
+endif; ?>
                 </h1>
             </div>
             <div class="row">

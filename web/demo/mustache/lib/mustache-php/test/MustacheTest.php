@@ -31,7 +31,8 @@ require_once '../Mustache.php';
  *
  * @extends PHPUnit_Framework_TestCase
  */
-class MustacheTest extends PHPUnit_Framework_TestCase {
+class MustacheTest extends PHPUnit_Framework_TestCase
+{
 
     const TEST_CLASS = 'Mustache';
 
@@ -45,7 +46,8 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
      * @access public
      * @return void
      */
-    public function test__construct() {
+    public function test__construct()
+    {
         $template = '{{#mustaches}}{{#last}}and {{/last}}{{type}}{{^last}}, {{/last}}{{/mustaches}}';
         $data     = array(
             'mustaches' => array(
@@ -75,14 +77,16 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider constructorOptions
      */
-    public function testConstructorOptions($options, $charset, $delimiters, $pragmas) {
+    public function testConstructorOptions($options, $charset, $delimiters, $pragmas)
+    {
         $mustache = new MustacheExposedOptionsStub(null, null, null, $options);
-        $this->assertEquals($charset,    $mustache->getCharset());
+        $this->assertEquals($charset, $mustache->getCharset());
         $this->assertEquals($delimiters, $mustache->getDelimiters());
-        $this->assertEquals($pragmas,    $mustache->getPragmas());
+        $this->assertEquals($pragmas, $mustache->getPragmas());
     }
 
-    public function constructorOptions() {
+    public function constructorOptions()
+    {
         return array(
             array(
                 array(),
@@ -116,7 +120,8 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
     /**
      * @expectedException MustacheException
      */
-    public function testConstructorInvalidPragmaOptionsThrowExceptions() {
+    public function testConstructorInvalidPragmaOptionsThrowExceptions()
+    {
         $mustache = new Mustache(null, null, null, array('pragmas' => array('banana phone' => true)));
     }
 
@@ -126,7 +131,8 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
      * @access public
      * @return void
      */
-    public function test__toString() {
+    public function test__toString()
+    {
         $m = new Mustache('{{first_name}} {{last_name}}', array('first_name' => 'Karl', 'last_name' => 'Marx'));
 
         $this->assertEquals('Karl Marx', $m->__toString());
@@ -140,7 +146,8 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('foo', $m2->render());
     }
 
-    public function test__toStringException() {
+    public function test__toStringException()
+    {
         $m = $this->getMock(self::TEST_CLASS, array('render'), array());
         $m->expects($this->once())
             ->method('render')
@@ -159,7 +166,8 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
      * @access public
      * @return void
      */
-    public function testRender() {
+    public function testRender()
+    {
         $m = new Mustache();
 
         $this->assertEquals('', $m->render(''));
@@ -181,7 +189,8 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
      *
      * @group interpolation
      */
-    public function testRenderWithData() {
+    public function testRenderWithData()
+    {
         $m = new Mustache('{{first_name}} {{last_name}}');
         $this->assertEquals('Charlie Chaplin', $m->render(null, array('first_name' => 'Charlie', 'last_name' => 'Chaplin')));
         $this->assertEquals('Zappa, Frank', $m->render('{{last_name}}, {{first_name}}', array('first_name' => 'Frank', 'last_name' => 'Zappa')));
@@ -190,7 +199,8 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
     /**
      * @group partials
      */
-    public function testRenderWithPartials() {
+    public function testRenderWithPartials()
+    {
         $m = new Mustache('{{>stache}}', null, array('stache' => '{{first_name}} {{last_name}}'));
         $this->assertEquals('Charlie Chaplin', $m->render(null, array('first_name' => 'Charlie', 'last_name' => 'Chaplin')));
         $this->assertEquals('Zappa, Frank', $m->render('{{last_name}}, {{first_name}}', array('first_name' => 'Frank', 'last_name' => 'Zappa')));
@@ -200,12 +210,14 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
      * @group interpolation
      * @dataProvider interpolationData
      */
-    public function testDoubleRenderMustacheTags($template, $context, $expected) {
+    public function testDoubleRenderMustacheTags($template, $context, $expected)
+    {
         $m = new Mustache($template, $context);
         $this->assertEquals($expected, $m->render());
     }
 
-    public function interpolationData() {
+    public function interpolationData()
+    {
         return array(
             array(
                 '{{#a}}{{=<% %>=}}{{b}} c<%={{ }}=%>{{/a}}',
@@ -225,7 +237,8 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
      *
      * @group comments
      */
-    public function testNewlinesInComments() {
+    public function testNewlinesInComments()
+    {
         $m = new Mustache("{{! comment \n \t still a comment... }}");
         $this->assertEquals('', $m->render());
     }
@@ -233,7 +246,8 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
     /**
      * Mustache should return the same thing when invoked multiple times.
      */
-    public function testMultipleInvocations() {
+    public function testMultipleInvocations()
+    {
         $m = new Mustache('x');
         $first = $m->render();
         $second = $m->render();
@@ -247,7 +261,8 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
      *
      * @group interpolation
      */
-    public function testMultipleInvocationsWithTags() {
+    public function testMultipleInvocationsWithTags()
+    {
         $m = new Mustache('{{one}} {{two}}', array('one' => 'foo', 'two' => 'bar'));
         $first = $m->render();
         $second = $m->render();
@@ -259,7 +274,8 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
     /**
      * Mustache should not use templates passed to the render() method for subsequent invocations.
      */
-    public function testResetTemplateForMultipleInvocations() {
+    public function testResetTemplateForMultipleInvocations()
+    {
         $m = new Mustache('Sirve.');
         $this->assertEquals('No sirve.', $m->render('No sirve.'));
         $this->assertEquals('Sirve.', $m->render());
@@ -279,9 +295,10 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
      * @param string $template
      * @param string $output
      */
-    public function test__clone($class, $template, $output) {
+    public function test__clone($class, $template, $output)
+    {
         if (isset($this->knownIssues[$class])) {
-            return $this->markTestSkipped($this->knownIssues[$class]);
+            self::markTestSkipped($this->knownIssues[$class]);
         }
 
         $m = new $class;
@@ -309,9 +326,10 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
      * @param string $template
      * @param string $output
      */
-    public function testExamples($class, $template, $output) {
+    public function testExamples($class, $template, $output)
+    {
         if (isset($this->knownIssues[$class])) {
-            return $this->markTestSkipped($this->knownIssues[$class]);
+            self::markTestSkipped($this->knownIssues[$class]);
         }
 
         $m = new $class;
@@ -331,14 +349,14 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
      *
      * @return array
      */
-    public function getExamples() {
+    public function getExamples()
+    {
         $basedir = dirname(__FILE__) . '/../examples/';
 
         $ret = array();
 
         $files = new RecursiveDirectoryIterator($basedir);
         while ($files->valid()) {
-
             if ($files->hasChildren() && $children = $files->getChildren()) {
                 $example  = $files->getSubPathname();
                 $class    = null;
@@ -346,13 +364,15 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
                 $output   = null;
 
                 foreach ($children as $file) {
-                    if (!$file->isFile()) continue;
+                    if (!$file->isFile()) {
+                        continue;
+                    }
 
                     $filename = $file->getPathname();
                     $info = pathinfo($filename);
 
                     if (isset($info['extension'])) {
-                        switch($info['extension']) {
+                        switch ($info['extension']) {
                             case 'php':
                                 $class = $info['filename'];
                                 include_once($filename);
@@ -382,7 +402,8 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
     /**
      * @group delimiters
      */
-    public function testCrazyDelimiters() {
+    public function testCrazyDelimiters()
+    {
         $m = new Mustache(null, array('result' => 'success'));
         $this->assertEquals('success', $m->render('{{=[[ ]]=}}[[ result ]]'));
         $this->assertEquals('success', $m->render('{{=(( ))=}}(( result ))'));
@@ -395,7 +416,8 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
     /**
      * @group delimiters
      */
-    public function testResetDelimiters() {
+    public function testResetDelimiters()
+    {
         $m = new Mustache(null, array('result' => 'success'));
         $this->assertEquals('success', $m->render('{{=[[ ]]=}}[[ result ]]'));
         $this->assertEquals('success', $m->render('{{=<< >>=}}<< result >>'));
@@ -405,7 +427,8 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
     /**
      * @group delimiters
      */
-    public function testStickyDelimiters() {
+    public function testStickyDelimiters()
+    {
         $m = new Mustache(null, array('result' => 'FAIL'));
         $this->assertEquals('{{ result }}', $m->render('{{=[[ ]]=}}{{ result }}[[={{ }}=]]'));
         $this->assertEquals('{{#result}}{{/result}}', $m->render('{{=[[ ]]=}}{{#result}}{{/result}}[[={{ }}=]]'));
@@ -418,12 +441,14 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
      * @dataProvider poorlyNestedSections
      * @expectedException MustacheException
      */
-    public function testPoorlyNestedSections($template) {
+    public function testPoorlyNestedSections($template)
+    {
         $m = new Mustache($template);
         $m->render();
     }
 
-    public function poorlyNestedSections() {
+    public function poorlyNestedSections()
+    {
         return array(
             array('{{#foo}}'),
             array('{{#foo}}{{/bar}}'),
@@ -438,7 +463,8 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
      *
      * @group sections
      */
-    public function testMustacheInjection() {
+    public function testMustacheInjection()
+    {
         $template = '{{#foo}}{{bar}}{{/foo}}';
         $view = array(
             'foo' => true,
@@ -451,14 +477,18 @@ class MustacheTest extends PHPUnit_Framework_TestCase {
     }
 }
 
-class MustacheExposedOptionsStub extends Mustache {
-    public function getPragmas() {
+class MustacheExposedOptionsStub extends Mustache
+{
+    public function getPragmas()
+    {
         return $this->_pragmas;
     }
-    public function getCharset() {
+    public function getCharset()
+    {
         return $this->_charset;
     }
-    public function getDelimiters() {
+    public function getDelimiters()
+    {
         return array($this->_otag, $this->_ctag);
     }
 }

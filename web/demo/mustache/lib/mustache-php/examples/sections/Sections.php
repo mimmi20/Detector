@@ -1,9 +1,11 @@
 <?php
 
-class Sections extends Mustache {
+class Sections extends Mustache
+{
     public $start = "It worked the first time.";
 
-    public function middle() {
+    public function middle()
+    {
         return array(
             array('item' => "And it worked the second time."),
             array('item' => "As well as the third."),

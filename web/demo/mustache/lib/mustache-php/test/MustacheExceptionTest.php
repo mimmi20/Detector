@@ -2,14 +2,16 @@
 
 require_once '../Mustache.php';
 
-class MustacheExceptionTest extends PHPUnit_Framework_TestCase {
+class MustacheExceptionTest extends PHPUnit_Framework_TestCase
+{
 
     const TEST_CLASS = 'Mustache';
 
     protected $pickyMustache;
     protected $slackerMustache;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->pickyMustache      = new PickyMustache();
         $this->slackerMustache    = new SlackerMustache();
     }
@@ -18,7 +20,8 @@ class MustacheExceptionTest extends PHPUnit_Framework_TestCase {
      * @group interpolation
      * @expectedException MustacheException
      */
-    public function testThrowsUnknownVariableException() {
+    public function testThrowsUnknownVariableException()
+    {
         $this->pickyMustache->render('{{not_a_variable}}');
     }
 
@@ -26,7 +29,8 @@ class MustacheExceptionTest extends PHPUnit_Framework_TestCase {
      * @group sections
      * @expectedException MustacheException
      */
-    public function testThrowsUnclosedSectionException() {
+    public function testThrowsUnclosedSectionException()
+    {
         $this->pickyMustache->render('{{#unclosed}}');
     }
 
@@ -34,7 +38,8 @@ class MustacheExceptionTest extends PHPUnit_Framework_TestCase {
      * @group sections
      * @expectedException MustacheException
      */
-    public function testThrowsUnclosedInvertedSectionException() {
+    public function testThrowsUnclosedInvertedSectionException()
+    {
         $this->pickyMustache->render('{{^unclosed}}');
     }
 
@@ -42,7 +47,8 @@ class MustacheExceptionTest extends PHPUnit_Framework_TestCase {
      * @group sections
      * @expectedException MustacheException
      */
-    public function testThrowsUnexpectedCloseSectionException() {
+    public function testThrowsUnexpectedCloseSectionException()
+    {
         $this->pickyMustache->render('{{/unopened}}');
     }
 
@@ -50,7 +56,8 @@ class MustacheExceptionTest extends PHPUnit_Framework_TestCase {
      * @group partials
      * @expectedException MustacheException
      */
-    public function testThrowsUnknownPartialException() {
+    public function testThrowsUnknownPartialException()
+    {
         $this->pickyMustache->render('{{>impartial}}');
     }
 
@@ -58,28 +65,32 @@ class MustacheExceptionTest extends PHPUnit_Framework_TestCase {
      * @group pragmas
      * @expectedException MustacheException
      */
-    public function testThrowsUnknownPragmaException() {
+    public function testThrowsUnknownPragmaException()
+    {
         $this->pickyMustache->render('{{%SWEET-MUSTACHE-BRO}}');
     }
 
     /**
      * @group sections
      */
-    public function testDoesntThrowUnclosedSectionException() {
+    public function testDoesntThrowUnclosedSectionException()
+    {
         $this->assertEquals('', $this->slackerMustache->render('{{#unclosed}}'));
     }
 
     /**
      * @group sections
      */
-    public function testDoesntThrowUnexpectedCloseSectionException() {
+    public function testDoesntThrowUnexpectedCloseSectionException()
+    {
         $this->assertEquals('', $this->slackerMustache->render('{{/unopened}}'));
     }
 
     /**
      * @group partials
      */
-    public function testDoesntThrowUnknownPartialException() {
+    public function testDoesntThrowUnknownPartialException()
+    {
         $this->assertEquals('', $this->slackerMustache->render('{{>impartial}}'));
     }
 
@@ -87,13 +98,15 @@ class MustacheExceptionTest extends PHPUnit_Framework_TestCase {
      * @group pragmas
      * @expectedException MustacheException
      */
-    public function testGetPragmaOptionsThrowsExceptionsIfItThinksYouHaveAPragmaButItTurnsOutYouDont() {
+    public function testGetPragmaOptionsThrowsExceptionsIfItThinksYouHaveAPragmaButItTurnsOutYouDont()
+    {
         $mustache = new TestableMustache();
         $mustache->testableGetPragmaOptions('PRAGMATIC');
     }
 }
 
-class PickyMustache extends Mustache {
+class PickyMustache extends Mustache
+{
     protected $_throwsExceptions = array(
         MustacheException::UNKNOWN_VARIABLE         => true,
         MustacheException::UNCLOSED_SECTION         => true,
@@ -103,7 +116,8 @@ class PickyMustache extends Mustache {
     );
 }
 
-class SlackerMustache extends Mustache {
+class SlackerMustache extends Mustache
+{
     protected $_throwsExceptions = array(
         MustacheException::UNKNOWN_VARIABLE         => false,
         MustacheException::UNCLOSED_SECTION         => false,
@@ -113,8 +127,10 @@ class SlackerMustache extends Mustache {
     );
 }
 
-class TestableMustache extends Mustache {
-    public function testableGetPragmaOptions($pragma_name) {
+class TestableMustache extends Mustache
+{
+    public function testableGetPragmaOptions($pragma_name)
+    {
         return $this->_getPragmaOptions($pragma_name);
     }
 }

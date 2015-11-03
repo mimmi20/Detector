@@ -34,5 +34,3 @@ if ($ua->isMobile) {
 } else {
     include "web/demo/ytembed/templates/index.default.inc.php";
 }
-
-?>

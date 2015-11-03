@@ -38,8 +38,9 @@ define('EXAMPLE_PATH', realpath(dirname(__FILE__) . DS . ".." . DS . "examples")
  * @access public
  * @return string
  */
-function getLowerCaseName($name) {
-    return preg_replace_callback("/([A-Z])/", create_function (
+function getLowerCaseName($name)
+{
+    return preg_replace_callback("/([A-Z])/", create_function(
         '$match',
         'return "_" . strtolower($match[1]);'
     ), lcfirst($name));
@@ -57,8 +58,9 @@ function getLowerCaseName($name) {
  * @access public
  * @return string
  */
-function getUpperCaseName($name) {
-    return preg_replace_callback("/_([a-z])/", create_function (
+function getUpperCaseName($name)
+{
+    return preg_replace_callback("/_([a-z])/", create_function(
         '$match',
         'return strtoupper($match{1});'
     ), ucfirst($name));
@@ -72,7 +74,8 @@ function getUpperCaseName($name) {
  * @access public
  * @return mixed
  */
-function out($value) {
+function out($value)
+{
     echo $value . "\n";
     return $value;
 }
@@ -89,7 +92,8 @@ function out($value) {
  * @access public
  * @return string
  */
-function buildPath($directory, $filename = null,  $extension = null) {
+function buildPath($directory, $filename = null, $extension = null)
+{
     return out(EXAMPLE_PATH . DS . $directory.
                     ($extension !== null && $filename !== null ? DS . $filename. "." . $extension : ""));
 }
@@ -102,8 +106,9 @@ function buildPath($directory, $filename = null,  $extension = null) {
  * @access public
  * @return void
  */
-function createDirectory($directory) {
-    if(!@mkdir(buildPath($directory))) {
+function createDirectory($directory)
+{
+    if (!@mkdir(buildPath($directory))) {
         die("FAILED to create directory\n");
     }
 }
@@ -119,9 +124,10 @@ function createDirectory($directory) {
  * @access public
  * @return void
  */
-function createFile($directory, $filename, $extension, $content = "") {
+function createFile($directory, $filename, $extension, $content = "")
+{
     $handle = @fopen(buildPath($directory, $filename, $extension), "w");
-    if($handle) {
+    if ($handle) {
         fwrite($handle, $content);
         fclose($handle);
     } else {
@@ -143,7 +149,8 @@ function createFile($directory, $filename, $extension, $content = "") {
  * @access public
  * @return void
  */
-function main($example_name) {
+function main($example_name)
+{
     $lowercase = getLowerCaseName($example_name);
     $uppercase = getUpperCaseName($example_name);
     createDirectory($lowercase);
@@ -161,7 +168,7 @@ CONTENT
 }
 
 // check if enougth arguments are given
-if(count($argv) > 1) {
+if (count($argv) > 1) {
     // get the name of the example
     $example_name = $argv[1];
 

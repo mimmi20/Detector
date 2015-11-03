@@ -1,6 +1,7 @@
 <?php
 
-class ChildContext extends Mustache {
+class ChildContext extends Mustache
+{
     public $parent = array(
         'child' => 'child works',
     );

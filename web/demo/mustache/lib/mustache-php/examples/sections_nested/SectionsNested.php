@@ -1,9 +1,11 @@
 <?php
 
-class SectionsNested extends Mustache {
+class SectionsNested extends Mustache
+{
     public $name = 'Little Mac';
 
-    public function enemies() {
+    public function enemies()
+    {
         return array(
             array(
                 'name' => 'Von Kaiser',

@@ -1,6 +1,7 @@
 <?php
 
-class Complex extends Mustache {
+class Complex extends Mustache
+{
     public $header = 'Colors';
 
     public $item = array(
@@ -9,11 +10,13 @@ class Complex extends Mustache {
         array('name' => 'blue', 'current' => false, 'url' => '#Blue'),
     );
 
-    public function notEmpty() {
+    public function notEmpty()
+    {
         return !($this->isEmpty());
     }
 
-    public function isEmpty() {
+    public function isEmpty()
+    {
         return count($this->item) === 0;
     }
 }

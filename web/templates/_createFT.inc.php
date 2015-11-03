@@ -1,6 +1,9 @@
-<?php use \Detector\Detector; ?>
+<?php use \Detector\Detector;
+
+    ?>
 <?php
-function createFT($ua,$match,$title,$prefix = '',$note = '') {
+function createFT($ua, $match, $title, $prefix = '', $note = '')
+{
     print "<table class=\"zebra-striped span9\">
         <thead>
             <tr>
@@ -11,11 +14,10 @@ function createFT($ua,$match,$title,$prefix = '',$note = '') {
         </thead>
         <tbody>";
     $check = 0;
-    foreach($ua as $key => $value) {
-        if (preg_match($match,$key)) {
+    foreach ($ua as $key => $value) {
+        if (preg_match($match, $key)) {
             $check = 1;
             if (is_object($value)) {
-
                 $value_a = (array) $value;
                 ksort($value_a);
                 $value = (object) $value_a;

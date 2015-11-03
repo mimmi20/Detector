@@ -31,5 +31,3 @@ $ua = Detector::build();//var_dump($ua);
 
 // include the browserFamily library to classify the browser by features
 print "family name: " . FeatureFamily::find($ua);
-
-?>

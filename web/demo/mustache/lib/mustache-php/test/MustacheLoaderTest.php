@@ -6,15 +6,18 @@ require_once '../MustacheLoader.php';
 /**
  * @group loader
  */
-class MustacheLoaderTest extends PHPUnit_Framework_TestCase {
+class MustacheLoaderTest extends PHPUnit_Framework_TestCase
+{
 
-    public function testTheActualFilesystemLoader() {
+    public function testTheActualFilesystemLoader()
+    {
         $loader = new MustacheLoader(dirname(__FILE__).'/fixtures');
         $this->assertEquals(file_get_contents(dirname(__FILE__).'/fixtures/foo.mustache'), $loader['foo']);
         $this->assertEquals(file_get_contents(dirname(__FILE__).'/fixtures/bar.mustache'), $loader['bar']);
     }
 
-    public function testMustacheUsesFilesystemLoader() {
+    public function testMustacheUsesFilesystemLoader()
+    {
         $template = '{{> foo }} {{> bar }}';
         $data = array(
             'truthy' => true,
@@ -27,7 +30,8 @@ class MustacheLoaderTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($output, $m->render($template, $data, $partials));
     }
 
-    public function testMustacheUsesDifferentLoadersToo() {
+    public function testMustacheUsesDifferentLoadersToo()
+    {
         $template = '{{> foo }} {{> bar }}';
         $data = array(
             'truthy' => true,
@@ -41,20 +45,27 @@ class MustacheLoaderTest extends PHPUnit_Framework_TestCase {
     }
 }
 
-class DifferentMustacheLoader implements ArrayAccess {
+class DifferentMustacheLoader implements ArrayAccess
+{
     protected $partials = array(
         'foo' => '{{ foo }}',
         'bar' => '{{# truthy }}{{ bar }}{{/ truthy }}',
     );
 
-    public function offsetExists($offset) {
+    public function offsetExists($offset)
+    {
         return isset($this->partials[$offset]);
     }
 
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
         return $this->partials[$offset];
     }
 
-    public function offsetSet($offset, $value) {}
-    public function offsetUnset($offset) {}
+    public function offsetSet($offset, $value)
+    {
+    }
+    public function offsetUnset($offset)
+    {
+    }
 }

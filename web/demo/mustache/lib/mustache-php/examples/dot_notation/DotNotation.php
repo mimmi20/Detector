@@ -5,7 +5,8 @@
  *
  * @extends Mustache
  */
-class DotNotation extends Mustache {
+class DotNotation extends Mustache
+{
     public $person = array(
         'name' => array('first' => 'Chris', 'last' => 'Firescythe'),
         'age' => 24,

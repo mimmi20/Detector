@@ -10,12 +10,12 @@
     you'll simply get an ugly link to the video on YouTube. If Detector did support that check then I could fall back to the old embed code first and then fall back to the ugly link.
 </p>
 <div class="embed-container">
-<?php 
-    if ($ua->video->h264 || $ua->video->webm) {
-        print $html5Embed;
-    } else {
-        print $simpleLink;
-    }
+<?php
+if ($ua->video->h264 || $ua->video->webm) {
+    print $html5Embed;
+} else {
+    print $simpleLink;
+}
 ?>
 </div>
 <h3>The Code</h3>

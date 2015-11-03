@@ -10,16 +10,19 @@
  *
  * @extends Mustache
  */
-class Whitespace extends Mustache {
+class Whitespace extends Mustache
+{
     public $foo = 'alpha';
 
     public $bar = 'beta';
 
-    public function baz() {
+    public function baz()
+    {
         return 'gamma';
     }
 
-    public function qux() {
+    public function qux()
+    {
         return array(
             array('key with space' => 'A'),
             array('key with space' => 'B'),

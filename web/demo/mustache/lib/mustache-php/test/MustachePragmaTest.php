@@ -5,9 +5,11 @@ require_once '../Mustache.php';
 /**
  * @group pragmas
  */
-class MustachePragmaTest extends PHPUnit_Framework_TestCase {
+class MustachePragmaTest extends PHPUnit_Framework_TestCase
+{
 
-    public function testUnknownPragmaException() {
+    public function testUnknownPragmaException()
+    {
         $m = new Mustache();
 
         try {
@@ -20,12 +22,14 @@ class MustachePragmaTest extends PHPUnit_Framework_TestCase {
         $this->fail('Mustache should have thrown an unknown pragma exception');
     }
 
-    public function testPragmaReplace() {
+    public function testPragmaReplace()
+    {
         $m = new Mustache();
         $this->assertEquals('', $m->render('{{%UNESCAPED}}'), 'Pragma tag not removed');
     }
 
-    public function testPragmaReplaceMultiple() {
+    public function testPragmaReplaceMultiple()
+    {
         $m = new Mustache();
 
         $this->assertEquals('', $m->render('{{%  UNESCAPED  }}'), 'Pragmas should allow whitespace');
@@ -34,14 +38,16 @@ class MustachePragmaTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(' ', $m->render('{{%UNESCAPED}} {{%UNESCAPED}}'), 'Multiple pragma tags not removed');
     }
 
-    public function testPragmaReplaceNewline() {
+    public function testPragmaReplaceNewline()
+    {
         $m = new Mustache();
         $this->assertEquals('', $m->render("{{%UNESCAPED}}\n"), 'Trailing newline after pragma tag not removed');
         $this->assertEquals("\n", $m->render("\n{{%UNESCAPED}}\n"), 'Too many newlines removed with pragma tag');
         $this->assertEquals("1\n23", $m->render("1\n2{{%UNESCAPED}}\n3"), 'Wrong newline removed with pragma tag');
     }
 
-    public function testPragmaReset() {
+    public function testPragmaReset()
+    {
         $m = new Mustache('', array('symbol' => '>>>'));
         $this->assertEquals('>>>', $m->render('{{{symbol}}}'));
         $this->assertEquals('>>>', $m->render('{{%UNESCAPED}}{{symbol}}'));
