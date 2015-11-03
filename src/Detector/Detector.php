@@ -27,10 +27,6 @@ class Detector
     private static $uaHash;
     private static $sessionID;
     private static $cookieID;
-    private static $uaFeaturesCore;
-    private static $uaFeaturesExtended;
-    private static $uaFeaturesPerSession;
-    private static $uaFeaturesPerRequest;
 
     private static $uaDirCore;
     private static $uaDirExtended;
@@ -137,42 +133,6 @@ class Detector
         } elseif (@session_start()
             && isset($_SESSION)
             && isset($_SESSION[self::$sessionID])
-            && isset($_COOKIE)
-            && isset($_COOKIE[self::$cookieID . '-ps'])
-        ) {
-            // where did we find this info to display... probably only need this for the demo
-            self::$foundIn = 'persession';
-
-            // parse the per request cookie
-            $cookiePerSession = new \stdClass();
-            $cookiePerSession = self::parseCookie('ps', $cookiePerSession, true);
-
-            // parse the per request cookie
-            $cookiePerRequest = new \stdClass();
-            $cookiePerRequest = self::parseCookie('pr', $cookiePerRequest, true);
-
-            // merge the session info we already have and the info from the cookie
-            $info = (object)array_merge(
-                (array)$_SESSION[self::$sessionID],
-                (isset($cookiePerSession)) ? (array)$cookiePerSession : array(),
-                (isset($cookiePerRequest)) ? (array)$cookiePerRequest : array(),
-                (array)self::createUAProperties()
-            );
-
-            // unset the cookies
-            setcookie(self::$cookieID, '');
-            setcookie(self::$cookieID . '-ps', '');
-
-            // put the merged JSON info into session
-            if (isset($_SESSION)) {
-                $_SESSION[self::$sessionID] = $info;
-            }
-
-            // send the data back to the script to be used
-            return $info;
-        } elseif (@session_start()
-            && isset($_SESSION)
-            && isset($_SESSION[self::$sessionID])
         ) {
             // where did we find this info to display... probably only need this for the demo
             self::$foundIn = 'session';
@@ -192,6 +152,13 @@ class Detector
             if (isset($_SESSION)) {
                 $_SESSION[self::$sessionID] = $info;
             }
+
+            // write out to disk for future requests that might have the same UA
+            self::writeUAFile(json_encode($info), $uaFileCore);
+
+            // add the user agent & hash to a list of already saved user agents
+            // not needed. a performance hit.
+            self::addToUAList();
 
             // send the data back to the script to be used
             return $info;
@@ -219,10 +186,9 @@ class Detector
                 $_SESSION[self::$sessionID] = $info;
             }
 
-            // need to build the tests for the per user
-            if (self::readDirFiles(self::$uaFeaturesPerSession, true)) {
-                self::persession();
-            }
+            // add the user agent & hash to a list of already saved user agents
+            // not needed. a performance hit.
+            self::addToUAList();
 
             // return to the script
             return $info;
@@ -263,6 +229,13 @@ class Detector
                 $_SESSION[self::$sessionID] = $info;
             }
 
+            // write out to disk for future requests that might have the same UA
+            self::writeUAFile(json_encode($info), $uaFileCore);
+
+            // add the user agent & hash to a list of already saved user agents
+            // not needed. a performance hit.
+            self::addToUAList();
+
             // return the collected data to the script for use in this go around
             return $info;
         } elseif (isset($_COOKIE) && isset($_COOKIE[self::$cookieID])) {
@@ -284,23 +257,15 @@ class Detector
                 }
             }
 
-            // create objects to hold any of the per user or per request data. it shouldn't be saved to file but it should be added to the session
-            $cookiePerSession = new \StdClass();
-            $cookiePerRequest = new \StdClass();
-
             // push features into the same level as the general device information
             // change 1/0 to true/false. why? 'cause that's what i like to read ;)
             $info                 = self::parseCookie('core', $info, true);
             $jsonTemplateExtended = self::parseCookie('extended', new \stdClass(), true);
-            $cookiePerSession     = self::parseCookie('ps', $cookiePerSession, true);
-            $cookiePerRequest     = self::parseCookie('pr', $cookiePerRequest, true);
 
             // merge the data for future requests
             $info = (object)array_merge(
                 (array)$info,
-                ($jsonTemplateExtended) ? (array)$jsonTemplateExtended : array(),
-                ($cookiePerSession) ? (array)$cookiePerSession : array(),
-                ($cookiePerRequest) ? (array)$cookiePerRequest : array()
+                ($jsonTemplateExtended) ? (array)$jsonTemplateExtended : array()
             );
 
             // some general properties
@@ -311,7 +276,7 @@ class Detector
             self::writeUAFile(json_encode($info), $uaFileCore);
 
             // add the user agent & hash to a list of already saved user agents
-            // not needed. a performance hit. really only necessary for detector.dmolsen.com
+            // not needed. a performance hit.
             self::addToUAList();
 
             // unset the cookie that held the vast amount of test data
@@ -346,31 +311,7 @@ class Detector
         }
 
         print Modernizr::buildJs();
-        print self::readDirFiles(self::$uaFeaturesPerRequest);
         print Modernizr::buildConvertJs(self::$cookieID, '-pr', false);
-    }
-
-    /**
-     * Reads in the per session & per request feature tests and sends them to the function that builds out the JS &
-     * cookie. forces a reload
-     *
-     * from modernizr-server
-     *
-     * @return void {String}       the HTML & JavaScript that tracks the per user & per request test
-     */
-    public static function persession()
-    {
-        // gather info by sending Modernizr & custom tests
-        print "<!DOCTYPE html><html lang=\"en\"><head><meta name=\"viewport\" content=\"width=device-width\"><script type='text/javascript'>";
-        print "document.cookie='" . self::$cookieID . "-ps=foo;path=/';"; // hack around how the cookies get handled in general
-        print file_get_contents('src/modernizr/cookieTest.js');
-        print Modernizr::buildJs();
-        print self::readDirFiles(self::$uaFeaturesPerSession);
-        print self::readDirFiles(self::$uaFeaturesPerRequest);
-        print Modernizr::buildConvertJs(self::$cookieID);
-        print "</script></head><body><noscript><meta http-equiv='refresh' content='0; url=" . self::buildNoscriptLink()
-            . "'></noscript></body></html>";
-        exit;
     }
 
     /**
@@ -382,10 +323,6 @@ class Detector
         print "<!DOCTYPE html><html lang=\"en\"><head><meta name=\"viewport\" content=\"width=device-width\"><script type='text/javascript'>";
         print file_get_contents('src/modernizr/cookieTest.js');
         print Modernizr::buildJs();
-        print self::readDirFiles(self::$uaFeaturesCore);
-        print self::readDirFiles(self::$uaFeaturesExtended);
-        print self::readDirFiles(self::$uaFeaturesPerSession);
-        print self::readDirFiles(self::$uaFeaturesPerRequest);
         print Modernizr::buildConvertJs(self::$cookieID);
         print "</script></head><body><noscript><meta http-equiv='refresh' content='0; url="
             . self::buildNoscriptLink()
@@ -490,36 +427,6 @@ class Detector
     }
 
     /**
-     * reads out all the files in a directory
-     *
-     * @param string $dir file path
-     * @param bool   $returnBool
-     *
-     * @return bool|null assuming it's requested the boolean value of if the dir has files will be returned
-     */
-    private static function readDirFiles($dir, $returnBool = false)
-    {
-        $dirHasFiles = false;
-        $entries     = scandir(__DIR__ . '/' . $dir);
-        $content     = '';
-
-        foreach ($entries as $entry) {
-            if (($entry != '.') && ($entry != '..') && ($entry != 'README') && (strpos($entry, '_') !== 0)) {
-                if (!$returnBool) {
-                    $content .= file_get_contents(__DIR__ . '/' . $dir . $entry);
-                }
-                $dirHasFiles = true;
-            }
-        }
-
-        if ($returnBool) {
-            return $dirHasFiles;
-        }
-
-        return $content;
-    }
-
-    /**
      * Parses the cookie for a list of features
      *
      * @param string    $cookieExtension
@@ -614,7 +521,7 @@ class Detector
         if ($uaListJSON = @file_get_contents(__DIR__ . '/' . self::$uaDirCore . 'ua.list.json')) {
             $uaList = (array) json_decode($uaListJSON);
         }
-
+var_dump($uaList);
         if (isset($uaList[self::$uaHash])) {
             return;
         }
@@ -624,8 +531,6 @@ class Detector
 
         // write out the data to the user agent list
         $uaListJSON = json_encode($mergedInfo);
-        $fp         = fopen(__DIR__ . '/' . self::$uaDirCore . 'ua.list.json', 'w');
-        fwrite($fp, $uaListJSON);
-        fclose($fp);
+        file_put_contents(__DIR__ . '/' . self::$uaDirCore . 'ua.list.json', $uaListJSON);
     }
 }

@@ -12,12 +12,6 @@ debug                   = false
 coreVersion             = "0.9"
 extendedVersion         = "1.0"
 
-// where to find the tests that should be run against browsers
-uaFeaturesCore          = "tests/core/"
-uaFeaturesExtended      = "tests/extended/"
-uaFeaturesPerSession    = "tests/persession/"
-uaFeaturesPerRequest    = "tests/perrequest/"
-
 // where to find the user agent profiles
 uaDirCore               = "user-agents/core/"
 uaDirExtended           = "user-agents/extended/"
