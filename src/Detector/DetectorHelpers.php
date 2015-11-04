@@ -16,58 +16,74 @@ class DetectorHelpers
     /**
      * Adds classes to the HTML tag if necessary
      *
-     * @param  {Object}        the user agent features
-     * @param  {String}        list of browser features to include in the css, bad idea to leave features blank...
+     * @param \stdClass   $obj          the user agent features
+     * @param string|null $features     list of browser features to include in the css, bad idea to leave features blank...
+     * @param bool        $printUAProps
+     *
+     * @return string
      */
     public static function createHTMLList(
         $obj,
         $features = null,
         $printUAProps = false
     ) {
-        if ($features != null) {
+        $features_a = array();
+        $output     = '';
+
+        if ($features !== null) {
             $features_a = explode(',', $features);
             array_walk($features_a, create_function('&$val', '$val = trim($val);'));
         }
+
         foreach ($obj as $key => $value) {
             if (is_object($value)) {
                 foreach ($value as $vkey => $vvalue) {
                     $vkey = $key . '-' . $vkey;
                     if (!$features || in_array($vkey, $features_a)) {
                         $result = ($vvalue) ? $vkey : 'no-' . $vkey;
-                        print $result . ' ';
+                        $output .= $result . ' ';
                     }
                 }
             } else {
                 if (!$features || in_array($key, $features_a)) {
                     $result = ($value) ? $key : 'no-' . $key;
-                    print $result . ' ';
+                    $output .= $result . ' ';
                 }
             }
         }
+
         if ($printUAProps) {
             $uaProps = array('os', 'osFull', 'browserFull', 'device', 'deviceFull');
+
             foreach ($uaProps as $uaProp) {
                 if (!isset($obj->$uaProp) || !is_string($obj->$uaProp)) {
                     continue;
                 }
 
-                print str_replace(' ', '-', strtolower($obj->$uaProp)) . ' ';
+                $output .= str_replace(' ', '-', strtolower($obj->$uaProp)) . ' ';
             }
         }
+
+        return $output;
     }
 
     /**
      * Adds a JavaScript object to the page so features collected on the server can be used client-side
      *
-     * @param  {Object}        the user agent features
-     * @param  {String}        list of browser features to include in the css, bad idea to leave features blank...
+     * @param  \stdClass   $obj      the user agent features
+     * @param  string|null $features list of browser features to include in the css, bad idea to leave features blank...
+     *
+     * @return string
      */
     public static function createJavaScriptObj(
         $obj,
         $features = null
     ) {
-        print '<script type="text/javascript">';
-        print 'Detector=new Object();';
+        $output  = '<script type="text/javascript">';
+        $output .= 'Detector=new Object();';
+
+        $features_a = array();
+
         if ($features) {
             $features_a = explode(',', $features);
             array_walk($features_a, create_function('&$val', '$val = trim($val);'));
@@ -78,14 +94,14 @@ class DetectorHelpers
                 foreach ($value as $vkey => $vvalue) {
                     if (!$features || in_array($key . '-' . $vkey, $features_a)) {
                         if ($i == 0) {
-                            print 'Detector.' . $key . "=new Object();\n";
+                            $output .= 'Detector.' . $key . "=new Object();\n";
                             $i++;
                         }
                         $vkey = str_replace('-', '', $vkey);
                         if ($vvalue) {
-                            print 'Detector.' . $key . '.' . $vkey . "=true;\n";
+                            $output .= 'Detector.' . $key . '.' . $vkey . "=true;\n";
                         } else {
-                            print 'Detector.' . $key . '.' . $vkey . "=false;\n";
+                            $output .= 'Detector.' . $key . '.' . $vkey . "=false;\n";
                         }
                     }
                 }
@@ -93,15 +109,18 @@ class DetectorHelpers
                 if (!$features || in_array($key, $features_a)) {
                     $key = str_replace('-', '', $key);
                     if ($value === true) {
-                        print 'Detector.' . $key . "=true;\n";
+                        $output .= 'Detector.' . $key . "=true;\n";
                     } else if ($value == false) {
-                        print 'Detector.' . $key . "=false;\n";
+                        $output .= 'Detector.' . $key . "=false;\n";
                     } else {
-                        print 'Detector.' . $key . "='" . $value . "';\n";
+                        $output .= 'Detector.' . $key . "='" . $value . "';\n";
                     }
                 }
             }
         }
-        print '</script>';
+
+        $output .= '</script>';
+
+        return $output;
     }
 }

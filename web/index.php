@@ -22,19 +22,29 @@ if (!$foundVendorAutoload) {
 // require Detector so we can popular identify the browser & populate $ua
 use \Detector\Detector;
 use \Detector\FeatureFamily;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use WurflCache\Adapter\File;
+
+$logger = new Logger('detector');
+$logger->pushHandler(new StreamHandler('log/error.log', Logger::NOTICE));
+
+$cache = new File(array(File::DIR => 'cache/'));
+
+$detector  = new Detector($cache, $logger);
 
 // if this is a request from features.js.php don't run the build function
-$ua = Detector::build();
+$ua = $detector->build($_SERVER);
 
 // include the browserFamily library to classify the browser by features
 $ua->family = FeatureFamily::find($ua);
-var_dump($ua, Detector::$foundIn);
+
 // include some helpful functions
 include 'web/templates/_convertTF.inc.php';
 include 'web/templates/_createFT.inc.php';
 
 // switch templates based on device type
-if (isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != 'archive')) {
+if (isset($ua->isMobile) && $ua->isMobile) {
     include 'web/templates/index.mobile.inc.php';
 } else {
     include 'web/templates/index.default.inc.php';

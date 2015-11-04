@@ -53,15 +53,10 @@ if (Detector::$foundIn == 'archive') {
             <th class="span3">User Agent:</th>
             <td><?php echo $ua->originalUserAgent?></td>
         </tr>
-        <?php
-        if (isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")) {
-        } else { ?>
-                <tr>
-                    <th class="span3">UA Hash:</th>
-                    <td><?php echo $ua->uaHash; ?></td>
-                </tr>
-        <?php
-        } ?>
+        <tr>
+            <th class="span3">UA Hash:</th>
+            <td><?php echo $ua->uaHash; ?></td>
+        </tr>
         <?php if (isset($ua->ua) && ($ua->ua != '')) { ?>
             <tr>
                 <th>Browser:</th>

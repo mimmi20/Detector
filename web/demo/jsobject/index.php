@@ -32,7 +32,7 @@ $ua = Detector::build();//var_dump($ua);
   <head>
     <meta charset="utf-8">
     <title>JavaScript Listing</title>
-    <?php echo DetectorHelpers::createJavaScriptObj($ua, "browserFull,isMobile,geolocation,cssanimations,cssgradients,indexeddb")?>
+    <?php echo DetectorHelpers::createJavaScriptObj($ua, 'browserFull,isMobile,geolocation,cssanimations,cssgradients,indexeddb')?>
   </head>
 
   <body>
@@ -40,7 +40,7 @@ $ua = Detector::build();//var_dump($ua);
     <p>An example of listing Detector properties via JS:</p>
     <p>
     <script type="text/javascript">
-     var m=Detector;
+     var m = Detector;
      for(var f in m){
         if(f[0]=='_'){continue;}
         var t=typeof m[f];

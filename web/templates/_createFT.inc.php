@@ -1,6 +1,4 @@
-<?php use \Detector\Detector;
-
-    ?>
+<?php use \Detector\Detector; ?>
 <?php
 function createFT($ua, $match, $title, $prefix = '', $note = '')
 {

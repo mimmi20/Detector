@@ -8,6 +8,11 @@
 
 namespace Detector;
 
+/**
+ * Class Exception
+ *
+ * @package Detector
+ */
 class Exception extends \Exception
 {
     // do nothing here

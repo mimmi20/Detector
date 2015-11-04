@@ -29,7 +29,7 @@ $ua = Detector::build();//var_dump($ua);
 
 <html class="<?php echo DetectorHelpers::createHTMLList(
     $ua,
-    "isMobile,geolocation,cssanimations,cssgradients,indexeddb",
+    'isMobile,geolocation,cssanimations,cssgradients,indexeddb',
     true
 ) ?>">
 <head>
@@ -39,6 +39,6 @@ $ua = Detector::build();//var_dump($ua);
 View the source and you'll see the HTML tag is modified with the following attributes select attributes:<br/>
 <br/>
 <!-- by using true as the last object you're saying you want select UA attributes also shared -->
-<?php echo DetectorHelpers::createHTMLList($ua, "isMobile,geolocation,cssanimations,cssgradients,indexeddb", true) ?>
+<?php echo DetectorHelpers::createHTMLList($ua, 'isMobile,geolocation,cssanimations,cssgradients,indexeddb', true) ?>
 </body>
 </html>

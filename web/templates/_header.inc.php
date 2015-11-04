@@ -8,7 +8,7 @@
     <?php use \Detector\Detector;
 
     ?>
-    <?php if (isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")) : ?>
+    <?php if (isset($ua->isMobile) && $ua->isMobile) : ?>
     <meta name="viewport" content="width=device-width">
     <?php
 endif; ?>
@@ -20,7 +20,7 @@ endif; ?>
 
     <!-- Le styles -->
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
-    <?php if (isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")) : ?>
+    <?php if (isset($ua->isMobile) && $ua->isMobile) : ?>
     <link href="/css/mobile.css" rel="stylesheet"/>
     <?php
 else : ?>
@@ -42,7 +42,7 @@ endif; ?>
                 <h1>
                     <a href="/" style="color: black;">Detector</a>
                     <span class='label notice beta'>beta</span>
-                    <?php if (!((isset($ua->isMobile) && $ua->isMobile && (Detector::$foundIn != "archive")))) : ?>
+                    <?php if (!((isset($ua->isMobile) && $ua->isMobile))) : ?>
                     <small>combined browser- &amp; feature-detection for your app</small>
                     <?php
 endif; ?>

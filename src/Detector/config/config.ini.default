@@ -13,7 +13,7 @@ coreVersion             = "0.9"
 extendedVersion         = "1.0"
 
 // where to find the user agent profiles
-uaDirCore               = "user-agents/core/"
+uaDir               = "user-agents/core/"
 uaDirExtended           = "user-agents/extended/"
 
 // where to find the features.js.php file from the web

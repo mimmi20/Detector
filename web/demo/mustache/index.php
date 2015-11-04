@@ -20,14 +20,14 @@ if (!$foundVendorAutoload) {
 }
 
 // require mustache for the templates
-require_once "web/demo/mustache/lib/mustache-php/Mustache.php";
-require_once "web/demo/mustache/lib/mustache-php/MustacheLoader.php";
+require_once 'web/demo/mustache/lib/mustache-php/Mustache.php';
+require_once 'web/demo/mustache/lib/mustache-php/MustacheLoader.php';
 
 // require detector to get the family, autoloads the $ua var
 use \Detector\Detector;
 use \Detector\FeatureFamily;
 
-$template = file_get_contents("web/demo/mustache/templates/index.mustache");
+$template = file_get_contents('web/demo/mustache/templates/index.mustache');
 $data     = array(
     'title'       => 'Hello, World!',
     'description' => 'This extremely simple demo is meant to show how Detector & Mustache can be combined to create a Responsive Web Design + Server Side Component (RESS) System. By using the requesting browser\'s Detector family classification a responsive template & partials that match the browser\'s features are rendered server-side via Mustache. Choose a different layout below to see how this page & the included images change depending upon the browser family.',
@@ -61,12 +61,18 @@ $data     = array(
 );
 
 // if this is a request from features.js.php don't run the build function
-$ua = Detector::build();//var_dump($ua);
+$ua = Detector::build();
 
 // include the browserFamily library to classify the browser by features
 $ua->family = FeatureFamily::find($ua);
 
-$m        = new Mustache();
-$partials = new MustacheLoader("web/demo/mustache/templates/partials/" . $ua->family, "mustache", "web/demo/mustache/templates/partials/base");
+$options = array(
+    'partials' => array(
+        'web/demo/mustache/templates/partials/' . $ua->family,
+        'web/demo/mustache/templates/partials/base'
+    )
+);
 
-print $m->render($template, $data, $partials);
+$m = new Mustache_Engine();
+
+print $m->render($template, $data);
