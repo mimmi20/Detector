@@ -20,16 +20,6 @@ class FeatureFamily
      */
     public static function find(\stdClass $obj)
     {
-
-        // first review to see if the ua matches any of the following options: spider, no js support, or no cookie support
-        if (Detector::$noJSCookieFamilySupport && isset($obj->isSpider) && ($obj->isSpider === true)) {
-            return Detector::$noJSSearchFamily;
-        } else if (Detector::$noJSCookieFamilySupport && isset($obj->nojs) && ($obj->nojs === true)) {
-            return Detector::$noJSDefaultFamily;
-        } else if (Detector::$noJSCookieFamilySupport && isset($obj->nocookies) && ($obj->nocookies === true)) {
-            return Detector::$noCookieFamily;
-        }
-
         // define what a family is
         if (!($familiesJson = @file_get_contents(__DIR__ . '/config/families.json'))) {
             // config.ini didn't exist so attempt to create it using the default file
@@ -44,11 +34,11 @@ class FeatureFamily
         $familiesJson = json_decode($familiesJson);
 
         // check to see if a family has been supplied with this request to override system created dfamily
-        if (Detector::$switchFamily && isset($_REQUEST['family']) && array_key_exists($_REQUEST['family'], $familiesJson)) {
+        if (isset($_REQUEST['family']) && array_key_exists($_REQUEST['family'], $familiesJson)) {
             $_SESSION['detectorFamily'] = $_REQUEST['family'];
 
             return $_REQUEST['family'];
-        } else if (Detector::$switchFamily && isset($_REQUEST['family']) && ($_REQUEST['family'] == 'clear-family')) {
+        } elseif (isset($_REQUEST['family']) && ($_REQUEST['family'] == 'clear-family')) {
             unset($_SESSION['detectorFamily']);
         } else if (isset($_SESSION['detectorFamily'])) {
             return $_SESSION['detectorFamily'];
@@ -78,7 +68,7 @@ class FeatureFamily
             }
         }
 
-        return Detector::$defaultFamily;
+        return 'mobile-basic';
     }
 
     /**

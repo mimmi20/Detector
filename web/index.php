@@ -22,16 +22,31 @@ if (!$foundVendorAutoload) {
 // require Detector so we can popular identify the browser & populate $ua
 use \Detector\Detector;
 use \Detector\FeatureFamily;
+use Modernizr\Modernizr;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use WurflCache\Adapter\File;
+
+Modernizr::init();
 
 $logger = new Logger('detector');
 $logger->pushHandler(new StreamHandler('log/error.log', Logger::NOTICE));
 
 $cache = new File(array(File::DIR => 'cache/'));
 
-$detector  = new Detector($cache, $logger);
+$detector = new Detector($cache, $logger);
+$cookieID = $detector->getCookieId($_SERVER);
+
+if (null === Modernizr::getData($cookieID)) {
+    $html = '<html><head><script type="text/javascript">';
+
+    $html .= Modernizr::buildJs();
+    $html .= Modernizr::buildConvertJs($cookieID, '-pr', false);
+
+    $html .= '</script></head><body></body></html>';
+    echo $html;
+    exit;
+}
 
 // if this is a request from features.js.php don't run the build function
 $ua = $detector->build($_SERVER);

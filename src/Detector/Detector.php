@@ -176,6 +176,11 @@ class Detector
             return $info;
         }
 
+        $cookieID = $this->getCookieId($request);
+
+        Modernizr::init();
+        $modernizrData = Modernizr::getData($cookieID);
+
         if ($this->checkSpider($request)
             || (isset($_REQUEST['nojs']) && ($_REQUEST['nojs'] === 'true'))
             || (isset($_REQUEST['nocookies']) && ($_REQUEST['nocookies'] === 'true'))
@@ -188,10 +193,8 @@ class Detector
             $info->uaHash      = $uaHash;
             $info->coreVersion = $this->coreVersion;
 
-            $modernizrData = Modernizr::getData();
-
             if (null !== $modernizrData) {
-                foreach (Modernizr::getData() as $property => $value) {
+                foreach ($modernizrData as $property => $value) {
                     $info->$property = $value;
                 }
             }
@@ -218,9 +221,7 @@ class Detector
             return $info;
         }
 
-        $cookieID = $this->getCookieId($request);
-
-        if (isset($_COOKIE) && isset($_COOKIE[$cookieID])) {
+        if (null !== $modernizrData) {
             // to be clear, this section means that a UA was unknown, was profiled with modernizr
             // & now we're saving that data to build a new profile
 
@@ -230,8 +231,6 @@ class Detector
             $info              = $this->createUAProperties($request);
             $info->uaHash      = $uaHash;
             $info->coreVersion = $this->coreVersion;
-
-            $modernizrData = Modernizr::getData();
 
             if (null !== $modernizrData) {
                 foreach ($modernizrData as $property => $value) {
@@ -261,21 +260,14 @@ class Detector
     }
 
     /**
-     * Builds the browser test page
-     */
-    public function buildTestPage()
-    {
-
-        exit;
-    }
-
-    /**
      * Builds a link to the features.js.php file that addresses if cookies are supported or not
+     *
+     * @return string
      */
     public function buildFeaturesScriptLink()
     {
         $nocookies = (isset($_REQUEST['nocookies']) && ($_REQUEST['nocookies'] == 'true')) ? '&nocookies=true' : '';
-        print '<script type="text/javascript" src="/js/features.js.php?dynamic=true' . $nocookies . '"></script>';
+        return '<script type="text/javascript" src="/js/features.js.php?dynamic=true' . $nocookies . '"></script>';
     }
 
     /**
@@ -317,7 +309,7 @@ class Detector
 
     /**
      * Adds the user agent hash and user agent to a list for retrieval in the demo (or for any reason i guess)
-     * 
+     *
      * @param \Wurfl\Request\GenericRequest $request
      *
      * @return int the result of checking the current user agent string against a list of bots
@@ -458,5 +450,13 @@ class Detector
         $this->addToUAList($request);
 
         $this->cache->setItem($cacheId, $info);
+    }
+
+    /**
+     * @return string
+     */
+    public function whereFound()
+    {
+        return $this->foundIn;
     }
 }

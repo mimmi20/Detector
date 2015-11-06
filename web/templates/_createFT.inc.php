@@ -1,6 +1,5 @@
-<?php use \Detector\Detector; ?>
 <?php
-function createFT($ua, $match, $title, $prefix = '', $note = '')
+function createFT($detector, $ua, $match, $title, $prefix = '', $note = '')
 {
     print "<table class=\"zebra-striped span9\">
         <thead>
@@ -23,7 +22,7 @@ function createFT($ua, $match, $title, $prefix = '', $note = '')
                 foreach ($value as $vkey => $vvalue) {
                     print "<tr>";
                     print "<th class=\"span7\">".$key."->".$vkey.":</th>";
-                    if (Detector::$foundIn == "archive") {
+                    if ($detector->whereFound() == "archive") {
                         print "<td class=\"span1\"><span class='label'>N/A</span></td>";
                     } else {
                         print "<td class=\"span1\">
@@ -44,7 +43,7 @@ function createFT($ua, $match, $title, $prefix = '', $note = '')
             } else {
                 print "<tr>";
                 print "<th class=\"span7\">".$key.":</th>";
-                if ((Detector::$foundIn == "archive") || ($key == "extendedVersion")) {
+                if (($detector->whereFound() == "archive") || ($key == "extendedVersion")) {
                     print "<td class=\"span1\"><span class='label'>N/A</span></td>";
                 } else {
                     print "<td class=\"span1\">

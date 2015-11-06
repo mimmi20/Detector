@@ -1,14 +1,14 @@
 <?php use \Detector\Detector;
 
     ?>
-<h3><?php echo  (Detector::$foundIn == 'archive') ? 'Archived' : 'Your'; ?> Detector Browser Profile</h3>
+<h3><?php echo  ($detector->whereFound() == 'archive') ? 'Archived' : 'Your'; ?> Detector Browser Profile</h3>
 <p>
     The following browser profile was created using <a href="https://github.com/ua-parser/uap-php">PHP implementation of ua-parser</a>. This information
     is derived solely from the user agent string for your browser.
 </p>
 <?php
-if (Detector::$foundIn == 'archive') {
-    if ($uaListJSON = @file_get_contents(__DIR__."/../../src/Detector/user-agents/core/ua.list.json")) {
+if ($detector->whereFound() == 'archive') {
+    if ($uaListJSON = @file_get_contents(__DIR__."/../../src/Detector/user-agents/ua.list.json")) {
         $uaList = (array) json_decode($uaListJSON);
         asort($uaList);
         $i = 0;
