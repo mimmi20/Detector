@@ -1,13 +1,10 @@
 <?php
-    $i       = 0;
-    $include = '';
-if ($uaListJSON = @file_get_contents(__DIR__."/../../src/Detector/user-agents/ua.list.json")) {
-    $uaList = (array) json_decode($uaListJSON);
-    asort($uaList);
-    foreach ($uaList as $key => $value) {
-        $include .= "<li> <a href=\"/?pid=".$key."\">".trim(substr(strip_tags($value), 0, 28))."...</a></li>";
-        $i++;
-    }
+$i       = 0;
+$include = '';
+$uaList = $detector->getUaList();
+foreach ($uaList as $key => $value) {
+    $include .= '<li> <a href="/?pid=' . $key . '">' . trim(substr(strip_tags($value), 0, 28)) . '...</a></li>';
+    $i++;
 }
 ?>
 <h3>Archive</h3>

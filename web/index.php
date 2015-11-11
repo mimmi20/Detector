@@ -27,8 +27,6 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use WurflCache\Adapter\File;
 
-Modernizr::init();
-
 $logger = new Logger('detector');
 $logger->pushHandler(new StreamHandler('log/error.log', Logger::NOTICE));
 
@@ -37,7 +35,7 @@ $cache = new File(array(File::DIR => 'cache/'));
 $detector = new Detector($cache, $logger);
 $cookieID = $detector->getCookieId($_SERVER);
 
-if (null === Modernizr::getData($cookieID)) {
+if (null === Modernizr::getData($cookieID, '-pr')) {
     $html = '<html><head><script type="text/javascript">';
 
     $html .= Modernizr::buildJs();

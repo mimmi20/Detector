@@ -1,5 +1,15 @@
 <?php
-function createFT($detector, $ua, $match, $title, $prefix = '', $note = '')
+use Detector\Detector;
+
+/**
+ * @param \Detector\Detector $detector
+ * @param \stdClass          $ua
+ * @param string             $match
+ * @param string             $title
+ * @param string             $prefix
+ * @param string             $note
+ */
+function createFT(Detector $detector, $ua, $match, $title, $prefix = '', $note = '')
 {
     print "<table class=\"zebra-striped span9\">
         <thead>
@@ -15,19 +25,19 @@ function createFT($detector, $ua, $match, $title, $prefix = '', $note = '')
         if (preg_match($match, $key)) {
             $check = 1;
             if (is_object($value)) {
-                $value_a = (array) $value;
-                ksort($value_a);
-                $value = (object) $value_a;
+                //$value_a = (array) $value;
+                //ksort($value_a);
+                //$value = (object) $value_a;
 
                 foreach ($value as $vkey => $vvalue) {
-                    print "<tr>";
-                    print "<th class=\"span7\">".$key."->".$vkey.":</th>";
-                    if ($detector->whereFound() == "archive") {
-                        print "<td class=\"span1\"><span class='label'>N/A</span></td>";
+                    print '<tr>';
+                    print '<th class="span7">'. $key . '->' . $vkey . ':</th>';
+                    if ($detector->whereFound() == 'archive') {
+                        print '<td class="span1"><span class="label">N/A</span></td>';
                     } else {
                         print "<td class=\"span1\">
                                 <script type=\"text/javascript\">
-                                    if (Modernizr['".$prefix.$key."']['".$vkey."'] == true) {
+                                    if (Modernizr['".$prefix.$key."']['".$vkey."'] === true) {
                                         document.write(\"<span class='label success'>\"+Modernizr['".$prefix.$key."']['".$vkey."']+\"</span>\");
                                     } else if (Modernizr['".$prefix.$key."']['".$vkey."']) {
                                         document.write(\"<span class='label warning'>\"+Modernizr['".$prefix.$key."']['".$vkey."']+\"</span>\");
@@ -43,13 +53,13 @@ function createFT($detector, $ua, $match, $title, $prefix = '', $note = '')
             } else {
                 print "<tr>";
                 print "<th class=\"span7\">".$key.":</th>";
-                if (($detector->whereFound() == "archive") || ($key == "extendedVersion")) {
+                if (($detector->whereFound() == 'archive') || ($key == 'extendedVersion')) {
                     print "<td class=\"span1\"><span class='label'>N/A</span></td>";
                 } else {
                     print "<td class=\"span1\">
                             <script type=\"text/javascript\">
                                 ";
-                    if (($prefix == "core-") && ($key == "mediaqueries")) {
+                    if (($prefix == 'core-') && ($key == 'mediaqueries')) {
                             print "        if (Modernizr['mediaqueries']) {
                                             document.write(\"<span class='label success'>\"+Modernizr['mediaqueries']+\"</span>\");";
                     } else {

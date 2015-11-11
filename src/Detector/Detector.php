@@ -58,7 +58,12 @@ class Detector
      */
     private $logger = null;
 
-
+    /**
+     * @param \WurflCache\Adapter\AdapterInterface $cache
+     * @param \Psr\Log\LoggerInterface             $logger
+     *
+     * @throws \Detector\Exception
+     */
     public function __construct(AdapterInterface $cache, LoggerInterface $logger = null)
     {
         $this->cache = $cache;
@@ -124,34 +129,34 @@ class Detector
             $this->foundIn = 'archive';
 
             // decode the core data
-            $uaJSONCore = json_decode(
-                @file_get_contents(__DIR__ . '/' . $this->uaDir . $this->uaDir($pid) . 'ua.' . $pid . '.json')
+            $info = json_decode(
+                @file_get_contents(__DIR__ . '/' . $this->uaDir . 'ua.' . $pid . '.json')
             );
-            
-            // merge the data
-            $info = $uaJSONCore;
 
-            // some general properties
-            $info->nojs      = false;
-            $info->nocookies = false;
+            if ($info instanceof \stdClass) {
+                // some general properties
+                $info->nojs      = false;
+                $info->nocookies = false;
 
-            // put the merged JSON info into session
-            if (isset($_SESSION)) {
-                $_SESSION[$sessionID] = $info;
+                // put the merged JSON info into session
+                if (isset($_SESSION)) {
+                    $_SESSION[$sessionID] = $info;
+                }
+
+                // return to the script
+                return $info;
             }
-
-            // return to the script
-            return $info;
         }
 
         $cacheId = hash('sha512', $request->getDeviceUserAgent() . '||||' . $request->getBrowserUserAgent());
-
         $result  = null;
         $success = false;
 
         $info = $this->cache->getItem($cacheId, $success);
 
         if ($success && $info instanceof \stdClass) {
+            $this->foundIn = 'cache';
+
             // send the data back to the script to be used
             return $info;
         }
@@ -167,7 +172,6 @@ class Detector
         ) {
             $this->foundIn = 'session';
 
-            // merge the session info we already have and the info from the cookie
             $info = $_SESSION[$sessionID];
 
             $this->save($request, $info, $uaFile, $cacheId);
@@ -178,7 +182,6 @@ class Detector
 
         $cookieID = $this->getCookieId($request);
 
-        Modernizr::init();
         $modernizrData = Modernizr::getData($cookieID);
 
         if ($this->checkSpider($request)
@@ -279,7 +282,7 @@ class Detector
      */
     private function uaDir($uaHash = false)
     {
-        $uaHash = $uaHash ? $uaHash : $this->uaHash;
+        $uaHash = $uaHash ? $uaHash : '';
 
         return substr($uaHash, 0, 2) . '/';
     }
@@ -340,11 +343,32 @@ class Detector
         /** @var \UAParser\Result\Client $client */
         $client = $parser->parse($useragent);
         $obj    = new \StdClass();
+        if ($request->getDeviceUserAgent() === $request->getBrowserUserAgent()) {
+            $obj->originalUserAgent = $request->getBrowserUserAgent();
+        } else {
+            $obj->originalUserAgent          = new \StdClass();
+            $obj->originalUserAgent->browser = $request->getBrowserUserAgent();
+            $obj->originalUserAgent->device  = $request->getDeviceUserAgent();
+        }
 
         // save properties from ua-parser
-        foreach ($client as $key => $value) {
-            $obj->$key = $value;
-        }
+        $obj->ua         = new \StdClass();
+        $obj->ua->major  = $client->ua->major;
+        $obj->ua->minor  = $client->ua->minor;
+        $obj->ua->patch  = $client->ua->patch;
+        $obj->ua->family = $client->ua->toString();
+
+        $obj->os             = new \StdClass();
+        $obj->os->major      = $client->os->major;
+        $obj->os->minor      = $client->os->minor;
+        $obj->os->patch      = $client->os->patch;
+        $obj->os->patchMinor = $client->os->patchMinor;
+        $obj->os->family     = $client->os->toString();
+
+        $obj->device         = new \StdClass();
+        $obj->device->brand  = $client->device->brand;
+        $obj->device->model  = $client->device->model;
+        $obj->device->family = $client->device->toString();
 
         // Now, load an INI file into BrowscapPHP\Browscap for testing the UAs
         $browscap = new Browscap();
@@ -359,8 +383,6 @@ class Detector
             $obj->$property = $value;
         }
 
-
-
         return $obj;
     }
 
@@ -368,26 +390,22 @@ class Detector
      * Adds the user agent hash and user agent to a list for retrieval
      *
      * @param \Wurfl\Request\GenericRequest $request
+     * @param \stdClass                     $info
      */
-    private function addToUAList(GenericRequest $request)
+    private function addToUAList(GenericRequest $request, \stdClass $info)
     {
-        $uaList = array();
+        $uaList = $this->getUaList();
 
-        // open user agent list and decode the JSON
-        if ($uaListJSON = @file_get_contents(__DIR__ . '/' . $this->uaDir . 'ua.list.json')) {
-            $uaList = (array) json_decode($uaListJSON);
-        }
-
-        if (isset($uaList[$this->uaHash])) {
+        if (isset($uaList[$info->uaHash])) {
             return;
         }
 
         // merge the old list with the new user agent
-        $mergedInfo = (object) array_merge($uaList, array($this->uaHash => $request->getBrowserUserAgent()));
+        $mergedInfo = (object) array_merge($uaList, array($info->uaHash => $request->getBrowserUserAgent()));
 
         // write out the data to the user agent list
         $uaListJSON = json_encode($mergedInfo);
-        file_put_contents(__DIR__ . '/' . $this->uaDir . 'ua.list.json', $uaListJSON);
+        var_dump(__FUNCTION__, file_put_contents(__DIR__ . '/user-agents/ua.list.json', $uaListJSON));
     }
 
     /**
@@ -447,7 +465,7 @@ class Detector
 
         // add the user agent & hash to a list of already saved user agents
         // not needed. a performance hit.
-        $this->addToUAList($request);
+        $this->addToUAList($request, $info);
 
         $this->cache->setItem($cacheId, $info);
     }
@@ -458,5 +476,22 @@ class Detector
     public function whereFound()
     {
         return $this->foundIn;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUaList()
+    {
+        $uaList = array();
+
+        // open user agent list and decode the JSON
+        if ($uaListJSON = file_get_contents(__DIR__ . '/user-agents/ua.list.json')) {
+            $uaList = (array) json_decode($uaListJSON);
+        }
+
+        asort($uaList);
+
+        return $uaList;
     }
 }

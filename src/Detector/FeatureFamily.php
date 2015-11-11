@@ -150,6 +150,10 @@ class FeatureFamily
      */
     private static function testValue($value, $currentObj)
     {
+        if (!property_exists($currentObj, $value)) {
+            return false;
+        }
+
         $pos = strpos($value, '!');
 
         if ($pos !== false) {

@@ -5,12 +5,9 @@
     <p>The following profiles were created by Detector when the first user with that particular browser visited the system:</p>
     <ul>
     <?php
-    if ($uaListJSON = @file_get_contents(__DIR__."/../../src/Detector/user-agents/ua.list.json")) {
-        $uaList = (array) json_decode($uaListJSON);
-        asort($uaList);
-        foreach ($uaList as $key => $value) {
-            print "<li> <a href=\"/?pid=".$key."\">".strip_tags($value)."</a></li>";
-        }
+    $uaList = $detector->getUaList();
+    foreach ($uaList as $key => $value) {
+        print "<li> <a href=\"/?pid=".$key."\">".strip_tags($value)."</a></li>";
     }
     ?>
     </ul>
