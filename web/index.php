@@ -23,31 +23,33 @@ if (!$foundVendorAutoload) {
 use \Detector\Detector;
 use \Detector\FeatureFamily;
 use Modernizr\Modernizr;
+use Monolog\ErrorHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use WurflCache\Adapter\File;
 
 $logger = new Logger('detector');
-$logger->pushHandler(new StreamHandler('log/error.log', Logger::NOTICE));
+$logger->pushHandler(new StreamHandler('log/error.log', Logger::DEBUG));
+ErrorHandler::register($logger);
 
 $cache = new File(array(File::DIR => 'cache/'));
 
 $detector = new Detector($cache, $logger);
 $cookieID = $detector->getCookieId($_SERVER);
 
-if (null === Modernizr::getData($cookieID, '-pr')) {
+// if this is a request from features.js.php don't run the build function
+$ua = $detector->build($_SERVER);
+
+if (null === $ua) {
     $html = '<html><head><script type="text/javascript">';
 
     $html .= Modernizr::buildJs();
-    $html .= Modernizr::buildConvertJs($cookieID, '-pr', false);
+    $html .= Modernizr::buildConvertJs($cookieID, '', true);
 
     $html .= '</script></head><body></body></html>';
     echo $html;
     exit;
 }
-
-// if this is a request from features.js.php don't run the build function
-$ua = $detector->build($_SERVER);
 
 // include the browserFamily library to classify the browser by features
 $ua->family = FeatureFamily::find($ua);

@@ -235,10 +235,8 @@ class Detector
             $info->uaHash      = $uaHash;
             $info->coreVersion = $this->coreVersion;
 
-            if (null !== $modernizrData) {
-                foreach ($modernizrData as $property => $value) {
-                    $info->$property = $value;
-                }
+            foreach ($modernizrData as $property => $value) {
+                $info->$property = $value;
             }
 
             // some general properties
@@ -405,7 +403,7 @@ class Detector
 
         // write out the data to the user agent list
         $uaListJSON = json_encode($mergedInfo);
-        var_dump(__FUNCTION__, file_put_contents(__DIR__ . '/user-agents/ua.list.json', $uaListJSON));
+        file_put_contents(__DIR__ . '/user-agents/ua.list.json', $uaListJSON);
     }
 
     /**
@@ -483,14 +481,15 @@ class Detector
      */
     public function getUaList()
     {
-        $uaList = array();
+        $uaList   = array();
+        $fileName = __DIR__ . '/user-agents/ua.list.json';
 
         // open user agent list and decode the JSON
-        if ($uaListJSON = file_get_contents(__DIR__ . '/user-agents/ua.list.json')) {
+        if (file_exists($fileName) && $uaListJSON = file_get_contents($fileName)) {
             $uaList = (array) json_decode($uaListJSON);
-        }
 
-        asort($uaList);
+            asort($uaList);
+        }
 
         return $uaList;
     }
