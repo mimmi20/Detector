@@ -8,6 +8,9 @@
 
 namespace Detector;
 
+use Browscap\Generator\BuildGenerator;
+use Browscap\Helper\CollectionCreator;
+use Browscap\Writer\Factory\PhpWriterFactory;
 use BrowscapPHP\Browscap;
 use Modernizr\Modernizr;
 use Psr\Log\LoggerInterface;
@@ -342,6 +345,7 @@ class Detector
         /** @var \UAParser\Result\Client $client */
         $client = $parser->parse($useragent);
         $obj    = new \StdClass();
+
         if ($request->getDeviceUserAgent() === $request->getBrowserUserAgent()) {
             $obj->originalUserAgent = $request->getBrowserUserAgent();
         } else {
