@@ -154,17 +154,18 @@ class Detector
 
         $info = $this->cache->getItem($cacheId, $success);
 
+        // populate some variables specific to build()
+        $uaHash     = md5($request->getBrowserUserAgent());
+        $uaFile = __DIR__ . '/' . $this->uaDir . $this->uaDir() . 'ua.' . $uaHash . '.json';
+
         if ($success && $info instanceof \stdClass) {
             $this->foundIn = 'cache';
+
+            $this->save($request, $info, $uaFile, $cacheId);
 
             // send the data back to the script to be used
             return $info;
         }
-
-
-        // populate some variables specific to build()
-        $uaHash     = md5($request->getBrowserUserAgent());
-        $uaFile = __DIR__ . '/' . $this->uaDir . $this->uaDir() . 'ua.' . $uaHash . '.json';
 
         if (@session_start()
             && isset($_SESSION)
