@@ -158,7 +158,7 @@ class Detector
         $info = $this->cache->getItem($cacheId, $success);
 
         // populate some variables specific to build()
-        $uaHash     = md5($request->getBrowserUserAgent());
+        $uaHash = md5($request->getBrowserUserAgent());
         $uaFile = __DIR__ . '/' . $this->uaDir . $this->uaDir() . 'ua.' . $uaHash . '.json';
 
         if ($success && $info instanceof \stdClass) {

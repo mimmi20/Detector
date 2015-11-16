@@ -29,10 +29,6 @@ use WurflCache\Adapter\File;
 
 header('content-type: application/x-javascript', true);
 
-if ((isset($_REQUEST['dynamic']) && ($_REQUEST['dynamic'] == 'true')) && !(isset($_REQUEST['nocookies']) && ($_REQUEST['nocookies'] == 'true'))) {
-    print file_get_contents('src/modernizr/cookieTest.js');
-}
-
 $logger = new Logger('detector');
 $logger->pushHandler(new StreamHandler('log/error.log', Logger::NOTICE));
 
