@@ -49,8 +49,11 @@ $ua = Detector::build();//var_dump($ua);
             if(t=='object'){
                 document.write('-><br />');
                   for(var s in m[f]){
-                    if (typeof m[f][s]=='boolean') { document.write('&nbsp; &nbsp; &nbsp; '+s+'<br />'); }
-                    else { document.write('&nbsp; &nbsp; &nbsp; '+s+'<br />'); }
+                    if (typeof m[f][s]=='boolean') {
+                        document.write('&nbsp; &nbsp; &nbsp; '+s+'<br />');
+                    } else {
+                        document.write('&nbsp; &nbsp; &nbsp; '+s+'<br />');
+                    }
                   }
             } else {
                 document.write('<br />');

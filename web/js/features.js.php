@@ -22,7 +22,7 @@ if (!$foundVendorAutoload) {
 $p = true; // turn off the build function
 
 use \Detector\Detector;
-use Modernizr\Modernizr;
+use ModernizrServer\Modernizr;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use WurflCache\Adapter\File;

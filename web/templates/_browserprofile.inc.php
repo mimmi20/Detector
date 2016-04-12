@@ -60,15 +60,15 @@ if ($detector->whereFound() == 'archive') {
     </tr>
     <tr>
         <th>Browser</th>
-        <td><?php echo htmlentities($ua->ua->family); ?></td>
+        <td><?php echo htmlentities($ua->uaparser->ua->family); ?></td>
     </tr>
     <tr>
         <th>OS</th>
-        <td><?php echo htmlentities($ua->os->family); ?></td>
+        <td><?php echo htmlentities($ua->uaparser->os->family); ?></td>
     </tr>
     <tr>
         <th>Device</th>
-        <td><?php echo htmlentities($ua->device->family); ?></td>
+        <td><?php echo htmlentities($ua->uaparser->device->family); ?></td>
     </tr>
     <tr>
         <th>Is UIWebview?</th>
@@ -77,7 +77,7 @@ if ($detector->whereFound() == 'archive') {
             if (isset($ua->isUIWebview)) :
                 print convertTF($ua->isUIWebview);
             else: ?>
-            <span class="label important">false</span>
+            <span class="label important">n/a</span>
             <?php endif; ?>
         </td>
     </tr>
@@ -88,7 +88,7 @@ if ($detector->whereFound() == 'archive') {
             if (isset($ua->isMobile)) :
                 print convertTF($ua->isMobile);
             else: ?>
-            <span class="label important">false</span>
+            <span class="label important">n/a</span>
             <?php endif; ?>
         </td>
     </tr>
@@ -99,7 +99,7 @@ if ($detector->whereFound() == 'archive') {
             if (isset($ua->isMobileDevice)) :
                 print convertTF($ua->isMobileDevice);
             else: ?>
-            <span class="label important">false</span>
+            <span class="label important">n/a</span>
             <?php endif; ?>
         </td>
     </tr>
@@ -110,7 +110,7 @@ if ($detector->whereFound() == 'archive') {
             if (isset($ua->isTablet)) :
                 print convertTF($ua->isTablet);
             else: ?>
-            <span class="label important">false</span>
+            <span class="label important">n/a</span>
             <?php endif; ?>
         </td>
     </tr>
@@ -121,7 +121,7 @@ if ($detector->whereFound() == 'archive') {
             if (isset($ua->isComputer)) :
                 print convertTF($ua->isComputer);
             else: ?>
-            <span class="label important">false</span>
+            <span class="label important">n/a</span>
             <?php endif; ?>
         </td>
     </tr>
@@ -132,7 +132,7 @@ if ($detector->whereFound() == 'archive') {
             if (isset($ua->isSpider)) :
                 print convertTF($ua->isSpider);
             else: ?>
-            <span class="label important">false</span>
+            <span class="label important">n/a</span>
             <?php endif; ?>
         </td>
     </tr>
