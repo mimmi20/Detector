@@ -145,7 +145,7 @@ class Detector
                 if (isset($_SESSION)) {
                     $_SESSION[$sessionID] = $info;
                 }
-var_dump($info);
+//var_dump($info);
                 // return to the script
                 return $info;
             }
@@ -164,7 +164,7 @@ var_dump($info);
         if ($success && $info instanceof \stdClass) {
             $this->foundIn = 'cache';
 
-            $this->save($request, $info, $uaFile, $cacheId);var_dump($info);
+            $this->save($request, $info, $uaFile, $cacheId);//var_dump($info);
 
             // send the data back to the script to be used
             return $info;
@@ -178,7 +178,7 @@ var_dump($info);
 
             $info = $_SESSION[$sessionID];
 
-            $this->save($request, $info, $uaFile, $cacheId);var_dump($info);
+            $this->save($request, $info, $uaFile, $cacheId);//var_dump($info);
 
             // send the data back to the script to be used
             return $info;
@@ -222,7 +222,7 @@ var_dump($info);
                 $_SESSION[$sessionID] = $info;
             }
 
-            $this->save($request, $info, $uaFile, $cacheId);var_dump($info);
+            $this->save($request, $info, $uaFile, $cacheId);//var_dump($info);
 
             // return the collected data to the script for use in this go around
             return $info;
@@ -255,7 +255,7 @@ var_dump($info);
                 $_SESSION[$sessionID] = $info;
             }
 
-            $this->save($request, $info, $uaFile, $cacheId);var_dump($info);
+            $this->save($request, $info, $uaFile, $cacheId);//var_dump($info);
 
             // return the collected data to the script for use in this go around
             return $info;
