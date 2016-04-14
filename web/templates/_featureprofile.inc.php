@@ -7,7 +7,7 @@
     <br /><br />
 </p>
 
-<table class="zebra-striped span9">
+<table class="zebra-striped col-xs-9">
     <thead>
         <tr>
             <th colspan="2">Feature Profile Properties</th>
@@ -15,7 +15,7 @@
     </thead>
     <tbody>
         <tr>
-            <th class="span3">coreVersion:</th>
+            <th class="col-xs-3">coreVersion:</th>
             <td>
                 <?php
                 if (isset($ua->coreVersion)) {
@@ -27,7 +27,7 @@
             </td>
         </tr>
         <tr>
-            <th class="span3">family:</th>
+            <th class="col-xs-3">family:</th>
             <td>
                 <?php
                 if (isset($ua->family)) {
@@ -41,7 +41,7 @@
 
     </tbody>
 </table>
-<div class="featureNote span9">
+<div class="featureNote col-xs-9">
     <small><em>To learn more about families please <a href="https://github.com/dmolsen/Detector/wiki/Detector-Family-Tutorial">review the family tutorial</a>.</em></small>
 </div>
 

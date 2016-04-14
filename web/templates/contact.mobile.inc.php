@@ -1,6 +1,6 @@
 <?php include 'web/templates/_header.inc.php'; ?>
 
-    <div class="span10">
+    <div class="col-xs-10">
         <?php
         if ($_POST['post']) {
             include 'web/templates/_contactty.inc.php';
