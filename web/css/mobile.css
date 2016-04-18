@@ -7,7 +7,7 @@ h1 {
     margin-left: -11px;
 }
 
-.container, .content, .col-xs-10, .col-xs-9, .col-xs-4, footer {
+.container, .content, .span10, .span9, .span4, footer {
     width: 96%;
 }
 
@@ -15,7 +15,7 @@ textarea.xxlarge, input.xlarge, textarea {
     width: 94%;
 }
 
-.col-xs-7 {
+.span7 {
     width: 220px;
 }
 

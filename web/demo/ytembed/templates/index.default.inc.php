@@ -1,10 +1,10 @@
 <?php include "web/templates/_header.inc.php"; ?>
 
-<div class="col-xs-10">
+<div class="span10">
     <?php include "web/demo/ytembed/templates/_video.inc.php"; ?>
 </div>
 
-<div class="col-xs-4">
+<div class="span4">
     <?php include "web/templates/_about.inc.php"; ?>
     <?php include "web/templates/_moreinfo.inc.php"; ?>
     <?php include "web/templates/_credits.inc.php"; ?>

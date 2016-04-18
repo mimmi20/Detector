@@ -23,7 +23,7 @@ if ($detector->whereFound() == 'archive') {
 }
 ?>
 
-<table class="zebra-striped col-xs-9">
+<table class="zebra-striped span9">
     <thead>
     <tr>
         <th colspan="2">Browser Properties <span style="float: right; font-weight: normal; font-size: 12px;">
@@ -44,7 +44,7 @@ if ($detector->whereFound() == 'archive') {
     </thead>
     <tbody>
     <tr>
-        <th class="col-xs-3">User Agent:</th>
+        <th class="span3">User Agent:</th>
         <?php if (is_string($ua->originalUserAgent)): ?>
         <td><?php echo htmlentities($ua->originalUserAgent); ?></td>
         <?php else: ?>
@@ -55,7 +55,7 @@ if ($detector->whereFound() == 'archive') {
         <?php endif; ?>
     </tr>
     <tr>
-        <th class="col-xs-3">UA Hash:</th>
+        <th class="span3">UA Hash:</th>
         <td><?php echo htmlentities($ua->uaHash); ?></td>
     </tr>
     <tr>

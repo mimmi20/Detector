@@ -20,8 +20,8 @@ if (!$foundVendorAutoload) {
 }
 
 // require Detector so we can popular identify the browser & populate $ua
-use Detector\Detector;
-use Detector\FeatureFamily;
+use \Detector\Detector;
+use \Detector\FeatureFamily;
 use ModernizrServer\Modernizr;
 use Monolog\ErrorHandler;
 use Monolog\Handler\StreamHandler;
@@ -40,6 +40,17 @@ $cookieID = $detector->getCookieId($_SERVER);
 // if this is a request from features.js.php don't run the build function
 $ua = $detector->build($_SERVER);
 
+if (null === $ua) {
+    $html = '<html><head><script type="text/javascript">';
+
+    $html .= Modernizr::buildJs();
+    $html .= Modernizr::buildConvertJs($cookieID, '', true);
+
+    $html .= '</script></head><body></body></html>';
+    echo $html;
+    exit;
+}
+
 // include the browserFamily library to classify the browser by features
 $ua->family = FeatureFamily::find($ua);
 
@@ -48,4 +59,8 @@ include 'web/templates/_convertTF.inc.php';
 include 'web/templates/_createFT.inc.php';
 
 // switch templates based on device type
-include 'web/templates/index.default.inc.php';
+if (isset($ua->isMobile) && $ua->isMobile) {
+    include 'web/templates/index.mobile.inc.php';
+} else {
+    include 'web/templates/index.default.inc.php';
+}
