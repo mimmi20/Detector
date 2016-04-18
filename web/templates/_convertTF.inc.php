@@ -7,12 +7,12 @@
 function convertTF($value)
 {
     if ($value === 'true' || $value === true) {
-        return '<span class="label success">true</span>';
+        return '<span class="label label-success">true</span>';
     } elseif ($value === 'false' || $value === false) {
-        return '<span class="label important">false</span>';
+        return '<span class="label label-danger">false</span>';
     } elseif ($value) {
-        return '<span class="label warning">' . $value . '</span>';
+        return '<span class="label label-warning">' . $value . '</span>';
     } else {
-        return '<span class="label important">false</span>';
+        return '<span class="label label-danger">false</span>';
     }
 }

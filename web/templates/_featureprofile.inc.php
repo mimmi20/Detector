@@ -7,7 +7,7 @@
     <br /><br />
 </p>
 
-<table class="zebra-striped span9">
+<table class="zebra-striped col-xs-9 table">
     <thead>
         <tr>
             <th colspan="2">Feature Profile Properties</th>
@@ -15,7 +15,7 @@
     </thead>
     <tbody>
         <tr>
-            <th class="span3">coreVersion:</th>
+            <th class="col-xs-3">coreVersion:</th>
             <td>
                 <?php
                 if (isset($ua->coreVersion)) {
@@ -27,7 +27,7 @@
             </td>
         </tr>
         <tr>
-            <th class="span3">family:</th>
+            <th class="col-xs-3">family:</th>
             <td>
                 <?php
                 if (isset($ua->family)) {
@@ -41,7 +41,7 @@
 
     </tbody>
 </table>
-<div class="featureNote span9">
+<div class="featureNote col-xs-9">
     <small><em>To learn more about families please <a href="https://github.com/dmolsen/Detector/wiki/Detector-Family-Tutorial">review the family tutorial</a>.</em></small>
 </div>
 
@@ -65,8 +65,6 @@ createFT($detector, $ua, $html5Features, 'HTML5 Features');
 createFT($detector, $ua, $miscFeatures, 'Misc. Features', '', 'While a device may be touch-based that doesn\'t not mean it supports <a href="http://www.w3.org/TR/touch-events/">touch events</a> which is what I\'m testing for here.');
 createFT($detector, $ua, $mqFeatures, 'Browser Class via Media Queries', 'core-', 'This feature needs some love as it\'s not always returning information correctly.');
 createFT($detector, $ua, $extendedFeatures, 'Detector Extended Test Features', 'extended-', 'To learn more about extended tests and their purpose please <a href="https://github.com/dmolsen/Detector/wiki/Detector-Test-Tutorial">review the test tutorial.</a>');
-if ($detector->whereFound() != 'archive') {
-    createFT($detector, $ua, $perSessionFeatures, 'Detector Per Session Test Features', 'ps-', 'To learn more about per session tests and their purpose please <a href="https://github.com/dmolsen/Detector/wiki/Detector-Test-Tutorial">review the test tutorial.</a>');
-    createFT($detector, $ua, $perRequestFeatures, 'Detector Per Request Test Features', 'pr-', 'To learn more about per request tests and their purpose please <a href="https://github.com/dmolsen/Detector/wiki/Detector-Test-Tutorial">review the test tutorial.</a> If this section isn\'t populated hit "refresh". Attributes are captured via a cookie. Screen size will also be one request behind if you resize the window for the same reason.');
-}
+createFT($detector, $ua, $perSessionFeatures, 'Detector Per Session Test Features', 'ps-', 'To learn more about per session tests and their purpose please <a href="https://github.com/dmolsen/Detector/wiki/Detector-Test-Tutorial">review the test tutorial.</a>');
+createFT($detector, $ua, $perRequestFeatures, 'Detector Per Request Test Features', 'pr-', 'To learn more about per request tests and their purpose please <a href="https://github.com/dmolsen/Detector/wiki/Detector-Test-Tutorial">review the test tutorial.</a> If this section isn\'t populated hit "refresh". Attributes are captured via a cookie. Screen size will also be one request behind if you resize the window for the same reason.');
 ?>

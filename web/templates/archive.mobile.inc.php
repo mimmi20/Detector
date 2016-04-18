@@ -1,6 +1,6 @@
 <?php include "web/templates/_header.inc.php"; ?>
 
-<div class="span10">
+<div class="col-xs-10">
     <h2>Archive of Detector Profiles</h2>
     <p>The following profiles were created by Detector when the first user with that particular browser visited the system:</p>
     <ul>

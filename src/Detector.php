@@ -355,23 +355,24 @@ class Detector
         }
 
         // save properties from ua-parser
-        $obj->ua         = new \StdClass();
-        $obj->ua->major  = $client->ua->major;
-        $obj->ua->minor  = $client->ua->minor;
-        $obj->ua->patch  = $client->ua->patch;
-        $obj->ua->family = $client->ua->toString();
+        $obj->uaparser             = new \StdClass();
+        $obj->uaparser->ua         = new \StdClass();
+        $obj->uaparser->ua->major  = $client->ua->major;
+        $obj->uaparser->ua->minor  = $client->ua->minor;
+        $obj->uaparser->ua->patch  = $client->ua->patch;
+        $obj->uaparser->ua->family = $client->ua->toString();
 
-        $obj->os             = new \StdClass();
-        $obj->os->major      = $client->os->major;
-        $obj->os->minor      = $client->os->minor;
-        $obj->os->patch      = $client->os->patch;
-        $obj->os->patchMinor = $client->os->patchMinor;
-        $obj->os->family     = $client->os->toString();
+        $obj->uaparser->os             = new \StdClass();
+        $obj->uaparser->os->major      = $client->os->major;
+        $obj->uaparser->os->minor      = $client->os->minor;
+        $obj->uaparser->os->patch      = $client->os->patch;
+        $obj->uaparser->os->patchMinor = $client->os->patchMinor;
+        $obj->uaparser->os->family     = $client->os->toString();
 
-        $obj->device         = new \StdClass();
-        $obj->device->brand  = $client->device->brand;
-        $obj->device->model  = $client->device->model;
-        $obj->device->family = $client->device->toString();
+        $obj->uaparser->device         = new \StdClass();
+        $obj->uaparser->device->brand  = $client->device->brand;
+        $obj->uaparser->device->model  = $client->device->model;
+        $obj->uaparser->device->family = $client->device->toString();
 
         // Now, load an INI file into BrowscapPHP\Browscap for testing the UAs
         $browscap = new Browscap();
@@ -382,8 +383,10 @@ class Detector
 
         $actualProps = (array) $browscap->getBrowser($useragent);
 
+        $obj->browscap = new \StdClass();
+
         foreach ($actualProps as $property => $value) {
-            $obj->$property = $value;
+            $obj->browscap->$property = $value;
         }
 
         return $obj;

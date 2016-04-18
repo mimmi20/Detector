@@ -125,16 +125,16 @@ a:hover {
   float: left;
   margin-left: 20px;
 }
-.span1 {
+.col-xs-1 {
   width: 60px;
 }
 .span2 {
   width: 140px;
 }
-.span3 {
+.col-xs-3 {
   width: 220px;
 }
-.span4 {
+.col-xs-4 {
   width: 300px;
 }
 .span5 {
@@ -143,22 +143,22 @@ a:hover {
 .span6 {
   width: 460px;
 }
-.span7 {
+.col-xs-7 {
   width: 540px;
 }
 .span8 {
   width: 620px;
 }
-.span9 {
+.col-xs-9 {
   width: 700px;
 }
-.span10 {
+.col-xs-10 {
   width: 780px;
 }
-.span11 {
+.col-xs-11 {
   width: 860px;
 }
-.span12, .container {
+.col-xs-12, .container {
   width: 940px;
 }
 .offset1 {
@@ -212,16 +212,16 @@ a:hover {
 .row-fluid > [class*="span"]:first-child {
   margin-left: 0;
 }
-.row-fluid .span1 {
+.row-fluid .col-xs-1 {
   width: 6.382978723%;
 }
 .row-fluid .span2 {
   width: 14.89361702%;
 }
-.row-fluid .span3 {
+.row-fluid .col-xs-3 {
   width: 23.404255317%;
 }
-.row-fluid .span4 {
+.row-fluid .col-xs-4 {
   width: 31.914893614%;
 }
 .row-fluid .span5 {
@@ -230,22 +230,22 @@ a:hover {
 .row-fluid .span6 {
   width: 48.93617020799999%;
 }
-.row-fluid .span7 {
+.row-fluid .col-xs-7 {
   width: 57.446808505%;
 }
 .row-fluid .span8 {
   width: 65.95744680199999%;
 }
-.row-fluid .span9 {
+.row-fluid .col-xs-9 {
   width: 74.468085099%;
 }
-.row-fluid .span10 {
+.row-fluid .col-xs-10 {
   width: 82.97872339599999%;
 }
-.row-fluid .span11 {
+.row-fluid .col-xs-11 {
   width: 91.489361693%;
 }
-.row-fluid .span12 {
+.row-fluid .col-xs-12 {
   width: 99.99999998999999%;
 }
 .container {
@@ -684,16 +684,16 @@ textarea[class*="span"],
   float: none;
   margin-left: 0;
 }
-input.span1, textarea.span1, .uneditable-input.span1 {
+input.col-xs-1, textarea.col-xs-1, .uneditable-input.col-xs-1 {
   width: 50px;
 }
 input.span2, textarea.span2, .uneditable-input.span2 {
   width: 130px;
 }
-input.span3, textarea.span3, .uneditable-input.span3 {
+input.col-xs-3, textarea.col-xs-3, .uneditable-input.col-xs-3 {
   width: 210px;
 }
-input.span4, textarea.span4, .uneditable-input.span4 {
+input.col-xs-4, textarea.col-xs-4, .uneditable-input.col-xs-4 {
   width: 290px;
 }
 input.span5, textarea.span5, .uneditable-input.span5 {
@@ -702,22 +702,22 @@ input.span5, textarea.span5, .uneditable-input.span5 {
 input.span6, textarea.span6, .uneditable-input.span6 {
   width: 450px;
 }
-input.span7, textarea.span7, .uneditable-input.span7 {
+input.col-xs-7, textarea.col-xs-7, .uneditable-input.col-xs-7 {
   width: 530px;
 }
 input.span8, textarea.span8, .uneditable-input.span8 {
   width: 610px;
 }
-input.span9, textarea.span9, .uneditable-input.span9 {
+input.col-xs-9, textarea.col-xs-9, .uneditable-input.col-xs-9 {
   width: 690px;
 }
-input.span10, textarea.span10, .uneditable-input.span10 {
+input.col-xs-10, textarea.col-xs-10, .uneditable-input.col-xs-10 {
   width: 770px;
 }
-input.span11, textarea.span11, .uneditable-input.span11 {
+input.col-xs-11, textarea.col-xs-11, .uneditable-input.col-xs-11 {
   width: 850px;
 }
-input.span12, textarea.span12, .uneditable-input.span12 {
+input.col-xs-12, textarea.col-xs-12, .uneditable-input.col-xs-12 {
   width: 930px;
 }
 input[disabled],
@@ -1054,7 +1054,7 @@ table {
 .table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th {
   background-color: #f9f9f9;
 }
-table .span1 {
+table .col-xs-1 {
   float: none;
   width: 44px;
   margin-left: 0;
@@ -1064,12 +1064,12 @@ table .span2 {
   width: 124px;
   margin-left: 0;
 }
-table .span3 {
+table .col-xs-3 {
   float: none;
   width: 204px;
   margin-left: 0;
 }
-table .span4 {
+table .col-xs-4 {
   float: none;
   width: 284px;
   margin-left: 0;
@@ -1084,7 +1084,7 @@ table .span6 {
   width: 444px;
   margin-left: 0;
 }
-table .span7 {
+table .col-xs-7 {
   float: none;
   width: 524px;
   margin-left: 0;
@@ -1094,22 +1094,22 @@ table .span8 {
   width: 604px;
   margin-left: 0;
 }
-table .span9 {
+table .col-xs-9 {
   float: none;
   width: 684px;
   margin-left: 0;
 }
-table .span10 {
+table .col-xs-10 {
   float: none;
   width: 764px;
   margin-left: 0;
 }
-table .span11 {
+table .col-xs-11 {
   float: none;
   width: 844px;
   margin-left: 0;
 }
-table .span12 {
+table .col-xs-12 {
   float: none;
   width: 924px;
   margin-left: 0;
