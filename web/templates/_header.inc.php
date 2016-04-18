@@ -19,7 +19,7 @@ endif; ?>
     <![endif]-->
 
     <!-- Le styles -->
-    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
     <?php if (isset($ua->isMobile) && $ua->isMobile) : ?>
     <link href="/css/mobile.css" rel="stylesheet"/>
     <?php
@@ -31,6 +31,8 @@ endif; ?>
 
     <!-- My Scripts -->
     <?php echo $detector->buildFeaturesScriptLink(); ?>
+    <script type="text/javascript" src="/js/modernizr.2.8.3.min.custom.js"></script>
+    <script type="text/javascript" src="/js/tests.demo.js"></script>
 </head>
 
 <body>
