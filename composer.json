@@ -14,21 +14,21 @@
   ],
   "license": "MIT",
   "require": {
-    "php": ">=5.6.0",
-    "mimmi20/modernizr-server": "^1.0.1@dev",
-    "ua-parser/uap-php": "^3.4",
+    "php": ">=5.5.0",
+    "mimmi20/modernizr-server": "~1.0.1",
+    "ua-parser/uap-php": "~3.4",
     "browscap/browscap": "dev-master",
     "browscap/browscap-php": "dev-master",
-    "monolog/monolog": "^1.13",
-    "mimmi20/wurflcache": "^1.3",
-    "mimmi20/wurfl-generic-request": "^1.0",
+    "monolog/monolog": "~1.13",
+    "mimmi20/wurflcache": "~1.3",
+    "mimmi20/wurfl-generic-request": "1.0.*",
     "composer/composer": "dev-master",
-    "mustache/mustache": "^2.9"
+    "mustache/mustache": "~2.9"
   },
   "require-dev": {
-    "phpunit/phpunit": "^5.2",
-    "squizlabs/php_codesniffer": "^2.5",
-    "fabpot/php-cs-fixer": "^1.11"
+    "phpunit/phpunit": "*",
+    "squizlabs/php_codesniffer": "2.*",
+    "fabpot/php-cs-fixer": "*"
   },
   "authors": [
     {
@@ -50,5 +50,9 @@
     "branch-alias": {
       "dev-master": "1.0-dev"
     }
+  },
+  "scripts": {
+    "post-install-cmd": ["Detector\\Tool\\ComposerHook::postInstall"],
+    "post-update-cmd": ["Detector\\Tool\\ComposerHook::postUpdate"]
   }
 }

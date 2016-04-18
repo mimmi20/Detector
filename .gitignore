@@ -7,9 +7,3 @@ composer.phar
 composer.lock
 build/build*/
 cache/*
-web/log/*
-!web/log/.gitkeep
-src/user-agents/*
-!src/user-agents/.gitkeep
-log/*
-!log/.gitkeep

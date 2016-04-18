@@ -22,7 +22,7 @@ if (!$foundVendorAutoload) {
 // require Detector so we can popular identify the browser & populate $ua
 use \Detector\Detector;
 use \Detector\FeatureFamily;
-use ModernizrServer\Modernizr;
+use Modernizr\Modernizr;
 use Monolog\ErrorHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;

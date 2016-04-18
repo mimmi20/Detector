@@ -12,7 +12,7 @@ use Browscap\Generator\BuildGenerator;
 use Browscap\Helper\CollectionCreator;
 use Browscap\Writer\Factory\PhpWriterFactory;
 use BrowscapPHP\Browscap;
-use ModernizrServer\Modernizr;
+use Modernizr\Modernizr;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use UAParser\Parser;
@@ -145,7 +145,7 @@ class Detector
                 if (isset($_SESSION)) {
                     $_SESSION[$sessionID] = $info;
                 }
-var_dump($info);
+
                 // return to the script
                 return $info;
             }
@@ -164,7 +164,7 @@ var_dump($info);
         if ($success && $info instanceof \stdClass) {
             $this->foundIn = 'cache';
 
-            $this->save($request, $info, $uaFile, $cacheId);var_dump($info);
+            $this->save($request, $info, $uaFile, $cacheId);
 
             // send the data back to the script to be used
             return $info;
@@ -178,7 +178,7 @@ var_dump($info);
 
             $info = $_SESSION[$sessionID];
 
-            $this->save($request, $info, $uaFile, $cacheId);var_dump($info);
+            $this->save($request, $info, $uaFile, $cacheId);
 
             // send the data back to the script to be used
             return $info;
@@ -222,7 +222,7 @@ var_dump($info);
                 $_SESSION[$sessionID] = $info;
             }
 
-            $this->save($request, $info, $uaFile, $cacheId);var_dump($info);
+            $this->save($request, $info, $uaFile, $cacheId);
 
             // return the collected data to the script for use in this go around
             return $info;
@@ -255,7 +255,7 @@ var_dump($info);
                 $_SESSION[$sessionID] = $info;
             }
 
-            $this->save($request, $info, $uaFile, $cacheId);var_dump($info);
+            $this->save($request, $info, $uaFile, $cacheId);
 
             // return the collected data to the script for use in this go around
             return $info;
@@ -345,7 +345,6 @@ var_dump($info);
         /** @var \UAParser\Result\Client $client */
         $client = $parser->parse($useragent);
         $obj    = new \StdClass();
-        $obj->uaparser = new \StdClass();
 
         if ($request->getDeviceUserAgent() === $request->getBrowserUserAgent()) {
             $obj->originalUserAgent = $request->getBrowserUserAgent();
@@ -356,23 +355,23 @@ var_dump($info);
         }
 
         // save properties from ua-parser
-        $obj->uaparser->ua         = new \StdClass();
-        $obj->uaparser->ua->major  = $client->ua->major;
-        $obj->uaparser->ua->minor  = $client->ua->minor;
-        $obj->uaparser->ua->patch  = $client->ua->patch;
-        $obj->uaparser->ua->family = $client->ua->toString();
+        $obj->ua         = new \StdClass();
+        $obj->ua->major  = $client->ua->major;
+        $obj->ua->minor  = $client->ua->minor;
+        $obj->ua->patch  = $client->ua->patch;
+        $obj->ua->family = $client->ua->toString();
 
-        $obj->uaparser->os             = new \StdClass();
-        $obj->uaparser->os->major      = $client->os->major;
-        $obj->uaparser->os->minor      = $client->os->minor;
-        $obj->uaparser->os->patch      = $client->os->patch;
-        $obj->uaparser->os->patchMinor = $client->os->patchMinor;
-        $obj->uaparser->os->family     = $client->os->toString();
+        $obj->os             = new \StdClass();
+        $obj->os->major      = $client->os->major;
+        $obj->os->minor      = $client->os->minor;
+        $obj->os->patch      = $client->os->patch;
+        $obj->os->patchMinor = $client->os->patchMinor;
+        $obj->os->family     = $client->os->toString();
 
-        $obj->uaparser->device         = new \StdClass();
-        $obj->uaparser->device->brand  = $client->device->brand;
-        $obj->uaparser->device->model  = $client->device->model;
-        $obj->uaparser->device->family = $client->device->toString();
+        $obj->device         = new \StdClass();
+        $obj->device->brand  = $client->device->brand;
+        $obj->device->model  = $client->device->model;
+        $obj->device->family = $client->device->toString();
 
         // Now, load an INI file into BrowscapPHP\Browscap for testing the UAs
         $browscap = new Browscap();
@@ -381,12 +380,10 @@ var_dump($info);
             ->setLogger($this->logger)
         ;
 
-        $obj->browscap = new \StdClass();
-
         $actualProps = (array) $browscap->getBrowser($useragent);
 
         foreach ($actualProps as $property => $value) {
-            $obj->browscap->$property = $value;
+            $obj->$property = $value;
         }
 
         return $obj;
