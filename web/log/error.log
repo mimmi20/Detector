@@ -1,2 +1,0 @@
-[2016-04-13 20:05:33] detector.ALERT: Fatal Error (E_PARSE): syntax error, unexpected 'use' (T_USE)  []
-[2016-04-13 20:19:39] detector.ALERT: Fatal Error (E_ERROR): Class 'Modernizr' not found  []
