@@ -11,15 +11,18 @@ use Detector\Detector;
  */
 function createFT(Detector $detector, $ua, $match, $title, $prefix = '', $note = '')
 {
-    print "<table class=\"zebra-striped col-xs-9\">
-        <thead>
-            <tr>
-                <th>".$title."</th>
-                <th>Your Browser</th>
-                <th>Detector Profile</th>
-            </tr>
-        </thead>
-        <tbody>";
+    ?>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 table">
+    <div class="text-center clearfix">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <?php
+            echo htmlentities($title);
+            ?>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">Your Browser</div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">Detector Profile</div>
+    </div>
+    <?php
     $check = 0;
     foreach ($ua as $key => $value) {
         if (!preg_match($match, $key)) {
@@ -28,67 +31,95 @@ function createFT(Detector $detector, $ua, $match, $title, $prefix = '', $note =
 
         $check = 1;
         if (is_object($value)) {
-            //$value_a = (array) $value;
-            //ksort($value_a);
-            //$value = (object) $value_a;
-
             foreach ($value as $vkey => $vvalue) {
-                print '<tr>';
-                print '<th class="col-xs-7">'. $key . '->' . $vkey . ':</th>';
-                if ($detector->whereFound() == 'archive') {
-                    print '<td class="col-xs-1"><span class="label label-info">N/A</span></td>';
-                } else {
-                    print "<td class=\"col-xs-1\">
-                                <script type=\"text/javascript\">
-                                    if (Modernizr['".$prefix.$key."']['".$vkey."'] === true) {
-                                        document.write(\"<span class='label label-success'>\"+Modernizr['".$prefix.$key."']['".$vkey."']+\"</span>\");
-                                    } else if (Modernizr['".$prefix.$key."']['".$vkey."']) {
-                                        document.write(\"<span class='label label-warning'>\"+Modernizr['".$prefix.$key."']['".$vkey."']+\"</span>\");
-                                    } else {
-                                        document.write(\"<span class='label label-danger'>false</span>\");
-                                    }
-                                </script>
-                               </td>";
-                }
-                print "<td class=\"col-xs-1\">".convertTF($vvalue)."</td>";
-                print "</tr>";
-            }
-        } else {
-            print "<tr>";
-            print "<th class=\"col-xs-7\">".$key.":</th>";
-            if ($detector->whereFound() == 'archive') {
-                print "<td class=\"col-xs-1\"><span class='label label-info'>N/A</span></td>";
-            } else {
-                print "<td class=\"col-xs-1\">
-                            <script type=\"text/javascript\">
-                                ";
-                if (($prefix == 'core-') && ($key == 'mediaqueries')) {
-                    print "        if (Modernizr['mediaqueries']) {
-                                            document.write(\"<span class='label label-success'>\"+Modernizr['mediaqueries']+\"</span>\");";
-                } else {
-                    print "        if (Modernizr['".$prefix.$key."']) {
-                                            document.write(\"<span class='label label-success'>\"+Modernizr['".$prefix.$key."']+\"</span>\");";
-                }
-                print "        } else {
-                                    document.write(\"<span class='label label-danger'>false</span>\");
+                ?>
+                <div class="clearfix">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 text-left">
+                        <?php
+                        echo htmlentities($key . '->' . $vkey);
+                        ?>
+                    </div>
+                    <?php
+                    if ($detector->whereFound() == 'archive') :
+                        ?>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4"><span
+                                class="label label-info">N/A</span></div>
+                    <?php
+                    else:
+                        ?>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                            <script type="text/javascript">
+                                if (Modernizr['<?php echo $prefix.$key; ?>']['<?php echo $vkey; ?>'] === true) {
+                                    document.write("<span class='label label-success'>" + Modernizr['<?php echo $prefix.$key; ?>']['<?php echo $vkey; ?>'] + "</span>");
+                                } else if (Modernizr['<?php echo $prefix.$key; ?>']['<?php echo $vkey; ?>'] === false) {
+                                    document.write("<span class='label label-danger'>" + Modernizr['<?php echo $prefix.$key; ?>']['<?php echo $vkey; ?>'] + "</span>");
+                                } else if (Modernizr['<?php echo $prefix.$key; ?>']['<?php echo $vkey; ?>']) {
+                                    document.write("<span class='label label-warning'>" + Modernizr['<?php echo $prefix.$key; ?>']['<?php echo $vkey; ?>'] + "</span>");
+                                } else {
+                                    document.write("<span class='label label-info'>unknown</span>");
                                 }
                             </script>
-                           </td>";
+                        </div>
+                    <?php
+                    endif;
+                    ?>
+
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4"><?php echo convertTF($vvalue); ?></div>
+                </div>
+            <?php
             }
-            print "<td class=\"col-xs-1\">".convertTF($value)."</td>";
-            print "</tr>";
+        } else {
+            ?>
+            <div class="clearfix">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 text-left">
+                    <?php
+                    echo htmlentities($key);
+                    ?>
+                </div>
+                <?php
+                if ($detector->whereFound() == 'archive') :
+                    ?>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4"><span class="label label-info">N/A</span>
+                    </div>
+                <?php
+                else:
+                    ?>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <script type="text/javascript">
+                            if (Modernizr['<?php echo $prefix.$key; ?>'] === true) {
+                                document.write("<span class='label label-success'>" + Modernizr['<?php echo $prefix.$key; ?>'] + "</span>");
+                            } else if (Modernizr['<?php echo $prefix.$key; ?>'] === false) {
+                                document.write("<span class='label label-danger'>" + Modernizr['<?php echo $prefix.$key; ?>'] + "</span>");
+                            } else if (Modernizr['<?php echo $prefix.$key; ?>']) {
+                                document.write("<span class='label label-warning'>" + Modernizr['<?php echo $prefix.$key; ?>'] + "</span>");
+                            } else {
+                                document.write("<span class='label label-info'>unknown</span>");
+                            }
+                        </script>
+                    </div>
+                <?php
+                endif;
+                ?>
+
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4"><?php echo convertTF($value); ?></div>
+            </div>
+        <?php
         }
     }
-    if ($check == 0) {
-        print "<tr>";
-        print "<td class=\"col-xs-9\" colspan=\"3\">Detector wasn't able to capture these features because they rely on a cookie that was set after the PHP script ran.</td>";
-        print "</tr>";
-    }
-    print "</tbody>";
-    print "</table>";
-    if ($note != '') {
-        print "<div class=\"featureNote col-xs-9\">";
-        print "<small><em>".$note."</em></small>";
-        print "</div>";
-    }
+    if ($check == 0) : ?>
+        <div class="clearfix text-left">
+            Detector wasn't able to capture these features because they rely on a cookie that was set after the PHP
+            script ran.
+        </div>
+    <?php
+    endif;
+    ?>
+    </div>
+    <?php
+    if ($note != '') : ?>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 clearfix">
+            <small><em><?php echo $note; ?></em></small>
+        </div>
+    <?php
+    endif;
 }

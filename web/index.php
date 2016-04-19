@@ -20,9 +20,9 @@ if (!$foundVendorAutoload) {
 }
 
 // require Detector so we can popular identify the browser & populate $ua
-use \Detector\Detector;
-use \Detector\FeatureFamily;
-use Modernizr\Modernizr;
+use Detector\Detector;
+use Detector\FeatureFamily;
+use ModernizrServer\Modernizr;
 use Monolog\ErrorHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -59,8 +59,4 @@ include 'web/templates/_convertTF.inc.php';
 include 'web/templates/_createFT.inc.php';
 
 // switch templates based on device type
-if (isset($ua->isMobile) && $ua->isMobile) {
-    include 'web/templates/index.mobile.inc.php';
-} else {
-    include 'web/templates/index.default.inc.php';
-}
+include 'web/templates/index.default.inc.php';

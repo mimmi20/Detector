@@ -20,13 +20,22 @@ if (!$foundVendorAutoload) {
 }
 
 // require Detector so we can popular identify the browser & populate $ua
-use \Detector\Detector;
+use Detector\Detector;
+use Monolog\ErrorHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use WurflCache\Adapter\File;
+
+$logger = new Logger('detector');
+$logger->pushHandler(new StreamHandler('log/error.log', Logger::DEBUG));
+ErrorHandler::register($logger);
+
+$cache = new File(array(File::DIR => 'cache/'));
+
+$detector = new Detector($cache, $logger);
+$cookieID = $detector->getCookieId($_SERVER);
 
 // if this is a request from features.js.php don't run the build function
-$ua = Detector::build();//var_dump($ua);
+$ua = $detector->build();
 
-if ($ua->isMobile) {
-    include "web/templates/archive.mobile.inc.php";
-} else {
-    include "web/templates/archive.default.inc.php";
-}
+include "web/templates/archive.default.inc.php";

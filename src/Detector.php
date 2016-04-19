@@ -12,7 +12,7 @@ use Browscap\Generator\BuildGenerator;
 use Browscap\Helper\CollectionCreator;
 use Browscap\Writer\Factory\PhpWriterFactory;
 use BrowscapPHP\Browscap;
-use Modernizr\Modernizr;
+use ModernizrServer\Modernizr;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use UAParser\Parser;
