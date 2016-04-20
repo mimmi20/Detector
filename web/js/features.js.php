@@ -21,7 +21,7 @@ if (!$foundVendorAutoload) {
 
 $p = true; // turn off the build function
 
-use \Detector\Detector;
+use Detector\Detector;
 use ModernizrServer\Modernizr;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;

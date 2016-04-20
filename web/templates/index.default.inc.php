@@ -26,9 +26,7 @@
     <link href="/css/general.css" rel="stylesheet"/>
 
     <!-- My Scripts -->
-    <?php echo $detector->buildFeaturesScriptLink(); ?>
-    <script type="text/javascript" src="/js/modernizr.2.8.3.min.custom.js"></script>
-    <script type="text/javascript" src="/js/tests.demo.js"></script>
+    <script type="text/javascript" src="<?php echo htmlentities($detector->buildFeaturesScriptLink()); ?>"></script>
 </head>
 
 <body>
@@ -47,10 +45,10 @@
                 </a>
             </div>
         </div>
-        <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 clearfix">
+        <div class="row clearfix">
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9">
-                <p class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <p class="row">
                     With the initial release of <a href="http://yiibu.com/">Yiibu's</a> <a
                         href="https://github.com/yiibu/profile">Profile</a>, <a
                         href="https://github.com/mimmi20/Detector">Detector</a>
@@ -64,7 +62,7 @@
                     please check
                     out the <a href="https://github.com/mimmi20/Detector">README on GitHub</a>.
                 </p>
-                <p class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <p class="row">
                     Both of the following Detector profiles were <strong>
                         <?php
                         if ($detector->whereFound() == "archive") {
@@ -80,8 +78,8 @@
                         }
                         ?></strong>
                 </p>
-                <h3 class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><?php echo  ($detector->whereFound() == 'archive') ? 'Archived' : 'Your'; ?> Detector Browser Profile</h3>
-                <p class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <h3 class="row"><?php echo  ($detector->whereFound() == 'archive') ? 'Archived' : 'Your'; ?> Detector Browser Profile</h3>
+                <p class="row">
                     The following browser profile was created using <a href="https://github.com/ua-parser/uap-php">PHP implementation of ua-parser</a>. This information
                     is derived solely from the user agent string for your browser.
                 </p>
@@ -105,7 +103,7 @@
                 }
                 ?>
 
-                <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="row">
                     <div class="text-center clearfix">
                         <?php if (isset($previous) && ($previous != '')) { ?>
                             <span><a href="/?pid=<?php echo htmlentities($previous); ?>">Previous Profile</a> | </span>
@@ -120,9 +118,9 @@
                     <div class="clearfix">
                         <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2 col-xl-2 text-right">User Agent:</div>
                         <div class="col-xs-6 col-sm-8 col-md-10 col-lg-10 col-xl-10">
-                        <?php if (is_string($ua->originalUserAgent)): ?>
+                        <?php if (isset($ua->originalUserAgent) && is_string($ua->originalUserAgent)): ?>
                             <?php echo htmlentities($ua->originalUserAgent); ?>
-                        <?php else: ?>
+                        <?php elseif (isset($ua->originalUserAgent) && is_object($ua->originalUserAgent)): ?>
                             Browser Information: <?php echo htmlentities($ua->originalUserAgent->browser); ?><br/>
                             Device Information: <?php echo htmlentities($ua->originalUserAgent->device); ?>
                         <?php endif; ?>
@@ -220,12 +218,12 @@
                     </div>
                 </div>
 
-                <p class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <p class="row">
                     <strong>Something wrong with this profile?</strong> Please, <a href="/contact.php?cid=<?php echo htmlentities($ua->uaHash); ?>">let me know</a>. Note that
                     the <strong>"tablet" classification may be incorrect</strong> for those Android tablets using an OS older than Android 3.0.
                 </p>
-                <h3 class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><?php echo  ($detector->whereFound() == 'archive') ? 'Archived' : 'Your'; ?> Detector Feature Profile</h3>
-                <p class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <h3 class="row"><?php echo  ($detector->whereFound() == 'archive') ? 'Archived' : 'Your'; ?> Detector Feature Profile</h3>
+                <p class="row">
                     The following feature profile was primarily created using <a href="http://www.modernizr.com/docs/#s2">Modernizr's core tests</a>. The left column of results, <strong>Your Browser</strong>, is populated by JavaScript using a copy of Modernizr that is loaded with this page. The right column, <strong>Detector Profile</strong>, is populated by PHP using the profile created by Detector for your browser.
                     In addition to the core tests
                     I've added an extended test that checks for emoji support as well as a per request test to check the device pixel ratio. Both were added using the <a href="http://www.modernizr.com/docs/#addtest">Modernizr.addTest() Plugin API</a>.
@@ -233,7 +231,7 @@
                     <br /><br />
                 </p>
 
-                <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="row">
                     <div class="text-center clearfix">Feature Profile Properties</div>
                     <div class="clearfix">
                         <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2 col-xl-2 text-right">coreVersion:</div>
@@ -260,8 +258,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="featureNote col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="featureNote">
                     <small><em>To learn more about families please <a href="https://github.com/dmolsen/Detector/wiki/Detector-Family-Tutorial">review the family tutorial</a>.</em></small>
+                </div>
+
+                <div>
+                    <script type="text/javascript">
+                        if (typeof Modernizr === 'undefined') {
+                            document.write("Modernizr is unknown");
+                        }
+                    </script>
                 </div>
 
                 <?php

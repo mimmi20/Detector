@@ -272,7 +272,7 @@ class Detector
     public function buildFeaturesScriptLink()
     {
         $nocookies = (isset($_REQUEST['nocookies']) && ($_REQUEST['nocookies'] == 'true')) ? '&nocookies=true' : '';
-        return '<script type="text/javascript" src="/js/features.js.php?dynamic=true' . $nocookies . '"></script>';
+        return '/js/features.js.php?dynamic=true' . $nocookies;
     }
 
     /**
