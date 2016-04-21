@@ -16,20 +16,10 @@
 
     <!-- Le styles -->
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-    <?php /*if (isset($ua->isMobile) && $ua->isMobile) : ?>
-        <link href="/css/mobile.css" rel="stylesheet"/>
-    <?php
-    else : ?>
-        <link href="/css/desktop.css" rel="stylesheet"/>
-    <?php
-    endif;/**/
-    ?>
     <link href="/css/general.css" rel="stylesheet"/>
 
     <!-- My Scripts -->
-    <?php echo $detector->buildFeaturesScriptLink(); ?>
-    <script type="text/javascript" src="/js/modernizr.2.8.3.min.custom.js"></script>
-    <script type="text/javascript" src="/js/tests.demo.js"></script>
+    <script type="text/javascript" src="<?php echo htmlentities($detector->buildFeaturesScriptLink()); ?>"></script>
 </head>
 
 <body>
@@ -58,9 +48,10 @@
                 <ul>
                     <?php
                     $uaList = $detector->getUaList();
-                    foreach ($uaList as $key => $value) {
-                        print "<li> <a href=\"/?pid=" . $key . "\">" . strip_tags($value) . "</a></li>";
-                    }
+                    foreach ($uaList as $key => $value) : ?>
+                    <li><a href="/?pid=<?php echo htmlentities($key); ?>"><?php echo htmlentities(strip_tags($value)); ?></a></li>
+                    <?php
+                    endforeach;
                     ?>
                 </ul>
             </div>

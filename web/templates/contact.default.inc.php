@@ -26,9 +26,7 @@
     <link href="/css/general.css" rel="stylesheet"/>
 
     <!-- My Scripts -->
-    <?php echo $detector->buildFeaturesScriptLink(); ?>
-    <script type="text/javascript" src="/js/modernizr.2.8.3.min.custom.js"></script>
-    <script type="text/javascript" src="/js/tests.demo.js"></script>
+    <script type="text/javascript" src="<?php echo htmlentities($detector->buildFeaturesScriptLink()); ?>"></script>
 </head>
 
 <body>

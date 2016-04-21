@@ -33,9 +33,5 @@ ErrorHandler::register($logger);
 $cache = new File(array(File::DIR => 'cache/'));
 
 $detector = new Detector($cache, $logger);
-$cookieID = $detector->getCookieId($_SERVER);
-
-// if this is a request from features.js.php don't run the build function
-$ua = $detector->build();
 
 include "web/templates/archive.default.inc.php";
