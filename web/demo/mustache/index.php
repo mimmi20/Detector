@@ -19,13 +19,9 @@ if (!$foundVendorAutoload) {
     throw new Exception('Could not find autoload path in any of the searched locations');
 }
 
-// require mustache for the templates
-require_once 'web/demo/mustache/lib/mustache-php/Mustache.php';
-require_once 'web/demo/mustache/lib/mustache-php/MustacheLoader.php';
-
 // require detector to get the family, autoloads the $ua var
-use \Detector\Detector;
-use \Detector\FeatureFamily;
+use Detector\Detector;
+use Detector\FeatureFamily;
 
 $template = file_get_contents('web/demo/mustache/templates/index.mustache');
 $data     = array(
