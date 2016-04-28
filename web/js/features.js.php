@@ -38,4 +38,4 @@ $detector = new Detector($cache, $logger);
 $cookieID = $detector->getCookieId($_SERVER);
 
 print Modernizr::buildJs();
-print Modernizr::buildConvertJs($cookieID, '-pr', false);
+print Modernizr::buildConvertJs($cookieID, '', false);
