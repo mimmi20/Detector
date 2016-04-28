@@ -91,7 +91,7 @@ $cookieID = $detector->getCookieId($_SERVER);
 
 // if this is a request from features.js.php don't run the build function
 $ua = $detector->build($_SERVER);
-
+/*
 if (null === $ua) {
     $html = '<html><head><script type="text/javascript">';
 
@@ -102,9 +102,10 @@ if (null === $ua) {
     echo $html;
     exit;
 }
+/**/
 
 // include the browserFamily library to classify the browser by features
-$ua->family = FeatureFamily::find($ua);
+//$ua->family = FeatureFamily::find($ua);
 
 // include some helpful functions
 include 'web/templates/_convertTF.inc.php';

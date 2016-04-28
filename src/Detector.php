@@ -375,6 +375,7 @@ class Detector
         $obj->uaparser->device->family = $client->device->toString();
 
         // Now, load an INI file into BrowscapPHP\Browscap for testing the UAs
+        /*
         $browscap = new Browscap();
         $browscap
             ->setCache($this->cache)
@@ -388,6 +389,7 @@ class Detector
         foreach ($actualProps as $property => $value) {
             $obj->browscap->$property = $value;
         }
+        /**/
 
         return $obj;
     }

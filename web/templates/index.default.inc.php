@@ -27,6 +27,81 @@
 
     <!-- My Scripts -->
     <script type="text/javascript" src="<?php echo htmlentities($detector->buildFeaturesScriptLink()); ?>"></script>
+    <script type="text/javascript">
+        var m = Modernizr, c = '', reload = true, cx = {};
+
+        for (var f in m) {
+            if (!m.hasOwnProperty(f)) {
+                continue;
+            }
+
+            if (f[0] === '_') {
+                continue;
+            }
+
+            var t = typeof m[f];
+
+            if (t === 'function') {
+                continue;
+            }
+
+            if (t === 'object') {
+                cx[f] = {};
+
+                for (var s in m[f]) {
+                    if (!m[f].hasOwnProperty(s)) {
+                        continue;
+                    }
+
+                    if (typeof m[f][s] === 'boolean') {
+                        c = f + '->' + s + ':' + (m[f][s] ? 't' : 'f');
+                        cx[f][s] = (m[f][s] ? 't' : 'f');
+                    } else if (m[f][s] === null) {
+                        c = f + '->' + s + ':' + 'n';
+                        cx[f][s] = 'n';
+                    } else if (m[f][s] === '') {
+                        c = f + '->' + s + ':' + 'e';
+                        cx[f][s] = 'e';
+                    } else if (m[f][s] === 'probably') {
+                        c = f + '->' + s + ':' + 'p';
+                        cx[f][s] = 'p';
+                    } else if (m[f][s] === 'maybe') {
+                        c = f + '->' + s + ':' + 'm';
+                        cx[f][s] = 'm';
+                    } else {
+                        c = f + '->' + s + ':' + m[f][s];
+                        cx[f][s] = m[f][s];
+                    }
+                    document.writeln(c);
+                }
+            } else if (t === 'boolean') {
+                c = f + ':' + (m[f] ? 't' : 'f');
+                cx[f] = (m[f] ? 't' : 'f');
+                document.writeln(c);
+            } else if (m[f] === null) {
+                c = f + ':' + 'n';
+                cx[f] = 'n';
+                document.writeln(c);
+            } else if (m[f] === '') {
+                c = f + ':' + 'e';
+                cx[f] = 'e';
+                document.writeln(c);
+            } else if (m[f] === 'probably') {
+                c = f + ':' + 'p';
+                cx[f] = 'p';
+                document.writeln(c);
+            } else if (m[f] === 'maybe') {
+                c = f + ':' + 'm';
+                cx[f] = 'm';
+                document.writeln(c);
+            } else {
+                c = f + ':' + m[f];
+                cx[f] = m[f];
+                document.writeln(c);
+            }
+        }
+        document.writeln(JSON.stringify(cx));
+    </script>
 </head>
 
 <body>
