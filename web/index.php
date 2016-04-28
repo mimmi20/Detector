@@ -1,4 +1,11 @@
 <?php
+// Delegate static file requests back to the PHP built-in webserver
+if (php_sapi_name() === 'cli-server'
+    && is_file(__DIR__ . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))
+) {
+    return false;
+}
+
 chdir(dirname(__DIR__));
 
 $autoloadPaths = array(
@@ -24,13 +31,58 @@ use Detector\Detector;
 use Detector\FeatureFamily;
 use ModernizrServer\Modernizr;
 use Monolog\ErrorHandler;
+use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use WurflCache\Adapter\File;
+use Zend\Diactoros\Response\JsonResponse;
+use Zend\Expressive\AppFactory;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr7Middlewares\Middleware;
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
+use Cache\Adapter\Filesystem\FilesystemCachePool;
 
-$logger = new Logger('detector');
-$logger->pushHandler(new StreamHandler('log/error.log', Logger::DEBUG));
-ErrorHandler::register($logger);
+$app = AppFactory::create();
+
+$errerLog = new Logger('error');
+$errerLog->pushHandler(new StreamHandler('log/error.log', Logger::DEBUG));
+ErrorHandler::register($errerLog);
+
+$accessLog = new Logger('error');
+$accessLog->pushHandler(new StreamHandler('log/access.log', Logger::DEBUG));
+
+$filesystemAdapter = new Local('cache/');
+$filesystem        = new Filesystem($filesystemAdapter);
+
+$pool = new FilesystemCachePool($filesystem);
+
+$app->pipe(Middleware::ClientIp()->remote(false)); // required for AccessLog, Geolocate
+$app->pipe(Middleware::AccessLog($accessLog)->combined(true));
+$app->pipe(Middleware::TrailingSlash(false)->redirect(301));
+$app->pipe(Middleware::FormatNegotiator()); // required for Expires, Minify
+$app->pipe(Middleware::Expires());
+$app->pipe(Middleware::Minify());
+//$app->pipe(Middleware::BlockSpam());
+$app->pipe(Middleware::PhpSession()->name('DetectorSessionId'));
+$app->pipe(Middleware::Geolocate()->saveInSession());
+//$app->pipe(Middleware::Cache($pool));
+$app->pipe(Middleware::responseTime());
+$app->pipeRoutingMiddleware();
+$app->pipeDispatchMiddleware();
+
+$app->get('/', function (RequestInterface $request, ResponseInterface $response, callable $next) {
+    $response->getBody()->write('Hello, world!');
+    return $response;
+});
+
+$app->get('/ping', function (RequestInterface $request, ResponseInterface $response, callable $next) {
+    return new JsonResponse(['ack' => time()]);
+});
+
+$app->run();
+exit;
 
 $cache = new File(array(File::DIR => 'cache/'));
 
