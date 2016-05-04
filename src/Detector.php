@@ -147,7 +147,7 @@ class Detector
                 }
 
                 // return to the script
-                return $info;
+              //  return $info;
             }
         }
 
@@ -167,9 +167,10 @@ class Detector
             $this->save($request, $info, $uaFile, $cacheId);
 
             // send the data back to the script to be used
-            return $info;
+            //return $info;
         }
 
+        session_id($sessionID);
         if (@session_start()
             && isset($_SESSION)
             && isset($_SESSION[$sessionID])
@@ -181,7 +182,7 @@ class Detector
             $this->save($request, $info, $uaFile, $cacheId);
 
             // send the data back to the script to be used
-            return $info;
+            //return $info;
         }
 
         $cookieID = $this->getCookieId($request);
@@ -262,17 +263,6 @@ class Detector
         }
 
         return null;
-    }
-
-    /**
-     * Builds a link to the features.js.php file that addresses if cookies are supported or not
-     *
-     * @return string
-     */
-    public function buildFeaturesScriptLink()
-    {
-        $nocookies = (isset($_REQUEST['nocookies']) && ($_REQUEST['nocookies'] == 'true')) ? '&nocookies=true' : '';
-        return '/js/features.js.php?dynamic=true' . $nocookies;
     }
 
     /**

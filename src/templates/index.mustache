@@ -19,81 +19,9 @@
         <link href="/css/general.css" rel="stylesheet"/>
 
         <!-- My Scripts -->
-        <script type="text/javascript" src="{{ buildFeaturesScriptLink }}" defer="defer"></script>
-        <script type="text/javascript" defer="defer">
-            var m = Modernizr, c = '', reload = true, cx = {};
-
-            for (var f in m) {
-                if (!m.hasOwnProperty(f)) {
-                    continue;
-                }
-
-                if (f[0] === '_') {
-                    continue;
-                }
-
-                var t = typeof m[f];
-
-                if (t === 'function') {
-                    continue;
-                }
-
-                if (t === 'object') {
-                    cx[f] = {};
-
-                    for (var s in m[f]) {
-                        if (!m[f].hasOwnProperty(s)) {
-                            continue;
-                        }
-
-                        if (typeof m[f][s] === 'boolean') {
-                            c = f + '->' + s + ':' + (m[f][s] ? 't' : 'f');
-                            cx[f][s] = (m[f][s] ? 't' : 'f');
-                        } else if (m[f][s] === null) {
-                            c = f + '->' + s + ':' + 'n';
-                            cx[f][s] = 'n';
-                        } else if (m[f][s] === '') {
-                            c = f + '->' + s + ':' + 'e';
-                            cx[f][s] = 'e';
-                        } else if (m[f][s] === 'probably') {
-                            c = f + '->' + s + ':' + 'p';
-                            cx[f][s] = 'p';
-                        } else if (m[f][s] === 'maybe') {
-                            c = f + '->' + s + ':' + 'm';
-                            cx[f][s] = 'm';
-                        } else {
-                            c = f + '->' + s + ':' + m[f][s];
-                            cx[f][s] = m[f][s];
-                        }
-                        document.writeln(c);
-                    }
-                } else if (t === 'boolean') {
-                    c = f + ':' + (m[f] ? 't' : 'f');
-                    cx[f] = (m[f] ? 't' : 'f');
-                    document.writeln(c);
-                } else if (m[f] === null) {
-                    c = f + ':' + 'n';
-                    cx[f] = 'n';
-                    document.writeln(c);
-                } else if (m[f] === '') {
-                    c = f + ':' + 'e';
-                    cx[f] = 'e';
-                    document.writeln(c);
-                } else if (m[f] === 'probably') {
-                    c = f + ':' + 'p';
-                    cx[f] = 'p';
-                    document.writeln(c);
-                } else if (m[f] === 'maybe') {
-                    c = f + ':' + 'm';
-                    cx[f] = 'm';
-                    document.writeln(c);
-                } else {
-                    c = f + ':' + m[f];
-                    cx[f] = m[f];
-                    document.writeln(c);
-                }
-            }
-            document.writeln(JSON.stringify(cx));
+        <script type="text/javascript" src="/js/features.js"></script>
+        <script type="text/javascript">
+            //document.writeln(JSON.stringify(cx));
         </script>
     </head>
 
@@ -109,7 +37,7 @@
 
                     <div id="forkme">
                         <a href="https://github.com/mimmi20/Detector">
-                            <img src="images/ForkMe_Wht.png" width="141" height="141" alt="Fork Me on GitHub"/>
+                            <img src="/images/ForkMe_Wht.png" width="141" height="141" alt="Fork Me on GitHub"/>
                         </a>
                     </div>
                 </div>
@@ -289,14 +217,7 @@
                             <small><em>To learn more about families please <a href="https://github.com/dmolsen/Detector/wiki/Detector-Family-Tutorial">review the family tutorial</a>.</em></small>
                         </div>
 
-                        <div>
-                            <script type="text/javascript">
-                                if (typeof Modernizr === 'undefined') {
-                                    document.write("Modernizr is unknown");
-                                }
-                            </script>
-                        </div>
-
+                        <!--
                         <?php
                         $ua_a = (array) $ua;
                         ksort($ua_a);
@@ -319,17 +240,16 @@
                         createFT($detector, $ua, $extendedFeatures, 'Detector Extended Test Features', 'extended-', 'To learn more about extended tests and their purpose please <a href="https://github.com/dmolsen/Detector/wiki/Detector-Test-Tutorial">review the test tutorial.</a>');
                         createFT($detector, $ua, $perSessionFeatures, 'Detector Per Session Test Features', 'ps-', 'To learn more about per session tests and their purpose please <a href="https://github.com/dmolsen/Detector/wiki/Detector-Test-Tutorial">review the test tutorial.</a>');
                         createFT($detector, $ua, $perRequestFeatures, 'Detector Per Request Test Features', 'pr-', 'To learn more about per request tests and their purpose please <a href="https://github.com/dmolsen/Detector/wiki/Detector-Test-Tutorial">review the test tutorial.</a> If this section isn\'t populated hit "refresh". Attributes are captured via a cookie. Screen size will also be one request behind if you resize the window for the same reason.');
-                        ?>
+                        ?> -->
                     </div>
 
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-                        <?php include 'web/templates/_about.inc.php'; ?>
-                        <?php include 'web/templates/_moreinfo.inc.php'; ?>
-                        <?php include 'web/templates/_credits.inc.php'; ?>
-                        <?php include 'web/templates/_socialmedia.inc.php'; ?>
-                        <?php include 'web/templates/_archive.inc.php'; ?>
+                        {{>about}}
+                        {{>moreinfo}}
+                        {{>credits}}
+                        {{>socialmedia}}
+                        {{>archive}}
                     </div>
-
                 </div>
             </div>
             <footer class="clearfix">
