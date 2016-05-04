@@ -14,6 +14,7 @@
 *.ini text eol=lf diff
 *.sh text eol=lf diff
 *.tmp text eol=lf diff
+*.mustache text eol=lf diff
 .gitattributes text eol=lf diff
 .gitignore text eol=lf diff
 .php_cs text eol=lf diff

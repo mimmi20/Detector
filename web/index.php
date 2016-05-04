@@ -63,16 +63,26 @@ $app->pipe(Middleware::AccessLog($accessLog)->combined(true));
 $app->pipe(Middleware::TrailingSlash(false)->redirect(301));
 $app->pipe(Middleware::FormatNegotiator()); // required for Expires, Minify
 //$app->pipe(Middleware::Expires());
-$app->pipe(Middleware::Minify());
+//$app->pipe(Middleware::Minify());
 $app->pipe(Middleware::BlockSpam());
-$app->pipe(Middleware::PhpSession()->name('DetectorSessionId'));
-$app->pipe(Middleware::Geolocate()->saveInSession());
+//$app->pipe(Middleware::PhpSession()->name('DetectorSessionId'));
+//$app->pipe(Middleware::Geolocate()->saveInSession(true));
 //$app->pipe(Middleware::Cache($pool));
 $app->pipe(Middleware::responseTime());
 $app->pipeRoutingMiddleware();
 $app->pipeDispatchMiddleware();
 
 $cache = new File(array(File::DIR => 'cache/'));
+
+$app->get('/js/features.js', function (RequestInterface $request, ResponseInterface $response, callable $next) use ($errorLog, $cache) {
+    $response->withAddedHeader('content-type', 'application/x-javascript');
+    $response->getBody()->write(Modernizr::buildJs());
+
+    $detector = new Detector($cache, $errorLog);
+    $cookieID = $detector->getCookieId($_SERVER);
+    $response->getBody()->write(Modernizr::buildConvertJs($cookieID, '', false));
+    return $response;
+});
 
 $app->get('/', function (RequestInterface $request, ResponseInterface $response, callable $next) use ($errorLog, $cache) {
     $detector = new Detector($cache, $errorLog);
@@ -93,11 +103,8 @@ $app->get('/', function (RequestInterface $request, ResponseInterface $response,
     $response->getBody()->write('Hello, world!');
 
     $options = array(
-        'partials' => array(
-            //'src/templates/partials/' . $ua->family,
-            'src/templates/partials/base'
-        ),
-        'loader' => new Mustache_Loader_FilesystemLoader('src/templates/'),
+        'loader' => new Mustache_Loader_FilesystemLoader('src/templates'),
+        'partials_loader' => new Mustache_Loader_FilesystemLoader('src/templates/partials'),
         'logger' => $errorLog,
     );
 
@@ -136,7 +143,6 @@ $app->get('/', function (RequestInterface $request, ResponseInterface $response,
     $data = [
         'title'       => 'Detector [BETA] - combined browser- &amp; feature-detection for your app',
         'description' => 'This extremely simple demo is meant to show how Detector & Mustache can be combined to create a Responsive Web Design + Server Side Component (RESS) System. By using the requesting browser\'s Detector family classification a responsive template & partials that match the browser\'s features are rendered server-side via Mustache. Choose a different layout below to see how this page & the included images change depending upon the browser family.',
-        'buildFeaturesScriptLink' => $detector->buildFeaturesScriptLink(),
         'foundIn'  => $foundIn,
         'profile'  => ($detector->whereFound() == 'archive') ? 'Archived' : 'Your',
         'next'     => $next,

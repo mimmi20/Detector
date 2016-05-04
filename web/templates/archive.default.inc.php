@@ -19,7 +19,7 @@
     <link href="/css/general.css" rel="stylesheet"/>
 
     <!-- My Scripts -->
-    <script type="text/javascript" src="<?php echo htmlentities($detector->buildFeaturesScriptLink()); ?>"></script>
+    <script type="text/javascript" src="/js/features.js"></script>
 </head>
 
 <body>
@@ -57,9 +57,9 @@
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-                <?php include "web/templates/_about.inc.php"; ?>
-                <?php include "web/templates/_moreinfo.inc.php"; ?>
-                <?php include "web/templates/_credits.inc.php"; ?>
+                <?php include "web/templates/about.mustache"; ?>
+                <?php include "web/templates/moreinfo.mustache"; ?>
+                <?php include "web/templates/credits.mustache"; ?>
             </div>
 
         </div>
