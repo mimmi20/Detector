@@ -69,6 +69,6 @@ $options = array(
     )
 );
 
-$m = new Mustache_Engine();
+$m = new Mustache_Engine($options);
 
 print $m->render($template, $data);
